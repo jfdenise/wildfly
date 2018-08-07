@@ -33,6 +33,7 @@ import org.jboss.as.server.deployment.DeploymentUnit;
 import org.jboss.as.server.deployment.jbossallxml.JBossAllXMLParser;
 import org.jboss.staxmapper.XMLElementReader;
 import org.jboss.staxmapper.XMLExtendedStreamReader;
+import org.wildfly.clustering.web.hotrod.session.HotRodSessionManagementProvider;
 import org.wildfly.clustering.web.infinispan.session.InfinispanSessionManagementProvider;
 
 /**
@@ -43,7 +44,9 @@ public class DistributableWebDeploymentXMLReader implements XMLElementReader<Mut
 
     private static final String SESSION_MANAGEMENT = "session-management";
     private static final String NAME = "name";
+    private static final String HOTROD_SESSION_MANAGEMENT = "hotrod-session-management";
     private static final String INFINISPAN_SESSION_MANAGEMENT = "infinispan-session-management";
+    private static final String REMOTE_CACHE_CONTAINER = "remote-cache-container";
     private static final String CACHE_CONTAINER = "cache-container";
     private static final String CACHE = "cache";
     private static final String GRANULARITY = "granularity";
@@ -69,6 +72,7 @@ public class DistributableWebDeploymentXMLReader implements XMLElementReader<Mut
 
         Set<String> names = new TreeSet<>();
         names.add(SESSION_MANAGEMENT);
+        names.add(HOTROD_SESSION_MANAGEMENT);
         names.add(INFINISPAN_SESSION_MANAGEMENT);
 
         if (!reader.hasNext() || reader.nextTag() == XMLStreamConstants.END_ELEMENT) {
@@ -81,6 +85,12 @@ public class DistributableWebDeploymentXMLReader implements XMLElementReader<Mut
                 String name = reader.getAttributeValue(0);
                 ParseUtils.requireNoContent(reader);
                 configuration.setSessionManagementName(name);
+                break;
+            }
+            case HOTROD_SESSION_MANAGEMENT: {
+                MutableHotRodSessionManagementConfiguration config = new MutableHotRodSessionManagementConfiguration(configuration);
+                configuration.setSessionManagement(new HotRodSessionManagementProvider(config));
+                this.readHotRodSessionManagement(reader, config);
                 break;
             }
             case INFINISPAN_SESSION_MANAGEMENT: {
@@ -124,6 +134,36 @@ public class DistributableWebDeploymentXMLReader implements XMLElementReader<Mut
                 throw ParseUtils.unexpectedAttribute(reader, index);
             }
         }
+    }
+
+    private void readHotRodSessionManagement(XMLExtendedStreamReader reader, MutableHotRodSessionManagementConfiguration configuration) throws XMLStreamException {
+
+        Set<String> required = new TreeSet<>();
+        required.add(REMOTE_CACHE_CONTAINER);
+        required.add(GRANULARITY);
+        required.add(ROUTING);
+
+        for (int i = 0; i < reader.getAttributeCount(); ++i) {
+            String localName = reader.getAttributeLocalName(i);
+            String value = reader.getAttributeValue(i);
+            required.remove(localName);
+
+            switch (localName) {
+                case REMOTE_CACHE_CONTAINER: {
+                    configuration.setContainerName(value);
+                    break;
+                }
+                default: {
+                    this.readSessionManagementAttribute(reader, i, configuration);
+                }
+            }
+        }
+
+        if (!required.isEmpty()) {
+            ParseUtils.requireAttributes(reader, required.toArray(new String[required.size()]));
+        }
+
+        ParseUtils.requireNoContent(reader);
     }
 
     private void readInfinispanSessionManagement(XMLExtendedStreamReader reader, MutableInfinispanSessionManagementConfiguration configuration) throws XMLStreamException {

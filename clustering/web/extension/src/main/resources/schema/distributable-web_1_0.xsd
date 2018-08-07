@@ -20,6 +20,11 @@
                     <xs:documentation>Defines a deployment specific Infinispan cache-based session management provider</xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element name="hotrod-session-management" type="tns:hotrod-session-management">
+                <xs:annotation>
+                    <xs:documentation>Defines a deployment specific HotRod remote cache-based session management provider</xs:documentation>
+                </xs:annotation>
+            </xs:element>
         </xs:choice>
     </xs:complexType>
 
@@ -58,6 +63,18 @@
                             References a cache within the associated cache-container.
                             If unspecified, the default cache of the associated cache-container is assumed.
                         </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="hotrod-session-management">
+        <xs:complexContent>
+            <xs:extension base="tns:abstract-session-management">
+                <xs:attribute name="remote-cache-container" type="xs:string" use="required">
+                    <xs:annotation>
+                        <xs:documentation>References a remote-cache-container defined by the Infinispan subsystem.</xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
             </xs:extension>
