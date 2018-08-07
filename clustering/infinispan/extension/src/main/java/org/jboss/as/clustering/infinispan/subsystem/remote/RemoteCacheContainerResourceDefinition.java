@@ -46,7 +46,7 @@ import org.jboss.as.controller.registry.AttributeAccess;
 import org.jboss.as.controller.transform.description.ResourceTransformationDescriptionBuilder;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
-import org.wildfly.clustering.infinispan.spi.InfinispanRequirement;
+import org.wildfly.clustering.infinispan.client.InfinispanClientRequirement;
 import org.wildfly.clustering.service.UnaryRequirement;
 
 /**
@@ -63,8 +63,8 @@ public class RemoteCacheContainerResourceDefinition extends ChildResourceDefinit
     }
 
     public enum Capability implements CapabilityProvider {
-        CONTAINER(InfinispanRequirement.REMOTE_CONTAINER),
-        CONFIGURATION(InfinispanRequirement.REMOTE_CONTAINER_CONFIGURATION),
+        CONTAINER(InfinispanClientRequirement.REMOTE_CONTAINER),
+        CONFIGURATION(InfinispanClientRequirement.REMOTE_CONTAINER_CONFIGURATION),
         ;
 
         private final org.jboss.as.clustering.controller.Capability capability;

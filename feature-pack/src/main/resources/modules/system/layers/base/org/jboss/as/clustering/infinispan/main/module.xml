@@ -62,6 +62,7 @@
         <module name="org.reactivestreams"/>
         <module name="org.wildfly.clustering.ee.infinispan"/>
         <module name="org.wildfly.clustering.ee.spi"/>
+        <module name="org.wildfly.clustering.infinispan.client"/>
         <module name="org.wildfly.clustering.infinispan.spi"/>
         <module name="org.wildfly.clustering.jgroups.spi"/>
         <module name="org.wildfly.clustering.marshalling.api"/>
