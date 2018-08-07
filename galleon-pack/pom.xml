@@ -2646,6 +2646,16 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>wildfly-clustering-ee-cache</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>wildfly-clustering-ee-infinispan</artifactId>
             <exclusions>
                 <exclusion>
@@ -2846,6 +2856,16 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>wildfly-clustering-web-api</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wildfly-clustering-web-cache</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>

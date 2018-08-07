@@ -26,6 +26,11 @@ import java.time.Duration;
 import java.time.Instant;
 
 import org.wildfly.clustering.dispatcher.Command;
+import org.wildfly.clustering.web.cache.session.CompositeSessionMetaData;
+import org.wildfly.clustering.web.cache.session.SessionAccessMetaData;
+import org.wildfly.clustering.web.cache.session.SessionCreationMetaData;
+import org.wildfly.clustering.web.cache.session.SimpleSessionAccessMetaData;
+import org.wildfly.clustering.web.cache.session.SimpleSessionCreationMetaData;
 import org.wildfly.clustering.web.session.ImmutableSessionMetaData;
 
 /**
@@ -68,6 +73,6 @@ public class ScheduleSchedulerCommand implements Command<Void, Scheduler> {
         creationMetaData.setMaxInactiveInterval(maxInactiveInterval);
         SessionAccessMetaData accessMetaData = new SimpleSessionAccessMetaData();
         accessMetaData.setLastAccessedDuration(lastAccessedDuration);
-        this.metaData = new SimpleSessionMetaData(creationMetaData, accessMetaData);
+        this.metaData = new CompositeSessionMetaData(creationMetaData, accessMetaData);
     }
 }

@@ -27,10 +27,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.infinispan.commons.marshall.NotSerializableException;
 import org.wildfly.clustering.ee.Mutator;
-import org.wildfly.clustering.ee.infinispan.CacheProperties;
+import org.wildfly.clustering.ee.cache.CacheProperties;
 import org.wildfly.clustering.marshalling.spi.Marshallability;
-import org.wildfly.clustering.web.infinispan.session.SessionAttributes;
-import org.wildfly.clustering.web.session.SessionAttributeImmutability;
+import org.wildfly.clustering.web.cache.session.SessionAttributeImmutability;
+import org.wildfly.clustering.web.cache.session.SessionAttributes;
 
 /**
  * Exposes session attributes for a coarse granularity session.

@@ -32,8 +32,6 @@
     </resources>
 
     <dependencies>
-        <module name="net.jcip"/>
-        <module name="org.jboss.logging"/>
         <module name="org.wildfly.common"/>
     </dependencies>
 </module>

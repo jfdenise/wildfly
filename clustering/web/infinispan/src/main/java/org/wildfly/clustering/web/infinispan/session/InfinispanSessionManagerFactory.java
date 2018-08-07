@@ -48,10 +48,10 @@ import org.wildfly.clustering.dispatcher.CommandDispatcherFactory;
 import org.wildfly.clustering.ee.Batch;
 import org.wildfly.clustering.ee.Batcher;
 import org.wildfly.clustering.ee.Recordable;
-import org.wildfly.clustering.ee.infinispan.CacheProperties;
-import org.wildfly.clustering.ee.infinispan.InfinispanBatcher;
+import org.wildfly.clustering.ee.cache.CacheProperties;
+import org.wildfly.clustering.ee.cache.tx.TransactionBatch;
 import org.wildfly.clustering.ee.infinispan.InfinispanCacheProperties;
-import org.wildfly.clustering.ee.infinispan.TransactionBatch;
+import org.wildfly.clustering.ee.infinispan.tx.InfinispanBatcher;
 import org.wildfly.clustering.group.Group;
 import org.wildfly.clustering.infinispan.spi.affinity.KeyAffinityServiceFactory;
 import org.wildfly.clustering.infinispan.spi.distribution.CacheLocality;
@@ -64,6 +64,11 @@ import org.wildfly.clustering.marshalling.spi.MarshalledValueFactory;
 import org.wildfly.clustering.marshalling.spi.MarshalledValueMarshaller;
 import org.wildfly.clustering.spi.NodeFactory;
 import org.wildfly.clustering.web.IdentifierFactory;
+import org.wildfly.clustering.web.cache.session.CompositeSessionFactory;
+import org.wildfly.clustering.web.cache.session.CompositeSessionMetaDataEntry;
+import org.wildfly.clustering.web.cache.session.SessionAttributesFactory;
+import org.wildfly.clustering.web.cache.session.SessionFactory;
+import org.wildfly.clustering.web.cache.session.SessionMetaDataFactory;
 import org.wildfly.clustering.web.infinispan.AffinityIdentifierFactory;
 import org.wildfly.clustering.web.infinispan.session.coarse.CoarseSessionAttributesFactory;
 import org.wildfly.clustering.web.infinispan.session.fine.FineSessionAttributesFactory;
@@ -95,7 +100,7 @@ public class InfinispanSessionManagerFactory<C extends Marshallability, L> imple
     final Group group;
 
     private final KeyAffinityServiceFactory affinityFactory;
-    private final SessionFactory<InfinispanSessionMetaData<L>, ?, L> factory;
+    private final SessionFactory<CompositeSessionMetaDataEntry<L>, ?, L> factory;
     private final Scheduler scheduler;
     private final SessionCreationMetaDataKeyFilter filter = new SessionCreationMetaDataKeyFilter();
     private final ExecutorService executor = Executors.newSingleThreadExecutor(createThreadFactory());
@@ -107,8 +112,8 @@ public class InfinispanSessionManagerFactory<C extends Marshallability, L> imple
         this.memberFactory = config.getMemberFactory();
         this.batcher = new InfinispanBatcher(this.cache);
         this.properties = new InfinispanCacheProperties(this.cache.getCacheConfiguration());
-        SessionMetaDataFactory<InfinispanSessionMetaData<L>, L> metaDataFactory = new InfinispanSessionMetaDataFactory<>(config.getCache(), this.properties);
-        this.factory = new InfinispanSessionFactory<>(metaDataFactory, this.createSessionAttributesFactory(config), config.getLocalContextFactory());
+        SessionMetaDataFactory<CompositeSessionMetaDataEntry<L>, L> metaDataFactory = new InfinispanSessionMetaDataFactory<>(config.getCache(), this.properties);
+        this.factory = new CompositeSessionFactory<>(metaDataFactory, this.createSessionAttributesFactory(config), config.getLocalContextFactory());
         CommandDispatcherFactory dispatcherFactory = config.getCommandDispatcherFactory();
         ExpiredSessionRemover<?, ?, L> remover = new ExpiredSessionRemover<>(this.factory);
         this.expirationRegistrar = remover;
@@ -238,7 +243,7 @@ public class InfinispanSessionManagerFactory<C extends Marshallability, L> imple
     }
 
     private void schedule(Locality oldLocality, Locality newLocality) {
-        SessionMetaDataFactory<InfinispanSessionMetaData<L>, L> metaDataFactory = this.factory.getMetaDataFactory();
+        SessionMetaDataFactory<CompositeSessionMetaDataEntry<L>, L> metaDataFactory = this.factory.getMetaDataFactory();
         // Iterate over sessions in memory
         try (CloseableIterator<Key<String>> keys = this.cache.getAdvancedCache().withFlags(Flag.CACHE_MODE_LOCAL, Flag.SKIP_CACHE_LOAD).keySet().iterator()) {
             while (keys.hasNext()) {
@@ -250,7 +255,7 @@ public class InfinispanSessionManagerFactory<C extends Marshallability, L> imple
                     try (Batch batch = this.batcher.createBatch()) {
                         try {
                             // We need to lookup the session to obtain its meta data
-                            InfinispanSessionMetaData<L> value = metaDataFactory.tryValue(id);
+                            CompositeSessionMetaDataEntry<L> value = metaDataFactory.tryValue(id);
                             if (value != null) {
                                 this.scheduler.schedule(id, metaDataFactory.createImmutableSessionMetaData(id, value));
                             }
