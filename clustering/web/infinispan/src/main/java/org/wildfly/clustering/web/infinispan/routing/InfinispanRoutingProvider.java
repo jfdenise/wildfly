@@ -37,6 +37,7 @@ import org.wildfly.clustering.service.SupplierDependency;
 import org.wildfly.clustering.spi.CacheServiceConfiguratorProvider;
 import org.wildfly.clustering.spi.ClusteringCacheRequirement;
 import org.wildfly.clustering.spi.DistributedCacheServiceConfiguratorProvider;
+import org.wildfly.clustering.web.cache.routing.LocalRouteServiceConfigurator;
 import org.wildfly.clustering.web.routing.RoutingProvider;
 
 /**
@@ -57,7 +58,8 @@ public class InfinispanRoutingProvider implements RoutingProvider {
 
         List<CapabilityServiceConfigurator> builders = new LinkedList<>();
 
-        builders.add(new RouteRegistryEntryProviderServiceConfigurator(containerName, serverName, route));
+        builders.add(new LocalRouteServiceConfigurator(serverName, route));
+        builders.add(new RouteRegistryEntryProviderServiceConfigurator(containerName, serverName));
         builders.add(new TemplateConfigurationServiceConfigurator(ServiceNameFactory.parseServiceName(InfinispanCacheRequirement.CONFIGURATION.resolve(containerName, serverName)), containerName, serverName, cacheName, this.config));
         builders.add(new CacheServiceConfigurator<>(ServiceNameFactory.parseServiceName(InfinispanCacheRequirement.CACHE.resolve(containerName, serverName)), containerName, serverName));
         ServiceNameRegistry<ClusteringCacheRequirement> registry = requirement -> ServiceNameFactory.parseServiceName(requirement.resolve(containerName, serverName));

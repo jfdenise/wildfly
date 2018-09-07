@@ -20,43 +20,38 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.wildfly.extension.clustering.web;
+package org.wildfly.clustering.web.cache.routing;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.jboss.as.clustering.controller.CapabilityServiceConfigurator;
 import org.jboss.as.controller.ServiceNameFactory;
 import org.jboss.msc.Service;
 import org.jboss.msc.service.ServiceBuilder;
-import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceTarget;
+import org.wildfly.clustering.service.FunctionalService;
 import org.wildfly.clustering.service.SimpleServiceNameProvider;
 import org.wildfly.clustering.service.SupplierDependency;
 import org.wildfly.clustering.web.WebDeploymentRequirement;
-import org.wildfly.clustering.web.routing.RouteLocator;
 
 /**
- * Service configurator for the local routing provider.
  * @author Paul Ferraro
  */
-public class LocalRouteLocatorServiceConfigurator extends SimpleServiceNameProvider implements CapabilityServiceConfigurator, RouteLocator {
+public class LocalRouteServiceConfigurator extends SimpleServiceNameProvider implements CapabilityServiceConfigurator {
 
     private final SupplierDependency<String> route;
 
-    public LocalRouteLocatorServiceConfigurator(String serverName, SupplierDependency<String> route) {
-        super(ServiceNameFactory.parseServiceName(WebDeploymentRequirement.ROUTE_LOCATOR.resolve(serverName)));
+    public LocalRouteServiceConfigurator(String serverName, SupplierDependency<String> route) {
+        super(ServiceNameFactory.parseServiceName(WebDeploymentRequirement.LOCAL_ROUTE.resolve(serverName)));
         this.route = route;
-    }
-
-    @Override
-    public String locate(String sessionId) {
-        return this.route.get();
     }
 
     @Override
     public ServiceBuilder<?> build(ServiceTarget target) {
         ServiceBuilder<?> builder = target.addService(this.getServiceName());
-        Consumer<RouteLocator> locator = this.route.register(builder).provides(this.getServiceName());
-        return builder.setInstance(Service.newInstance(locator, this)).setInitialMode(ServiceController.Mode.ON_DEMAND);
+        Consumer<String> route = this.route.register(builder).provides(this.getServiceName());
+        Service service = new FunctionalService<>(route, Function.identity(), this.route);
+        return builder.setInstance(service);
     }
 }

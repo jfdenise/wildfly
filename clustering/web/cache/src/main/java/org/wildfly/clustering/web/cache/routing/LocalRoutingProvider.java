@@ -20,24 +20,22 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.wildfly.extension.clustering.web;
+package org.wildfly.clustering.web.cache.routing;
 
-import org.jboss.as.controller.PathAddress;
-import org.wildfly.clustering.web.cache.routing.LocalRoutingProvider;
+import java.util.Collection;
+import java.util.Collections;
+
+import org.jboss.as.clustering.controller.CapabilityServiceConfigurator;
+import org.wildfly.clustering.service.SupplierDependency;
 import org.wildfly.clustering.web.routing.RoutingProvider;
 
 /**
- * Service configurator for the local routing provider.
  * @author Paul Ferraro
  */
-public class LocalRoutingProviderServiceConfigurator extends RoutingProviderServiceConfigurator {
-
-    public LocalRoutingProviderServiceConfigurator(PathAddress address) {
-        super(address);
-    }
+public class LocalRoutingProvider implements RoutingProvider {
 
     @Override
-    public RoutingProvider get() {
-        return new LocalRoutingProvider();
+    public Collection<CapabilityServiceConfigurator> getServiceConfigurators(String serverName, SupplierDependency<String> route) {
+        return Collections.singleton(new LocalRouteServiceConfigurator(serverName, route));
     }
 }

@@ -34,6 +34,7 @@ import org.wildfly.clustering.web.sso.SSOManagerFactory;
  * @author Paul Ferraro
  */
 public enum WebDeploymentRequirement implements UnaryRequirement, UnaryServiceNameFactoryProvider {
+    LOCAL_ROUTE("org.wildfly.clustering.web.local-route", String.class),
     ROUTE_LOCATOR("org.wildfly.clustering.web.route-locator", RouteLocator.class),
     SESSION_MANAGER_FACTORY("org.wildfly.clustering.web.session-manager-factory", SessionManagerFactory.class),
     SSO_MANAGER_FACTORY("org.wildfly.clustering.web.single-sign-on-manager-factory", SSOManagerFactory.class),

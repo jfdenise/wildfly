@@ -34,9 +34,11 @@ import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceTarget;
 import org.wildfly.clustering.service.FunctionalService;
+import org.wildfly.clustering.service.ServiceSupplierDependency;
 import org.wildfly.clustering.service.SimpleServiceNameProvider;
 import org.wildfly.clustering.service.SupplierDependency;
 import org.wildfly.clustering.spi.ClusteringCacheRequirement;
+import org.wildfly.clustering.web.WebDeploymentRequirement;
 
 /**
  * Service that provides the {@link Map.Entry} for the routing {@link org.wildfly.clustering.registry.Registry}.
@@ -46,9 +48,9 @@ public class RouteRegistryEntryProviderServiceConfigurator extends SimpleService
 
     private final SupplierDependency<String> route;
 
-    public RouteRegistryEntryProviderServiceConfigurator(String containerName, String cacheName, SupplierDependency<String> route) {
-        super(ServiceNameFactory.parseServiceName(ClusteringCacheRequirement.REGISTRY_ENTRY.resolve(containerName, cacheName)));
-        this.route = route;
+    public RouteRegistryEntryProviderServiceConfigurator(String containerName, String serverName) {
+        super(ServiceNameFactory.parseServiceName(ClusteringCacheRequirement.REGISTRY_ENTRY.resolve(containerName, serverName)));
+        this.route = new ServiceSupplierDependency<>(ServiceNameFactory.parseServiceName(WebDeploymentRequirement.LOCAL_ROUTE.resolve(serverName)));
     }
 
     @Override
