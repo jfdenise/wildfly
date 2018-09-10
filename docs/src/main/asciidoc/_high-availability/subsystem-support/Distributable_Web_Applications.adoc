@@ -77,6 +77,39 @@ OWNER:::
 Routes subsequent requests to the primary owner of a given session.
 Behaves the same as LOCAL if cache is not distributed nor replicated.
 
+The subsystem also supports session management where session data is stored in a remote infinispan-server cluster via the HotRod protocol.
+
+e.g.
+
+[source]
+----
+[standalone@embedded /] /subsystem=distributable-web/hotrod-session-management=remote:add(remote-cache-container=web, granularity=ATTRIBUTE, routing=LOCAL)
+----
+
+remote-cache-container::
+This references a remote-cache-container defined in the Infinispan subsystem into which session data will be stored.
+granularity::
+This defines how the session manager will map a session into individual cache entries.
+Possible values are:
+SESSION:::
+Stores all session attributes within a single cache entry.
+This is generally more expensive than ATTRIBUTE granularity, but preserves any cross-attribute object references.
+ATTRIBUTE:::
+Stores each session attribute within a separate cache entry.
+This is generally more efficient than SESSION granularity, but does not preserve any cross-attribute object references.
+routing::
+This defines the algorithm for generating the route to be appended onto the session ID (within the JSESSIONID cookie, or when encoding URLs).
+This annotation of the session ID is used by load balancers to advise how future requests for existing sessions should be directed.
+Routing is designed to be opaque to application code such that calls to `HttpSession.getId()` always return an unmodified session ID.
+This is only generated when creating the JSESSIONID cookie, or when encoding URLs via `HttpServletResponse.encodeURL()` and `encodeRedirectURL()`.
+Possible values are:
+NONE:::
+Disables route annotation of session ID.
+LOCAL:::
+Routes subsequent requests to the node that last handled a request for a given session.
+OWNER:::
+Behaves the same as LOCAL.
+
 == Overriding default behavior
 
 A web application can override the default distributable session management behavior in 1 of 2 ways:
