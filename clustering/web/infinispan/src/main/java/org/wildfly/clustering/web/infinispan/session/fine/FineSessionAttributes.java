@@ -111,9 +111,9 @@ public class FineSessionAttributes<V> implements SessionAttributes {
         if (attribute != null) {
             // If the object is mutable, we need to indicate that the attribute should be replicated
             if (!SessionAttributeImmutability.INSTANCE.test(attribute)) {
-                Mutator mutator = this.mutations.computeIfAbsent(name, k -> new CacheEntryMutator<>(this.attributeCache, key, value));
+                Mutator mutator = new CacheEntryMutator<>(this.attributeCache, key, value);
                 // If cache is not transactional, mutate on close instead.
-                if (this.properties.isTransactional()) {
+                if ((this.mutations.putIfAbsent(name, mutator) == null) && this.properties.isTransactional()) {
                     mutator.mutate();
                 }
             }
