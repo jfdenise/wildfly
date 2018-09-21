@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="seam">
+    <dependencies>
+        <layer name="web-server"/>
+    </dependencies>
+    
+    <packages>
+        <!-- injected by server deployment processor -->
+        <package name="org.jboss.integration.ext-content"/>
+    </packages>
+</layer-spec>

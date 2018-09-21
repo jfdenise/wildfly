@@ -39,6 +39,20 @@
     </resources>
 
     <dependencies>
+        <!-- missing deps required by client configuration shipped with wildfly-->
+        <module name="org.jboss.as.connector"/>
+        <module name="org.jboss.as.ejb3"/>
+        <module name="org.jboss.as.jpa"/>
+        <module name="org.jboss.as.logging"/>
+        <module name="org.jboss.as.transactions"/>
+        <module name="org.jboss.as.webservices"/>
+        <module name="org.wildfly.extension.bean-validation"/>
+        <module name="org.wildfly.extension.security.manager"/>
+        <module name="org.wildfly.iiop-openjdk"/>
+        <module name="com.h2database.h2"/>
+        <module name="org.jboss.as.webservices.server.integration"/>
+        <!-- END missing deps required by client configuration shipped with wildfly-->
+        
         <module name="javax.api"/>
         <module name="org.apache.xalan" services="import"/>
         <module name="org.apache.xerces" services="import"/>

@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="transactions-narayana-compensations">
+    <dependencies>
+        <layer name="transactions"/>
+    </dependencies>
+    <packages>
+        <package name="org.jboss.narayana.compensations"/>
+    </packages>
+</layer-spec>

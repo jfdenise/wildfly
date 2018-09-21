@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="undertow">
+    <dependencies>
+        <layer name="legacy-security-realms"/>
+        <layer name="io"/>
+        <!-- security-negociation already brings picketbox 
+        package but not picketbox optional deps (javax.stream.api -->
+        <layer name="picketbox"/>
+    </dependencies>
+    <feature spec="socket-binding-group">
+        <param name="socket-binding-group" value="standard-sockets" />
+        <feature spec="socket-binding-group.socket-binding">
+            <param name="socket-binding" value="ajp"/>
+            <param name="port" value="${jboss.ajp.port:8009}"/>
+        </feature>
+        <feature spec="socket-binding-group.socket-binding">
+            <param name="socket-binding" value="http"/>
+            <param name="port" value="${jboss.http.port:8080}"/>
+        </feature>
+        <feature spec="socket-binding-group.socket-binding">
+            <param name="socket-binding" value="https"/>
+            <param name="port" value="${jboss.https.port:8443}"/>
+        </feature>
+    </feature>
+    <feature-group name="undertow-base"/>
+    <feature-group name="undertow-https"/>
+</layer-spec>

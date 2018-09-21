@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="server-full-profile">
+    <dependencies>
+        <layer name="server-profile"/>
+        <layer name="jms-activemq-server-ejb" optional="true"/>
+        <layer name="ejb-iiop" optional="true"/>
+        <layer name="iiop" optional="true"/>
+        <layer name="jsr77" optional="true"/>
+    </dependencies>
+</layer-spec>

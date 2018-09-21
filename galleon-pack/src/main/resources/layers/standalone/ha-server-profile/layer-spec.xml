@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="ha-server-profile">
+    <dependencies>
+        <layer name="ha-base-server"/>
+        <layer name="ha-ejb" optional="true"/>
+        <layer name="ha-jpa" optional="true"/>
+        <layer name="web-server"/>
+        <layer name="legacy-security"/>
+        <layer name="core-server"/>
+        <layer name="discovery" optional="true"/>
+        <layer name="batch" optional="true"/>
+        <layer name="cdi" optional="true"/>
+        <layer name="ejb-client" optional="true"/>
+        <layer name="h2-database" optional="true"/>
+        <layer name="jaxrs" optional="true"/>
+        <layer name="jsf" optional="true"/>
+        <layer name="microprofile" optional="true"/>
+        <layer name="webservices" optional="true"/>
+        <layer name="mail" optional="true"/>
+        <layer name="sar" optional="true"/>
+        <layer name="remote-jndi" optional="true"/>
+        <layer name="transactions-narayana-compensations" optional="true"/>
+        <layer name="transactions" optional="true"/>
+        <layer name="jdr" optional="true"/>
+        <layer name="pojo" optional="true"/>
+        <layer name="ee-security" optional="true"/>
+        <layer name="resource-adapters" optional="true"/>
+    </dependencies>
+</layer-spec>

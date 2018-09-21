@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="jsr77">
+    <dependencies>
+        <layer name="web-server"/>
+        <layer name="jmx"/>
+    </dependencies>
+    <feature-group name="jsr77"/>
+</layer-spec>
