@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="undertow-load-balancer">
+    <dependencies>
+        <layer name="base-server"/>
+        <!-- Required by undertow, in order to ensure that picketbox optionals are provisioned -->
+        <layer name="picketbox"/>
+        <layer name="io"/>
+    </dependencies>
+    <feature spec="socket-binding-group">
+        <param name="socket-binding-group" value="standard-sockets"/>
+        <feature-group name="load-balancer-sockets"/>
+    </feature>
+    <feature spec="interface">
+        <param name="interface" value="private"/>
+        <param name="inet-address" value="${jboss.bind.address.private:127.0.0.1}"/>
+    </feature>
+    <feature-group name="undertow-load-balancer"/>
+</layer-spec>
