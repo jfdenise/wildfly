@@ -42,6 +42,10 @@
         <package name="modules.all"/>
         <package name="docs"/>
         <package name="docs.licenses.merge"/>
+        <package name="ejb-appclient"/>
+        <package name="wstools"/>
+        <package name="vaulttools"/>
+        <package name="bin"/>
     </default-packages>
     <package-schemas>
         <group name="org.jboss.as"/>
