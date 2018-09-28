@@ -83,6 +83,7 @@
         <host-exclude name="WildFly10.0">
             <host-release id="WildFly10.0"/>
             <excluded-extensions>
+                <extension module="org.wildfly.extension.clustering.web"/>
                 <extension module="org.wildfly.extension.core-management"/>
                 <extension module="org.wildfly.extension.datasources-agroal" />
                 <extension module="org.wildfly.extension.discovery"/>
@@ -96,6 +97,7 @@
         <host-exclude name="WildFly10.1">
             <host-release id="WildFly10.1"/>
             <excluded-extensions>
+                <extension module="org.wildfly.extension.clustering.web"/>
                 <extension module="org.wildfly.extension.core-management"/>
                 <extension module="org.wildfly.extension.datasources-agroal" />
                 <extension module="org.wildfly.extension.discovery"/>
@@ -109,6 +111,7 @@
         <host-exclude name="WildFly11.0">
             <host-release id="WildFly11.0"/>
             <excluded-extensions>
+                <extension module="org.wildfly.extension.clustering.web"/>
                 <extension module="org.wildfly.extension.datasources-agroal" />
                 <extension module="org.wildfly.extension.ee-security"/>
                 <extension module="org.wildfly.extension.microprofile.config-smallrye" />
@@ -119,6 +122,7 @@
         <host-exclude name="WildFly12.0">
             <host-release id="WildFly12.0"/>
             <excluded-extensions>
+                <extension module="org.wildfly.extension.clustering.web"/>
                 <extension module="org.wildfly.extension.datasources-agroal" />
                 <extension module="org.wildfly.extension.ee-security"/>
                 <extension module="org.wildfly.extension.microprofile.config-smallrye" />
@@ -129,10 +133,17 @@
         <host-exclude name="WildFly13.0">
             <host-release id="WildFly13.0"/>
             <excluded-extensions>
+                <extension module="org.wildfly.extension.clustering.web"/>
                 <extension module="org.wildfly.extension.datasources-agroal" />
                 <extension module="org.wildfly.extension.microprofile.config-smallrye" />
                 <extension module="org.wildfly.extension.microprofile.health-smallrye" />
                 <extension module="org.wildfly.extension.microprofile.opentracing-smallrye" />
+            </excluded-extensions>
+        </host-exclude>
+        <host-exclude name="WildFly14.0">
+            <host-release id="WildFly14.0"/>
+            <excluded-extensions>
+                <extension module="org.wildfly.extension.clustering.web"/>
             </excluded-extensions>
         </host-exclude>
     </host-excludes>
