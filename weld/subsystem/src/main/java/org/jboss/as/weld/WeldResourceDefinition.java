@@ -30,6 +30,8 @@ import org.jboss.as.controller.ReloadRequiredRemoveStepHandler;
 import org.jboss.as.controller.SimpleAttributeDefinition;
 import org.jboss.as.controller.SimpleAttributeDefinitionBuilder;
 import org.jboss.as.controller.operations.validation.IntRangeValidator;
+import org.jboss.as.controller.registry.ManagementResourceRegistration;
+import org.jboss.as.controller.registry.RuntimePackageDependency;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 
@@ -87,5 +89,26 @@ class WeldResourceDefinition extends PersistentResourceDefinition {
     @Override
     public Collection<AttributeDefinition> getAttributes() {
         return Arrays.asList(new AttributeDefinition[] {REQUIRE_BEAN_DESCRIPTOR_ATTRIBUTE, NON_PORTABLE_MODE_ATTRIBUTE, DEVELOPMENT_MODE_ATTRIBUTE, THREAD_POOL_SIZE_ATTRIBUTE});
+    }
+
+    @Override
+    public void registerAdditionalPackages(ManagementResourceRegistration resourceRegistration) {
+        resourceRegistration.registerAdditionalPackages(RuntimePackageDependency.passive("org.jboss.as.weld.ejb"),
+                    RuntimePackageDependency.passive("org.jboss.as.weld.jpa"),
+                    // Relies on org.jboss.as.security
+                    // so implies a dependency on security sub system that doesn't seem real.
+                    RuntimePackageDependency.passive("org.jboss.as.weld.beanvalidation"),
+                    // CRelies on org.jboss.as.security
+                    // so implies a dependency on security sub system that doesn't seem real.
+                    RuntimePackageDependency.passive("org.jboss.as.weld.webservices"),
+                    // Relies on org.jboss.as.security
+                    // so implies a dependency on security sub system that doesn't seem real.
+                    RuntimePackageDependency.passive("org.jboss.as.weld.transactions"),
+
+                    RuntimePackageDependency.optional("org.jboss.weld.probe"),
+
+                    RuntimePackageDependency.required("javax.inject.api"),
+                    RuntimePackageDependency.required("javax.persistence.api"),
+                    RuntimePackageDependency.required("org.hibernate.validator.cdi"));
     }
 }
