@@ -23,6 +23,26 @@ package org.jboss.as.jaxrs;
 import org.jboss.as.controller.ReloadRequiredRemoveStepHandler;
 import org.jboss.as.controller.SimpleResourceDefinition;
 
+import org.jboss.as.controller.registry.ManagementResourceRegistration;
+import org.jboss.as.controller.registry.RuntimePackageDependency;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.JACKSON_CORE_ASL;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.JACKSON_DATATYPE_JDK8;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.JACKSON_DATATYPE_JSR310;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.JAXB_API;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.JAXRS_API;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.JSON_API;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_ATOM;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_CDI;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_CRYPTO;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_JACKSON2;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_JAXB;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_JAXRS;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_JSAPI;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_JSON_B_PROVIDER;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_JSON_P_PROVIDER;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_MULTIPART;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_VALIDATOR_11;
+import static org.jboss.as.jaxrs.deployment.JaxrsDependencyProcessor.RESTEASY_YAML;
 /**
  *
  * @author <a href="mailto:ehugonne@redhat.com">Emmanuel Hugonnet</a> (c) 2014 Red Hat, inc.
@@ -37,4 +57,28 @@ public class JaxrsSubsystemDefinition extends SimpleResourceDefinition {
                  .setRemoveHandler(ReloadRequiredRemoveStepHandler.INSTANCE));
     }
 
+    @Override
+    public void registerAdditionalPackages(ManagementResourceRegistration resourceRegistration) {
+        resourceRegistration.registerAdditionalPackages(RuntimePackageDependency.passive(RESTEASY_CDI.getName()),
+                    RuntimePackageDependency.passive(RESTEASY_VALIDATOR_11.getName()),
+                    RuntimePackageDependency.required(JAXRS_API.getName()),
+                    RuntimePackageDependency.required(JAXB_API.getName()),
+                    RuntimePackageDependency.required(JSON_API.getName()),
+                    RuntimePackageDependency.optional(RESTEASY_ATOM.getName()),
+                    RuntimePackageDependency.optional(RESTEASY_JAXRS.getName()),
+                    RuntimePackageDependency.optional(RESTEASY_JAXB.getName()),
+                    RuntimePackageDependency.optional(RESTEASY_JACKSON2.getName()),
+                    RuntimePackageDependency.optional(RESTEASY_JSON_P_PROVIDER.getName()),
+                    RuntimePackageDependency.optional(RESTEASY_JSON_B_PROVIDER.getName()),
+                    RuntimePackageDependency.optional(RESTEASY_JSAPI.getName()),
+                    RuntimePackageDependency.optional(RESTEASY_MULTIPART.getName()),
+                    RuntimePackageDependency.optional(RESTEASY_YAML.getName()),
+                    RuntimePackageDependency.optional(JACKSON_CORE_ASL.getName()),
+                    RuntimePackageDependency.optional(RESTEASY_CRYPTO.getName()),
+                    RuntimePackageDependency.optional(JACKSON_DATATYPE_JDK8.getName()),
+                    RuntimePackageDependency.optional(JACKSON_DATATYPE_JSR310.getName()),
+                    RuntimePackageDependency.optional("org.jboss.resteasy.resteasy-jettison-provider"),
+                    RuntimePackageDependency.optional("org.jboss.resteasy.resteasy-jackson-provider"),
+                    RuntimePackageDependency.optional("org.jboss.resteasy.resteasy-spring"));
+    }
 }
