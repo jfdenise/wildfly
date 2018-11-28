@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature-group-spec name="undertow-https" xmlns="urn:jboss:galleon:feature-group:1.0">
+<feature-group-spec name="undertow-legacy-security" xmlns="urn:jboss:galleon:feature-group:1.0">
     <!-- https with legacy security -->
     <feature spec="subsystem.undertow">
         <feature spec="subsystem.undertow.server">
@@ -11,6 +11,15 @@
                 <param name="socket-binding" value="https"/>
                 <unset param="worker"/>
                 <unset param="buffer-pool"/>
+            </feature>
+        </feature>
+        <feature spec="subsystem.undertow.server">
+            <param name="server" value="default-server" />
+            <feature spec="subsystem.undertow.server.host">
+                <param name="host" value="default-host" />
+                <feature spec="subsystem.undertow.server.host.setting.http-invoker">
+                    <param name="security-realm" value="ApplicationRealm"/>
+                </feature>
             </feature>
         </feature>
     </feature>

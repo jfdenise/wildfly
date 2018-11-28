@@ -4,6 +4,8 @@
     <layers>
         <include name="management"/>
         <include name="logging"/>
-        <include name="load-balancer"/>
+        <include name="undertow-load-balancer"/>
     </layers>
+    <feature-group name="standalone-security-realms"/>
+    <feature-group name="management-legacy-security"/>
 </config>
