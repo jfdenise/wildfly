@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="tools">
+    <packages>
+        <package name="tools"/>
+        <package name="vaulttools"/>
+        <package name="wstools"/>
+        <package name="ejb-appclient"/>
+    </packages>
+    <feature spec="subsystem.jdr"/>
+</layer-spec>

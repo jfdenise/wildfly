@@ -9,10 +9,4 @@
         <param name="object-store-relative-to" value="jboss.server.data.dir"/>
         <feature spec="subsystem.transactions.log-store.log-store"/>
     </feature>
-    <feature spec="subsystem.elytron.permission-set.permissions">
-        <param name="subsystem" value="elytron"/>
-        <param name="permission-set" value="default-permissions"/>
-        <param name="module" value="org.wildfly.transaction.client"/>
-        <param name="class-name" value="org.wildfly.transaction.client.RemoteTransactionPermission"/>
-    </feature>
 </feature-group-spec>
