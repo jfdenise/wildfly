@@ -2,8 +2,6 @@
 
 <package-spec xmlns="urn:jboss:galleon:package:1.0" name="tools">
     <dependencies>
-        <origin name="org.wildfly.core:wildfly-core-galleon-pack">
-            <package name="bin.common"/>
-        </origin>
+        <package name="bin.common"/>
     </dependencies>
 </package-spec>
