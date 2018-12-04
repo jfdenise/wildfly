@@ -4,6 +4,5 @@
     <packages>
         <package name="product.conf" optional="true"/>
         <package name="misc.domain"/>
-        <package name="welcome-content"/>
     </packages>
 </config>
