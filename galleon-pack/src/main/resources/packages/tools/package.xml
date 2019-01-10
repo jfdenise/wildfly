@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<package-spec xmlns="urn:jboss:galleon:package:1.0" name="tools">
+    <dependencies>
+        <package name="bin.appclient"/>
+        <package name="bin.wstools"/>
+        <origin name="org.wildfly.core:wildfly-core-galleon-pack">
+            <package name="bin.vaulttools"/>
+        </origin>
+    </dependencies>
+</package-spec>

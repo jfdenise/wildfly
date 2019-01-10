@@ -7,6 +7,7 @@
         <package name="copyright.txt"/>
         <package name="welcome-content"/>
         <origin name="org.wildfly.core:wildfly-core-galleon-pack">
+            <package name="bin"/>
             <package name="misc.common"/>
         </origin>
     </dependencies>
