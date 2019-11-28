@@ -32,6 +32,7 @@
             <name>org.wildfly:wildfly-servlet-galleon-pack</name>
             <packages inherit="false">
                 <exclude name="product.conf"/>
+                <exclude name="docs.licenses.merge"/>
             </packages>
             <default-configs inherit="false">
                 <include name="standalone-load-balancer.xml" model="standalone"/>
