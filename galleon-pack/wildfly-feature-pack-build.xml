@@ -48,12 +48,12 @@
                 <include name="bin"/>
             </packages>
             <default-configs inherit="false">
-                <include name="standalone.xml" model="standalone"/>
+                <!--<include name="standalone.xml" model="standalone"/>
                 <include name="standalone-ha.xml" model="standalone"/>
                 <include name="standalone-full.xml" model="standalone"/>
                 <include name="standalone-full-ha.xml" model="standalone"/>
                 <include name="standalone-load-balancer.xml" model="standalone"/>
-                <include name="domain.xml" model="domain"/>
+                <include name="domain.xml" model="domain"/>-->
                 <include name="host.xml" model="host"/>
                 <include name="host-master.xml" model="host"/>
                 <include name="host-slave.xml" model="host"/>
