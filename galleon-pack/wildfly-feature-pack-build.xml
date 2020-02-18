@@ -59,6 +59,7 @@
         <package name="modules.all"/>
         <package name="docs.licenses.merge"/>
         <package name="product.conf"/>
+        <package name="docs.examples"/>
     </default-packages>
     <package-schemas>
         <group name="org.jboss.as"/>
