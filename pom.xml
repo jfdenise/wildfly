@@ -234,6 +234,7 @@
         <version.org.wildfly.common>1.5.2.Final</version.org.wildfly.common>
         <version.org.wildfly.component-matrix-plugin>1.0.3.Final</version.org.wildfly.component-matrix-plugin>
         <version.org.wildfly.galleon-plugins>4.2.8.Final</version.org.wildfly.galleon-plugins>
+        <version.org.wildfly.jar.plugin>2.0.0.Beta1</version.org.wildfly.jar.plugin>
         <version.org.wildfly.maven.plugins>2.2.0.Final</version.org.wildfly.maven.plugins>
         <version.org.wildfly.plugin>2.0.1.Final</version.org.wildfly.plugin>
         <version.verifier.plugin>1.1</version.verifier.plugin>
@@ -442,7 +443,7 @@
         <version.org.reactivestreams>1.0.3</version.org.reactivestreams>
         <version.org.syslog4j>0.9.30</version.org.syslog4j>
         <version.org.testng>6.14.3</version.org.testng>
-        <version.org.wildfly.arquillian>2.2.0.Final</version.org.wildfly.arquillian>
+        <version.org.wildfly.arquillian>3.0.0.Beta1-SNAPSHOT</version.org.wildfly.arquillian>
         <version.org.wildfly.core>13.0.0.Beta1</version.org.wildfly.core>
         <version.org.wildfly.extras.creaper>1.6.1</version.org.wildfly.extras.creaper>
         <version.org.wildfly.http-client>1.0.21.Final</version.org.wildfly.http-client>
@@ -8496,6 +8497,24 @@
             <dependency>
                 <groupId>org.wildfly.arquillian</groupId>
                 <artifactId>wildfly-arquillian-container-managed</artifactId>
+                <version>${version.org.wildfly.arquillian}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.jboss.sasl</groupId>
+                        <artifactId>jboss-sasl</artifactId>
+                    </exclusion>
+                    <!-- TODO remove this exclusion once this depends on Jakarta Inject -->
+                    <!-- superseded by jakarta.inject:jakarta.inject-api -->
+                    <exclusion>
+                        <groupId>javax.inject</groupId>
+                        <artifactId>javax.inject</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.wildfly.arquillian</groupId>
+                <artifactId>wildfly-arquillian-container-bootable</artifactId>
                 <version>${version.org.wildfly.arquillian}</version>
                 <exclusions>
                     <exclusion>
