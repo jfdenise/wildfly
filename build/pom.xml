@@ -102,6 +102,32 @@
                             </plugin-options>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>server-provisioning-jakarta9</id>
+                        <goals>
+                            <goal>provision</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <install-dir>${project.build.directory}/${project.build.finalName}-jakarta9</install-dir>
+                            <record-state>false</record-state>
+                            <log-time>${galleon.log.time}</log-time>
+                            <offline>true</offline>
+                            <feature-packs>
+                                <feature-pack>
+                                    <groupId>${full.maven.groupId}</groupId>
+                                    <artifactId>wildfly-galleon-pack</artifactId>
+                                    <version>${full.maven.version}</version>
+                                </feature-pack>
+                            </feature-packs>
+                            <plugin-options>
+                                <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
+                                <jboss-jakarta-transform>true</jboss-jakarta-transform>
+                                <jboss-jakarta-transform-verbose>false</jboss-jakarta-transform-verbose>
+                                <jboss-jakarta-transform-rules>file://${basedir}/jakarta-rules.properties</jboss-jakarta-transform-rules>
+                            </plugin-options>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
