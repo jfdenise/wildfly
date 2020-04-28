@@ -8,6 +8,6 @@
     <packages>
         <package name="org.picketbox"/>
         <package name="javax.xml.stream.api" optional="true"/>
-        <package name="javax.transaction.api" optional="true"/>
+        <package name="jakarta.transaction.api" optional="true"/>
     </packages>
 </layer-spec>
