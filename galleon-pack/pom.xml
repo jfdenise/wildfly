@@ -106,6 +106,8 @@
                             <release-name>${full.dist.product.release.name}</release-name>
                             <fork-embedded>${galleon.fork.embedded}</fork-embedded>
                             <task-properties>
+                                <jakarta.transform.artifacts>true</jakarta.transform.artifacts>
+                                <jakarta.transform.modules>true</jakarta.transform.modules>
                                 <product.release.version>${full.dist.product.release.version}</product.release.version>
                             </task-properties>
                         </configuration>
