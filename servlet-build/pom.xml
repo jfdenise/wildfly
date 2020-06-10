@@ -98,7 +98,7 @@
                                 </feature-pack>
                             </feature-packs>
                             <plugin-options>
-                                <jboss-maven-dist/>
+                                <!--<jboss-maven-dist/>-->
                                 <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                             </plugin-options>
                         </configuration>
