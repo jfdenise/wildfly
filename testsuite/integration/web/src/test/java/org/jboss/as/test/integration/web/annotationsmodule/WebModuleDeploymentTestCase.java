@@ -22,6 +22,7 @@
 
 package org.jboss.as.test.integration.web.annotationsmodule;
 
+import java.io.ByteArrayOutputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -33,12 +34,8 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.jandex.Index;
-import org.jboss.jandex.IndexWriter;
-import org.jboss.jandex.Indexer;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -48,15 +45,20 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import org.jboss.jandex.Index;
+import org.jboss.jandex.IndexWriter;
+import org.jboss.jandex.Indexer;
 
 import static org.junit.Assert.assertEquals;
+import org.wildfly.galleon.plugin.transformer.JakartaTransformer;
 
 /**
  * Tests that servlets defined by annodations in a static module are picked up
@@ -115,25 +117,46 @@ public class WebModuleDeploymentTestCase {
         jar.addClasses(ModuleServlet.class);
 
 
-        Indexer indexer = new Indexer();
-        try (InputStream resource = ModuleServlet.class.getResourceAsStream(ModuleServlet.class.getSimpleName() + ".class")) {
-            indexer.index(resource);
-        }
-        Index index = indexer.complete();
-        ByteArrayOutputStream data = new ByteArrayOutputStream();
-        IndexWriter writer = new IndexWriter(data);
-        writer.write(index);
-        jar.addAsManifestResource(new ByteArrayAsset(data.toByteArray()), "jandex.idx");
-        FileOutputStream jarFile = new FileOutputStream(new File(file, "webTest.jar"));
+//        Indexer indexer = new Indexer();
+//        try (InputStream resource = ModuleServlet.class.getResourceAsStream(ModuleServlet.class.getSimpleName() + ".class")) {
+//            indexer.index(resource);
+//        }
+//        Index index = indexer.complete();
+//        ByteArrayOutputStream data = new ByteArrayOutputStream();
+//        IndexWriter writer = new IndexWriter(data);
+//        writer.write(index);
+//        jar.addAsManifestResource(new ByteArrayAsset(data.toByteArray()), "jandex.idx");
+        FileOutputStream jarFile = new FileOutputStream(new File(file, "jakartaee-webTest.jar"));
         try {
             jar.as(ZipExporter.class).exportTo(jarFile);
         } finally {
             jarFile.flush();
             jarFile.close();
         }
-
+        JakartaTransformer.transform(new File(file, "jakartaee-webTest.jar").toPath(), new File(file, "noindex-webTest.jar").toPath(), true, null);
+        Path dir = file.toPath().resolve("unzipped-jar");
+        try (FileInputStream input = new FileInputStream(new File(file, "noindex-webTest.jar"))) {
+            try {
+                org.wildfly.galleon.plugin.transformer.Utils.unzip(input, dir.toFile());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        Path clazz = dir.resolve("org/jboss/as/test/integration/web/annotationsmodule/ModuleServlet.class");
+        Files.createDirectory(dir.resolve("META-INF"));
+        try (FileInputStream input = new FileInputStream(clazz.toFile())) {
+            Indexer indexer = new Indexer();
+            indexer.index(input);
+            Index index = indexer.complete();
+            ByteArrayOutputStream data = new ByteArrayOutputStream();
+            IndexWriter writer = new IndexWriter(data);
+            writer.write(index);
+            try (FileOutputStream out = new FileOutputStream(dir.resolve("META-INF/jandex.idx").toFile())) {
+                out.write(data.toByteArray());
+            }
+        }
+        org.wildfly.galleon.plugin.transformer.Utils.zip(dir, new File(file, "webTest.jar").toPath());
     }
-
     private static void copyFile(File target, InputStream src) throws IOException {
         Files.copy(src, target.toPath());
     }

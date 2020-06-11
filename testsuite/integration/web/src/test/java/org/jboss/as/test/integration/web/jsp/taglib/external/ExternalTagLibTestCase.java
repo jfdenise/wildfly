@@ -21,7 +21,11 @@
  */
 package org.jboss.as.test.integration.web.jsp.taglib.external;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -38,12 +42,14 @@ import org.jboss.as.test.module.util.TestModule;
 import org.jboss.as.test.shared.ModuleUtils;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.wildfly.galleon.plugin.transformer.JakartaTransformer;
 
 
 @RunWith(Arquillian.class)
@@ -111,12 +117,34 @@ public class ExternalTagLibTestCase {
 
     private static void doSetup() throws Exception {
         testModule = ModuleUtils.createTestModuleWithEEDependencies(MODULE_NAME);
-        JavaArchive jar = testModule.addResource("module.jar");
+        JavaArchive jar = ShrinkWrap.create(JavaArchive.class, "module.jar");
         jar.addClass(ExternalTag.class);
         jar.addAsManifestResource(ExternalTagLibTestCase.class.getPackage(), "external.tld", "external.tld");
-        testModule.create(true);
-    }
 
+        Path dir = Files.createTempDirectory("test-wf");
+        FileOutputStream jarFile = new FileOutputStream(new File(dir.toFile(), "jakartaee-exttld.jar"));
+        try {
+            jar.as(ZipExporter.class).exportTo(jarFile);
+        } finally {
+            jarFile.flush();
+            jarFile.close();
+        }
+        Path target = new File(dir.toFile(), "transformed-exttld.jar").toPath();
+        JakartaTransformer.transform(new File(dir.toFile(), "jakartaee-exttld.jar").toPath(), target, true, null);
+        testModule.addJavaArchive(target.toFile());
+        testModule.create(true);
+        deleteRecursively(dir.toFile());
+    }
+    private static void deleteRecursively(File file) {
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                for (String name : file.list()) {
+                    deleteRecursively(new File(file, name));
+                }
+            }
+            file.delete();
+        }
+    }
     private static StringAsset getJspAsset(boolean withInternalLib) {
         String optionalInternalTagLib = withInternalLib ? "<%@ taglib prefix=\"i\" uri=\"http://internal.taglib\" %>\n" : "";
         String optionalInternalTag = withInternalLib ? "    <i:test/>\n" : "";

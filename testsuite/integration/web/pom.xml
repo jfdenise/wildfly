@@ -41,6 +41,11 @@
     </properties>
 
     <dependencies>
+         <dependency>
+            <groupId>org.wildfly.galleon-plugins</groupId>
+            <artifactId>transformer</artifactId>
+            <version>${version.org.wildfly.galleon-plugins}</version>
+        </dependency>
         <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>

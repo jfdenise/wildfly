@@ -242,7 +242,7 @@
                                     <log-time>${galleon.log.time}</log-time>
                                     <offline>true</offline>
                                     <plugin-options>
-                                        <jboss-maven-dist/>
+                                        <!--<jboss-maven-dist/>-->
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
