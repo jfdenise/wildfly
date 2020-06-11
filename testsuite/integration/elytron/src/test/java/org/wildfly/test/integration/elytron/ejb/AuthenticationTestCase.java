@@ -238,7 +238,7 @@ public class AuthenticationTestCase {
         } catch (IOException e) {
             final String message = e.getMessage();
             assertTrue("Response should contain 'ELY01151: Evidence Verification Failed'", message.contains("ELY01151:"));
-            assertTrue("Response should contain 'javax.ejb.EJBException'", message.contains("javax.ejb.EJBException"));
+            assertTrue("Response should contain 'javax.ejb.EJBException'", message.contains("jakarta.ejb.EJBException"));
         }
     }
 

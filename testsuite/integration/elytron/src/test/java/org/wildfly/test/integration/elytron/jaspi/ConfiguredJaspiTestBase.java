@@ -54,6 +54,7 @@ import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assume;
 import org.junit.Test;
+import org.wildfly.galleon.plugin.transformer.JakartaTransformer;
 import org.wildfly.security.auth.jaspi.Flag;
 import org.wildfly.test.security.common.AbstractElytronSetupTask;
 import org.wildfly.test.security.common.elytron.ConfigurableElement;
@@ -299,6 +300,7 @@ abstract class ConfiguredJaspiTestBase extends JaspiTestBase {
         protected void setup(ModelControllerClient modelControllerClient) throws Exception {
             // Create the module jar.
             modulePath = createJar("jaspiSAM", SimpleServerAuthModule.class);
+            JakartaTransformer.transform(modulePath, modulePath, true, null);
             super.setup(modelControllerClient);
         }
 
