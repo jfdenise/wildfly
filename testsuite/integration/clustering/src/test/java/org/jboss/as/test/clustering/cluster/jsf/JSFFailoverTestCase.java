@@ -99,7 +99,7 @@ public class JSFFailoverTestCase extends AbstractClusteringTestCase {
         Pattern smallestPattern = Pattern.compile("<span id=\"numberGuess:smallest\">([^<]+)</span>");
         Pattern biggestPattern = Pattern.compile("<span id=\"numberGuess:biggest\">([^<]+)</span>");
         Pattern remainingPattern = Pattern.compile("You have (\\d+) guesses remaining.");
-        Pattern viewStatePattern = Pattern.compile("id=\".*javax.faces.ViewState.*\" value=\"([^\"]*)\"");
+        Pattern viewStatePattern = Pattern.compile("id=\".*jakarta.faces.ViewState.*\" value=\"([^\"]*)\"");
 
         Matcher matcher;
 
@@ -140,7 +140,7 @@ public class JSFFailoverTestCase extends AbstractClusteringTestCase {
 
         List<NameValuePair> list = new LinkedList<>();
 
-        list.add(new BasicNameValuePair("javax.faces.ViewState", viewState));
+        list.add(new BasicNameValuePair("jakarta.faces.ViewState", viewState));
         list.add(new BasicNameValuePair("numberGuess", "numberGuess"));
         list.add(new BasicNameValuePair("numberGuess:guessButton", "Guess"));
         list.add(new BasicNameValuePair("numberGuess:inputGuess", guess));
