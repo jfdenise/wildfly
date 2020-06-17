@@ -283,7 +283,7 @@
                            <jboss.home>${basedir}/target/wildfly</jboss.home>
                            <jboss.args>${jboss.args}</jboss.args>
                            <jboss.domain.server.args>${jboss.domain.server.args}</jboss.domain.server.args>
-                           <!--<module.path>${jboss.dist}/modules${path.separator}${basedir}/target/modules</module.path>-->
+                           <module.path>${jboss.dist}/modules${path.separator}${basedir}/target/modules</module.path>
                            <org.wildfly.test.kill-servers-before-test>${org.wildfly.test.kill-servers-before-test}</org.wildfly.test.kill-servers-before-test>
                        </systemPropertyVariables>
                        <!-- Arquillian's config files. -->
