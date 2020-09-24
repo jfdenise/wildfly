@@ -58,6 +58,55 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.wildfly.galleon-plugins</groupId>
+                <artifactId>wildfly-galleon-maven-plugin</artifactId>
+                <version>4.2.10.Final-SNAPSHOT</version>
+                <configuration>
+                    <feature-pack-location>${project.groupId}:wildfly-galleon-pack:${project.version}</feature-pack-location>
+                    <enriched-layers-file>src/main/galleon/enriched-layers.xml</enriched-layers-file>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-layers</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>dump-layers</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>xml-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>generate-layers-adoc</id>
+                        <goals>
+                            <goal>transform</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <transformationSets>
+                                <transformationSet>
+                                    <dir>${project.build.directory}/galleon-layers</dir>
+                                    <includes>
+                                        <include>layers.xml</include>
+                                    </includes>
+                                    <stylesheet>src/main/galleon/layers-adoc.xsl</stylesheet>
+                                    <outputDir>${project.build.directory}/galleon-layers</outputDir>
+                                    <fileMappers>
+                                        <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
+                                            <targetExtension>.html</targetExtension>
+                                        </fileMapper>
+                                    </fileMappers>
+                                </transformationSet>
+                            </transformationSets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
                 <configuration>
@@ -67,7 +116,7 @@
                         <javaee_version>8</javaee_version>
                         <oracle-javadoc>https://docs.oracle.com/javase/8/docs/api</oracle-javadoc>
                         <wildflyversion>${product.docs.server.version}</wildflyversion>
-
+                        <galleonlayerspath>${project.build.directory}/galleon-layers/layers.html</galleonlayerspath>
                         <!-- Default asciidoc setting attributes -->
                         <linkcss>false</linkcss>
                         <toc>left</toc>

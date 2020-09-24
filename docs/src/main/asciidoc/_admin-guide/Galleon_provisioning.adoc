@@ -113,6 +113,10 @@ WildFly defined layers to assemble a custom configuration. <<galleon-cli-recipes
 
 ==== WildFly layers
 
+++++
+include::{galleonlayerspath}[]
+++++
+
 Basic layers:
 
 * _microprofile-platform_: Support for available MicroProfile specifications.

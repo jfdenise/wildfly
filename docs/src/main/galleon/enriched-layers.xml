@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<layers-info xmlns="urn:wildfly:galleon-plugins:layers-info:1.0">
+    <layer name="legacy-security" deprecated="true">
+        <description>
+            Legacy security sub system
+        </description>
+    </layer>
+    <layer name="cloud-server" visibility="public">
+        <description>
+            <![CDATA[
+            Cloud server description. A very nice layer to do stuff......<br/>
+            A long descritpionsaccds cdsssssssssssssssssssssssssssssssss<br/>
+            cdscdscdscdsc<br/>
+            cdscdscdsssssssssssssssssssssssssssssssssssss<br/>
+            cdscdscs<br/>
+            cdscs<br/>
+            cdsc<br/>
+            cdsc<br/>
+            ]]>
+        </description>
+    </layer>
+    <layer name="jaxrs-server" visibility="public">
+       <description>
+            jaxrs server description
+        </description>
+    </layer>
+</layers-info>
