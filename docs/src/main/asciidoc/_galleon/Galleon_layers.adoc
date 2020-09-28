@@ -1,0 +1,840 @@
+[[wildfly_defined_galleon_layers]]
+=== WildFly defined Layers
+
+[[wildfly-galleon-layers-servers]]
+==== Server Galleon layers
+
+[NOTE]
+====
+If elytron layer is present, the security is handled by elytron subsystem.
+Undertow subsystem is configured with _other_ _application-security-domain_ that references Elytron _ApplicationDomain_ security domain.
+====
+
+[cols="1,2,1a"]
+|===
+|Name |Description |Dependencies
+|[[gal.web-server]]web-server
+|A servlet container.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.deployment-scanner[deployment-scanner]
+! true
+! link:#gal.ee[ee]
+! false
+! link:#gal.naming[naming]
+! false
+! link:#gal.undertow[undertow]
+! false
+!===
+
+|[[gal.datasources-web-server]]datasources-web-server
+| A servlet container with support for datasources.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.core-server[core-server]
+! false
+! link:#gal.core-tools[core-tools]
+! true
+! link:#gal.datasources[datasources]
+! true
+! link:#gal.web-server[web-server]
+! false
+!===
+
+|[[gal.jaxrs-server]]jaxrs-server
+|An extension of _datasources-web-server_ with support for JAX-RS, CDI and JPA.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.bean-validation[bean-validation]
+! true
+! link:#gal.cdi[cdi]
+! true
+! link:#gal.datasources-web-server[datasources-web-server]
+! false
+! link:#gal.jaxrs[jaxrs]
+! true
+! link:#gal.jpa[jpa]
+! true
+!===
+
+|[[gal.cloud-server]]cloud-server
+| An extension of _jaxrs-server_ to address common cloud requirements
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.ee-security[ee-security]
+! true
+! link:#gal.jaxrs-server[jaxrs-server]
+! false
+! link:#gal.jms-activemq[jms-activemq]
+! true
+! link:#gal.observability[observability]
+! true
+! link:#gal.resource-adapters[resource-adapters]
+! true
+!===
+
+|[[gal.core-server]]core-server
+|Aggregation of layers that compose a typical core server.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.core-management[core-management]
+! true
+! link:#gal.core-security-realms[core-security-realms]
+! true
+! link:#gal.jmx-remoting[jmx-remoting]
+! true
+! link:#gal.logging[logging]
+! true
+! link:#gal.management[management]
+! true
+! link:#gal.request-controller[request-controller]
+! true
+! link:#gal.security-manager[security-manager]
+! true
+!===
+|===
+
+[[wildfly-galleon-layers-basic]]
+==== Basic Galleon Layers
+
+[cols="1,2,1a"]
+|===
+|Name |Description |Dependencies
+|[[gal.application-security-realm]]application-security-realm
+|Application security realm.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.base-server]]base-server
+|Empty runnable server.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.git-history[git-history]
+! true
+!===
+|[[gal.batch-jberet]]batch-jberet
+|Support for Jakarta Batch.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.cdi[cdi]
+! false
+! link:#gal.ee[ee]
+! false
+! link:#gal.elytron[elytron]
+! false
+! link:#gal.transactions[transactions]
+! false
+!===
+|[[gal.bean-validation]]bean-validation
+|Support for Jakarta Bean Validation.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+! link:#gal.cdi[cdi]
+! true
+!===
+|[[gal.cdi]]cdi
+|Support for CDI.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+! link:#gal.bean-validation[bean-validation]
+! true
+!===
+|[[gal.cloud-profile]]cloud-profile
+|An aggregation of some basic layers to address cloud.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.bean-validation[bean-validation]
+! true
+! link:#gal.cdi[cdi]
+! true
+! link:#gal.ee-security[ee-security]
+! true
+! link:#gal.jaxrs[jaxrs]
+! true
+! link:#gal.jms-activemq[jms-activemq]
+! true
+! link:#gal.jpa[jpa]
+! true
+! link:#gal.observability[observability]
+! true
+! link:#gal.resource-adapters[resource-adapters]
+! true
+! link:#gal.web-server[web-server]
+! false
+!===
+|[[gal.core-management]]core-management
+|Support for server management services.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.core-security-realms]]core-security-realms
+|Support for core Application and Management realms.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.application-security-realm[application-security-realm]
+! true
+! link:#gal.base-server[base-server]
+! false
+! link:#gal.management-security-realm[management-security-realm]
+! true
+!===
+
+|[[gal.core-tools]]core-tools
+|Support for _jboss-cli_, _add-user_, _elytron-tool_ launch scripts and configuration files.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.management[management]
+! true
+!===
+|[[gal.datasources]]datasources
+|Support for datasources.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.transactions[transactions]
+! false
+!===
+
+|[[gal.deployment-scanner]]deployment-scanner
+|Support for deployment directory scanning.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.discovery]]discovery
+|Support for discovery.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.ee]]ee
+|Support for common functionality in the Jakarta EE platform.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.jsonb[jsonb]
+! true
+! link:#gal.naming[naming]
+! false
+!===
+|[[gal.ee-security]]ee-security
+|Support for EE Security.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.cdi[cdi]
+! false
+!===
+|[[gal.ejb]]ejb
+|Support for Jakarta Enterprise Beans, excluding IIOP protocol.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.ejb-lite[ejb-lite]
+! false
+! link:#gal.messaging-activemq[messaging-activemq]
+! false
+! link:#gal.remoting[remoting]
+! false
+! link:#gal.resource-adapters[resource-adapters]
+! false
+! link:#gal.undertow[undertow]
+! false
+!===
+|[[gal.ejb-dist-cache]]ejb-dist-cache
+|Infinispan-based distributed cache for stateful session bean.
+Can't be used with link:#gal.ejb-local-cache[ejb-local-cache] layer.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.transactions[transactions]
+! false
+!===
+|[[gal.ejb-lite]]ejb-lite
+|Support for Jakarta Enterprise Beans Lite.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.ejb-local-cache[ejb-local-cache]
+! true
+! link:#gal.naming[naming]
+! false
+! link:#gal.transactions[transactions]
+! false
+!===
+|[[gal.ejb-local-cache]]ejb-local-cache
+|Infinispan-based local cache for stateful session bean. 
+Can't be used with link:#gal.ejb-dist-cache[ejb-dist-cache] layer.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.transactions[transactions]
+! false
+!===
+|[[gal.elytron]]elytron
+|Support for Elytron security.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.git-history]]git-history
+|Support for using _git_ for configuration history.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+!===
+|[[gal.h2-datasource]]h2-datasource
+|Support for an H2 datasource
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.h2-driver[h2-driver]
+! false
+!===
+|[[gal.h2-default-datasource]]h2-default-datasource
+|Support for h2 datasource set as the ee subsystem default datasource.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.h2-datasource[h2-datasource]
+! false
+!===
+|[[gal.h2-driver]]h2-driver
+|Support for the H2 JDBC driver.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.io]]io
+|Support for XNIO workers and buffer pools.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.jaxrs]]jaxrs
+|Support for JAXRS.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.web-server[web-server]
+! false
+!===
+|[[gal.jdr]]jdr
+|Support for the JBoss Diagnostic Reporting (JDR) subsystem.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+! link:#gal.management[management]
+! true
+!===
+|[[gal.jms-activemq]]jms-activemq
+|Deprecated - use link:#gal.messaging-activemq[messaging-activemq].
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.messaging-activemq[messaging-activemq]
+! false
+!===
+|[[gal.jmx]]jmx
+|Support for registration of Management Model MBeans.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.jmx-remoting]]jmx-remoting
+|Support for registration of Management Model MBeans and a JMX remoting connector.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.jmx[jmx]
+! false
+! link:#gal.management[management]
+! true
+!===
+|[[gal.jpa]]jpa
+|Support for JPA (using the latest WildFly supported Hibernate release). 
+Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.bean-validation[bean-validation]
+! true
+! link:#gal.datasources[datasources]
+! false
+!===
+|[[gal.jpa-distributed]]jpa-distributed
+|Support JPA with a remote cache. Can't be used with link:#gal.jpa[jpa] layer.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.bean-validation[bean-validation]
+! true
+! link:#gal.datasources[datasources]
+! false
+!===
+|[[gal.jsf]]jsf
+|Support for Jakarta Server Faces
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.bean-validation[bean-validation]
+! true
+! link:#gal.cdi[cdi]
+! true
+! link:#gal.web-server[web-server]
+! false
+!===
+|[[gal.jsonb]]jsonb
+|Support for JSON Binding (JSON-B) provisioning the JSON-B API and Implementation modules.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.jsonp]]jsonp
+|Support for JSON Processing (JSON-P) provisioning the JSON-P API and Implementation modules.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.legacy-management]]legacy-management
+|Support for remote access to management interfaces secured with the core ManagementRealm.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.management-security-realm[management-security-realm]
+! false
+!===
+|[[gal.legacy-remoting]]legacy-remoting
+|Support for inbound and outbound JBoss Remoting connections, secured using legacy security realms.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.application-security-realm[application-security-realm]
+! false
+! link:#gal.io[io]
+! false
+!===
+|[[gal.legacy-security]]legacy-security
+|Support for legacy Picketbox-based web security.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.naming[naming]
+! false
+! link:#gal.vault[vault]
+! false
+!===
+|[[gal.logging]]logging
+|Support for the logging subsystem.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.mail]]mail
+|Support for Jakarta Mail.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+! link:#gal.naming[naming]
+! false
+!===
+|[[gal.management]]management
+|Support for remote access to management interfaces secured using Elytron.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.elytron[elytron]
+! false
+!===
+|[[gal.management-security-realm]]management-security-realm
+|Management security realm.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.messaging-activemq]]messaging-activemq
+|Support for connections to a remote JMS broker.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.resource-adapters[resource-adapters]
+! false
+!===
+|[[gal.microprofile-config]]microprofile-config
+|Support for MicroProfile Config.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.cdi[cdi]
+! false
+!===
+|[[gal.microprofile-fault-tolerance]]microprofile-fault-tolerance
+|Support for MicroProfile Fault Tolerance.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.cdi[cdi]
+! false
+! link:#gal.microprofile-config[microprofile-config]
+! false
+! link:#gal.microprofile-metrics[microprofile-metrics]
+! false
+!===
+|[[gal.microprofile-health]]microprofile-health
+|Support for MicroProfile Health.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.management[management]
+! false
+! link:#gal.microprofile-config[microprofile-config]
+! false
+!===
+|[[gal.microprofile-jwt]]microprofile-jwt
+|Support for MicroProfile JWT.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.ee-security[ee-security]
+! false
+! link:#gal.elytron[elytron]
+! false
+! link:#gal.microprofile-config[microprofile-config]
+! false
+!===
+|[[gal.microprofile-metrics]]microprofile-metrics
+|Support for MicroProfile Metrics.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.management[management]
+! false
+! link:#gal.microprofile-config[microprofile-config]
+! false
+!===
+|[[gal.microprofile-openapi]]microprofile-openapi
+|Support for MicroProfile OpenAPI.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.jaxrs[jaxrs]
+! false
+! link:#gal.microprofile-config[microprofile-config]
+! false
+!===
+|[[gal.microprofile-platform]]microprofile-platform
+|Support for available MicroProfile specifications.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.microprofile-config[microprofile-config]
+! true
+! link:#gal.microprofile-fault-tolerance[microprofile-fault-tolerance]
+! true
+! link:#gal.microprofile-health[microprofile-health]
+! true
+! link:#gal.microprofile-jwt[microprofile-jwt]
+! true
+! link:#gal.microprofile-metrics[microprofile-metrics]
+! true
+! link:#gal.microprofile-openapi[microprofile-openapi]
+! true
+! link:#gal.open-tracing[open-tracing]
+! true
+!===
+|[[gal.naming]]naming
+|Support for JNDI.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.observability]]observability
+|Support for MicroProfile monitoring and configuration features. 
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.microprofile-config[microprofile-config]
+! true
+! link:#gal.microprofile-health[microprofile-health]
+! true
+! link:#gal.microprofile-metrics[microprofile-metrics]
+! true
+! link:#gal.open-tracing[open-tracing]
+! true
+!===
+|[[gal.open-tracing]]open-tracing
+|Support for MicroProfile OpenTracing.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.cdi[cdi]
+! false
+! link:#gal.microprofile-config[microprofile-config]
+! false
+!===
+|[[gal.pojo]]pojo
+| Support for POJO.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.remote-activemq]]remote-activemq
+|Support for connections to a remote Apache Activemq Artemis JMS broker.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.resource-adapters[resource-adapters]
+! false
+!===
+|[[gal.remoting]]remoting
+|Support for inbound and outbound JBoss Remoting connections, secured using Elytron.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.elytron[elytron]
+! false
+! link:#gal.io[io]
+! false
+!===
+|[[gal.request-controller]]request-controller
+|Support for request management
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.resource-adapters]]resource-adapters
+|Support for deployment of JCA adapters.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.transactions[transactions]
+! false
+!===
+|[[gal.sar]]sar
+|Support for SAR archives to deploy MBeans.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+! link:#gal.jmx[jmx]
+! false
+!===
+|[[gal.security-manager]]security-manager
+|Support for security manager.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.transactions]]transactions
+| Support for transactions.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.ee[ee]
+! false
+! link:#gal.elytron[elytron]
+! false
+!===
+|[[gal.undertow]]undertow
+|Support for the Undertow HTTP server.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+! link:#gal.io[io]
+! false
+! link:#gal.vault[vault]
+! false
+!===
+|[[gal.undertow-legacy-https]]undertow-legacy-https
+|Support for the Undertow HTTPS server secured using the legacy security ApplicationRealm.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.core-security-realms[core-security-realms]
+! false
+! link:#gal.undertow[undertow]
+! false
+!===
+|[[gal.undertow-load-balancer]]undertow-load-balancer
+|Support for Undertow configured as a load balancer
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+! link:#gal.io[io]
+! false
+! link:#gal.vault[vault]
+! false
+!===
+|[[gal.vault]]vault
+|Support for Picketbox security vaults.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.base-server[base-server]
+! false
+!===
+|[[gal.web-clustering]]web-clustering
+|Infinispan-based web session clustering.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.transactions[transactions]
+! false
+! link:#gal.web-server[web-server]
+! false
+!===
+|[[gal.web-console]]web-console
+|Support for loading the HAL web console from the /console context on the HTTP 
+management interface. Not required to use a HAL console obtained independently 
+and configured to connect to the server.
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.management[management]
+! false
+!===
+
+|[[gal.webservices]]webservices
+|Support for Jakarta XML Web Services
+|
+[cols="2,1"]
+!===
+! Name ! Optional 
+! link:#gal.ejb-lite[ejb-lite]
+! true
+! link:#gal.messaging-activemq[messaging-activemq]
+! true
+! link:#gal.web-server[web-server]
+! false
+!===
+|===

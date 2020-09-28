@@ -1,0 +1,85 @@
+[[Installation_Guide]]
+= Installation Guide
+WildFly team;
+:revnumber: {version}
+:revdate: {localdate}
+:toc: macro
+:toclevels: 3
+:toc-title: Installation Guide
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:wildflyVersion: 14
+
+:leveloffset: +1
+
+ifndef::ebook-format[:leveloffset: 1]
+
+(C) 2020 The original authors.
+
+ifdef::basebackend-html[toc::[]]
+:numbered:
+
+[[Zipped_Installation]]
+= Installing WildFly from a zipped distribution
+
+That is the historical way to install a complete WildFly server with support for standalone and domain modes. A WildFly distribution
+contains a large number of default configurations allowing you to select the server features and operating modes.
+
+WildFly distribution based installation is well suited when:
+
+* You want to rely on a traditional Jakarta EE application deployment.
+* You want a Jakarta EE compliant server that offers all Jakarta EE features.
+* You are not (yet) concerned by server installation size and memory footprint.
+* You are not yet sure of the kind of operating mode and application you are targeting.
+* Your server instances will contain one or more application deployments.
+
+If that is the kind of installation you are aiming at, the guides that you should read next are:
+
+* link:Getting_Started_Guide{outfilesuffix}[Getting Started Guide] shows you
+how to install, start and configure the server.
+* link:Getting_Started_Developing_Applications_Guide{outfilesuffix}[Getting
+Started Developing Applications Guide] shows you how to build Jakarta EE
+applications and deploy them to WildFly.
+
+[[Galleon_Provisioning]]
+= Installing WildFly with Galleon
+
+Galleon provisioning tooling allows you to construct a customized WildFly installation according to your application needs. 
+Some applications don't need a fully featured server supporting all operating modes and containing all Jakarta EE capabilities. 
+Galleon tooling allows you to select the server capabilities you want to see installed. 
+
+A WildFly server provisioned with Galleon is well suited when:
+
+* You want to rely on a traditional Jakarta EE application deployment.
+* Your application requires only a subset of the Jakarta EE APIs (although note that Galleon 
+can provision a server that supports the full set of Jakarta EE APIs).
+* You are concerned by server installation size and memory footprint.
+* You are only using standalone operating mode (with support for High Availability or not).
+* Your server instances will contain one or more application deployments.
+
+If that is the kind of installation you are aiming at, the guides that you should read next are:
+
+* link:Galleon_Guide{outfilesuffix}[Galleon Provisioning Guide] shows you how to 
+provision customized WildFly server using Galleon.
+* link:Getting_Started_Developing_Applications_Guide{outfilesuffix}[Getting
+Started Developing Applications Guide] shows you how to build Jakarta EE
+applications and deploy them to WildFly.
+
+[[Bootable_JAR]]
+= WildFly Bootable JAR
+
+A bootable JAR contains both a customized WildFly server and your deployment. Such a JAR can
+then run with a simple java command such as ``java -jar myapp-bootable.jar``
+
+A Bootable JAR is well suited when:
+
+* You want to leverage your existing WildFly applications.
+* You want to build microservices composed of a server and a single application deployment.
+* You are concerned by JAR size and memory footprint.
+* You are only using standalone operating mode (with support for High Availability or not).
+
+If that is the kind of installation you are aiming at, the guides that you should read next is:
+
+* link:Bootable_Guide{outfilesuffix}[Bootable JAR Guide] shows you how to package your application and the WildFly server
+into a bootable JAR.
