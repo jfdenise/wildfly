@@ -1,32 +1,58 @@
 [[wildfly_defined_galleon_layers]]
-=== WildFly defined Layers
+=== WildFly Layers
+
+In the tables below we provide basic information about all of the layers WildFly provides.
+
+If the capabilities provided by a layer A require capabilities provided by another layer B, then layer A will _depend on_ layer B.
+If you ask for layer A, then Galleon will automatically provide B as well. In some cases A's dependency on B can be _optional_; that
+is A typically comes with B, but can function without it. In this case if you ask for A by default Galleon will provide B as well,
+but you can tell Galleon to _exclude_ B. The tables below detail the various dependency relationships.
+
+Some layers are logical _alternatives_ to other layers. If two layers are alternatives to each other they both provide the same general
+capabilities, but with different implementation characteristics. For example a number of layers provide the capability to cache different
+types of objects. These layers typically come in pairs of alternatives, where one alternative provides local caching, while the other provides
+distributed caching.  If a layer you want has an optional dependency on a layer that has an alternative, you can exclude that dependency
+and instead specify the alternative. If a layer has an alternative the Description column in the tables below will identify it.
+
+[NOTE]
+====
+If the elytron layer is present, security will be handled by the elytron subsystem.
+The undertow subsystem is configured with an _other_ _application-security-domain_ that references the Elytron _ApplicationDomain_ security domain.
+====
 
 [[wildfly-galleon-layers-servers]]
 ==== Server Galleon layers
 
-[NOTE]
-====
-If elytron layer is present, the security is handled by elytron subsystem.
-Undertow subsystem is configured with _other_ _application-security-domain_ that references Elytron _ApplicationDomain_ security domain.
-====
+A single Galleon layer can provide a relatively small set of capabilities, but most users will want to start with a broader set
+of capabilities without having to spell out all the details. To help with this WildFly provides a few foundational layers
+all of which provide typical core WildFly capabilities like the logging subsystem and a secure remote management interface.
+
+You don't have to base your WildFly installation on one of these basic server layers, but doing so may be more convenient.
 
 [cols="1,2,1a"]
 |===
 |Name |Description |Dependencies
-|[[gal.web-server]]web-server
-|A servlet container.
+
+|[[gal.core-server]]core-server
+|A typical manageable server core.
 |
 [cols="2,1"]
 !===
-! Name ! Optional 
-! link:#gal.deployment-scanner[deployment-scanner]
+! Name ! Optional
+! link:#gal.core-management[core-management]
 ! true
-! link:#gal.ee[ee]
-! false
-! link:#gal.naming[naming]
-! false
-! link:#gal.undertow[undertow]
-! false
+! link:#gal.core-security-realms[core-security-realms]
+! true
+! link:#gal.jmx-remoting[jmx-remoting]
+! true
+! link:#gal.logging[logging]
+! true
+! link:#gal.management[management]
+! true
+! link:#gal.request-controller[request-controller]
+! true
+! link:#gal.security-manager[security-manager]
+! true
 !===
 
 |[[gal.datasources-web-server]]datasources-web-server
@@ -64,7 +90,7 @@ Undertow subsystem is configured with _other_ _application-security-domain_ that
 !===
 
 |[[gal.cloud-server]]cloud-server
-| An extension of _jaxrs-server_ to address common cloud requirements
+| An extension of _jaxrs-server_ to address common cloud requirements.
 |
 [cols="2,1"]
 !===
@@ -81,27 +107,6 @@ Undertow subsystem is configured with _other_ _application-security-domain_ that
 ! true
 !===
 
-|[[gal.core-server]]core-server
-|Aggregation of layers that compose a typical core server.
-|
-[cols="2,1"]
-!===
-! Name ! Optional 
-! link:#gal.core-management[core-management]
-! true
-! link:#gal.core-security-realms[core-security-realms]
-! true
-! link:#gal.jmx-remoting[jmx-remoting]
-! true
-! link:#gal.logging[logging]
-! true
-! link:#gal.management[management]
-! true
-! link:#gal.request-controller[request-controller]
-! true
-! link:#gal.security-manager[security-manager]
-! true
-!===
 |===
 
 [[wildfly-galleon-layers-basic]]
@@ -111,7 +116,7 @@ Undertow subsystem is configured with _other_ _application-security-domain_ that
 |===
 |Name |Description |Dependencies
 |[[gal.application-security-realm]]application-security-realm
-|Application security realm.
+|Security realm meant for securing applications.
 |
 [cols="2,1"]
 !===
@@ -155,7 +160,7 @@ Undertow subsystem is configured with _other_ _application-security-domain_ that
 ! true
 !===
 |[[gal.cdi]]cdi
-|Support for CDI.
+|Support for Jakarta Contexts and Dependency Injection.
 |
 [cols="2,1"]
 !===
@@ -166,7 +171,7 @@ Undertow subsystem is configured with _other_ _application-security-domain_ that
 ! true
 !===
 |[[gal.cloud-profile]]cloud-profile
-|An aggregation of some basic layers to address cloud.
+|An aggregation of some basic layers to address cloud use cases.
 |
 [cols="2,1"]
 !===
@@ -200,7 +205,7 @@ Undertow subsystem is configured with _other_ _application-security-domain_ that
 ! false
 !===
 |[[gal.core-security-realms]]core-security-realms
-|Support for core Application and Management realms.
+|Support for core Application and Management security realms.
 |
 [cols="2,1"]
 !===
@@ -214,7 +219,7 @@ Undertow subsystem is configured with _other_ _application-security-domain_ that
 !===
 
 |[[gal.core-tools]]core-tools
-|Support for _jboss-cli_, _add-user_, _elytron-tool_ launch scripts and configuration files.
+|Support for _jboss-cli_, _add-user_ and _elytron-tool_ launch scripts and configuration files.
 |
 [cols="2,1"]
 !===
@@ -271,7 +276,7 @@ Undertow subsystem is configured with _other_ _application-security-domain_ that
 ! false
 !===
 |[[gal.ejb]]ejb
-|Support for Jakarta Enterprise Beans, excluding IIOP protocol.
+|Support for Jakarta Enterprise Beans, excluding the IIOP protocol.
 |
 [cols="2,1"]
 !===
@@ -288,8 +293,8 @@ Undertow subsystem is configured with _other_ _application-security-domain_ that
 ! false
 !===
 |[[gal.ejb-dist-cache]]ejb-dist-cache
-|Infinispan-based distributed cache for stateful session bean.
-Can't be used with link:#gal.ejb-local-cache[ejb-local-cache] layer.
+|Infinispan-based distributed cache for stateful session beans. +
+_Alternative:_ link:#gal.ejb-local-cache[ejb-local-cache]
 |
 [cols="2,1"]
 !===
@@ -311,8 +316,8 @@ Can't be used with link:#gal.ejb-local-cache[ejb-local-cache] layer.
 ! false
 !===
 |[[gal.ejb-local-cache]]ejb-local-cache
-|Infinispan-based local cache for stateful session bean. 
-Can't be used with link:#gal.ejb-dist-cache[ejb-dist-cache] layer.
+|Infinispan-based local cache for stateful session beans. +
+_Alternative:_ link:#gal.ejb-dist-cache[ejb-dist-cache]
 |
 [cols="2,1"]
 !===
@@ -330,7 +335,7 @@ Can't be used with link:#gal.ejb-dist-cache[ejb-dist-cache] layer.
 ! false
 !===
 |[[gal.git-history]]git-history
-|Support for using _git_ for configuration history.
+|Support for using _git_ for configuration management.
 |
 [cols="2,1"]
 !===
@@ -346,7 +351,7 @@ Can't be used with link:#gal.ejb-dist-cache[ejb-dist-cache] layer.
 ! false
 !===
 |[[gal.h2-default-datasource]]h2-default-datasource
-|Support for h2 datasource set as the ee subsystem default datasource.
+|Support for an H2 datasource set as the ee subsystem default datasource.
 |
 [cols="2,1"]
 !===
@@ -411,7 +416,7 @@ Can't be used with link:#gal.ejb-dist-cache[ejb-dist-cache] layer.
 ! false
 !===
 |[[gal.jmx-remoting]]jmx-remoting
-|Support for registration of Management Model MBeans and a JMX remoting connector.
+|Support for a JMX remoting connector.
 |
 [cols="2,1"]
 !===
@@ -422,8 +427,8 @@ Can't be used with link:#gal.ejb-dist-cache[ejb-dist-cache] layer.
 ! true
 !===
 |[[gal.jpa]]jpa
-|Support for JPA (using the latest WildFly supported Hibernate release). 
-Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
+|Support for JPA (using the latest WildFly supported Hibernate release). +
+_Alternative:_ link:#gal.jpa-distributed[jpa-distributed]
 |
 [cols="2,1"]
 !===
@@ -434,7 +439,8 @@ Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
 ! false
 !===
 |[[gal.jpa-distributed]]jpa-distributed
-|Support JPA with a remote cache. Can't be used with link:#gal.jpa[jpa] layer.
+|Support for JPA with a distributed second level cache. +
+_Alternative:_ link:#gal.jpa[jpa]
 |
 [cols="2,1"]
 !===
@@ -445,7 +451,7 @@ Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
 ! false
 !===
 |[[gal.jsf]]jsf
-|Support for Jakarta Server Faces
+|Support for Jakarta Server Faces.
 |
 [cols="2,1"]
 !===
@@ -536,7 +542,7 @@ Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
 ! false
 !===
 |[[gal.management-security-realm]]management-security-realm
-|Management security realm.
+|Security realm meant for securing server management interfaces.
 |
 [cols="2,1"]
 !===
@@ -622,7 +628,7 @@ Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
 ! false
 !===
 |[[gal.microprofile-platform]]microprofile-platform
-|Support for available MicroProfile specifications.
+|Support for available MicroProfile platform specifications.
 |
 [cols="2,1"]
 !===
@@ -652,7 +658,7 @@ Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
 ! false
 !===
 |[[gal.observability]]observability
-|Support for MicroProfile monitoring and configuration features. 
+|Support for MicroProfile monitoring features.
 |
 [cols="2,1"]
 !===
@@ -678,7 +684,7 @@ Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
 ! false
 !===
 |[[gal.pojo]]pojo
-| Support for POJO.
+| Support for legacy JBoss Microcontainer applications.
 |
 [cols="2,1"]
 !===
@@ -736,7 +742,7 @@ Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
 ! false
 !===
 |[[gal.security-manager]]security-manager
-|Support for security manager.
+|Support for applying security manager permissions to applications.
 |
 [cols="2,1"]
 !===
@@ -756,7 +762,8 @@ Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
 ! false
 !===
 |[[gal.undertow]]undertow
-|Support for the Undertow HTTP server.
+|Support for the Undertow HTTP server. Provides servlet support but does not provide typical EE integration like resource injection.
+Use link:#gal.web-server[web-server] for a servlet container with EE integration.
 |
 [cols="2,1"]
 !===
@@ -780,7 +787,7 @@ Can't be used with link:#gal.jpa-distributed[jpa-distributed] layer.
 ! false
 !===
 |[[gal.undertow-load-balancer]]undertow-load-balancer
-|Support for Undertow configured as a load balancer
+|Support for Undertow configured as a load balancer.
 |
 [cols="2,1"]
 !===
@@ -835,6 +842,22 @@ and configured to connect to the server.
 ! link:#gal.messaging-activemq[messaging-activemq]
 ! true
 ! link:#gal.web-server[web-server]
+! false
+!===
+
+|[[gal.web-server]]web-server
+|A servlet container.
+|
+[cols="2,1"]
+!===
+! Name ! Optional
+! link:#gal.deployment-scanner[deployment-scanner]
+! true
+! link:#gal.ee[ee]
+! false
+! link:#gal.naming[naming]
+! false
+! link:#gal.undertow[undertow]
 ! false
 !===
 |===
