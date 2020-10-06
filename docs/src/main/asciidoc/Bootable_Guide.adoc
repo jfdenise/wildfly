@@ -34,7 +34,7 @@ Complete information on the Maven plugin usage can be found in the bootable JAR 
 [[wildfly-jar-maven-plugin-pom-configuration]]
 == Adding the bootable JAR Maven plugin to your pom file
 
-This is done by adding extra build step to your application deployment Maven pom.xml file.
+This is done by adding an extra build step to your application deployment Maven pom.xml file.
 
 [source,xml]
 ----

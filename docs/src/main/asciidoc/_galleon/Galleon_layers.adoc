@@ -20,8 +20,8 @@ If the elytron layer is present, security will be handled by the elytron subsyst
 The undertow and ejb subsystems are configured with an _other_ _application-security-domain_ that references the Elytron _ApplicationDomain_ security domain.
 ====
 
-[[wildfly-galleon-layers-servers]]
-==== Server Galleon layers
+[[wildfly_foundational_galleon_layers]]
+==== Foundational Galleon layers
 
 A single Galleon layer can provide a relatively small set of capabilities, but most users will want to start with a broader set
 of capabilities without having to spell out all the details. To help with this WildFly provides a few foundational layers
@@ -32,17 +32,6 @@ You don't have to base your WildFly installation on one of these basic server la
 [cols="1,2,1"]
 |===
 |Name |Description |Dependencies
-
-|[[gal.core-server]]core-server
-|A typical manageable server core.
-|
-link:#gal.core-management[core-management] (optional) +
-link:#gal.core-security-realms[core-security-realms] (optional) +
-link:#gal.jmx-remoting[jmx-remoting] (optional) +
-link:#gal.logging[logging] (optional) +
-link:#gal.management[management] (optional) +
-link:#gal.request-controller[request-controller] (optional) +
-link:#gal.security-manager[security-manager] (optional) +
 
 |[[gal.datasources-web-server]]datasources-web-server
 | A servlet container with support for datasources.
@@ -70,9 +59,21 @@ link:#gal.jms-activemq[jms-activemq] (optional) +
 link:#gal.observability[observability] (optional) +
 link:#gal.resource-adapters[resource-adapters] (optional) +
 
+|[[gal.core-server]]core-server
+|A typical manageable server core. This layer could serve as a base for a more 
+specialized WildFly that doesn't need the capabilities provided by the other server layers.
+|
+link:#gal.core-management[core-management] (optional) +
+link:#gal.core-security-realms[core-security-realms] (optional) +
+link:#gal.jmx-remoting[jmx-remoting] (optional) +
+link:#gal.logging[logging] (optional) +
+link:#gal.management[management] (optional) +
+link:#gal.request-controller[request-controller] (optional) +
+link:#gal.security-manager[security-manager] (optional) +
+
 |===
 
-[[wildfly-galleon-layers-basic]]
+[[wildfly_basic_galleon_layers]]
 ==== Basic Galleon Layers
 
 [cols="1,2,1"]
@@ -471,13 +472,6 @@ and configured to connect to the server.
 |
 link:#gal.management[management] +
 
-|[[gal.webservices]]webservices
-|Support for Jakarta XML Web Services
-|
-link:#gal.ejb-lite[ejb-lite] (optional) +
-link:#gal.messaging-activemq[messaging-activemq] (optional) +
-link:#gal.web-server[web-server] +
-
 |[[gal.web-server]]web-server
 |A servlet container.
 |
@@ -485,4 +479,12 @@ link:#gal.deployment-scanner[deployment-scanner] (optional) +
 link:#gal.ee[ee] +
 link:#gal.naming[naming] +
 link:#gal.undertow[undertow] +
+
+|[[gal.webservices]]webservices
+|Support for Jakarta XML Web Services
+|
+link:#gal.ejb-lite[ejb-lite] (optional) +
+link:#gal.messaging-activemq[messaging-activemq] (optional) +
+link:#gal.web-server[web-server] +
+
 |===

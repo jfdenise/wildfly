@@ -30,13 +30,14 @@ configuration options generated directly from the management model.
 [[installation-guides]]
 == Installation Guides
 
-* link:Installation_Guide{outfilesuffix}[Installation Guide] helps you 
-identify the kind of WildFly installation that best fits your applications deployments needs.
+* The link:Installation_Guide{outfilesuffix}[Installation Guide] help you identify 
+the kind of WildFly installation that best fits your applications deployments needs: 
+a WildFly zip installation, a WildFly server provisioned with Galleon or a WildFly bootable JAR.
 
-* link:Bootable_Guide{outfilesuffix}[Bootable JAR Guide] shows you how to package your application and the WildFly server
+* The link:Bootable_Guide{outfilesuffix}[Bootable JAR Guide] shows you how to package your application and the WildFly server
 into a bootable JAR.
 
-* link:Galleon_Guide{outfilesuffix}[Galleon Provisioning Guide] shows you how to 
+* The link:Galleon_Guide{outfilesuffix}[Galleon Provisioning Guide] shows you how to 
 provision customized WildFly server using Galleon.
 
 [[administrator-guides]]

@@ -1,9 +1,9 @@
 [[Galleon_Provisioning]]
 = Provisioning WildFly with Galleon
 
-With the WildFly server being internally built using the https://github.com/wildfly/galleon[Galleon project], WildFly benefits +
-from Galleon's provisioning capabilities. One of the main features that Galleon brings to WildFly is the ability
-to install a complete or customized WildFly server using Galleon tooling.
+As opposed to a WildFly zip installation that installs it all (all default 
+server configurations and all JBoss modules), using https://github.com/wildfly/galleon[Galleon] tooling, 
+you can choose to install a complete or customized WildFly server.
 
 More information on Galleon features and tooling can be found in the Galleon https://docs.wildfly.org/galleon/[docs].
 
