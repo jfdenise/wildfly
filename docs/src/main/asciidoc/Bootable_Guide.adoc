@@ -24,18 +24,17 @@ ifdef::basebackend-html[toc::[]]
 This document details the steps to follow in order to develop a WildFly application
 packaged as a bootable JAR. A bootable JAR can be run both on bare-metal and cloud platforms.
 
-This document contains the minimal information set required to build and run a WildFly bootable JAR. 
-Complete information on the Maven plugin usage can be found in the bootable JAR https://docs.wildfly.org/bootablejar/[documentation].
-
-Developing an application packaged as a bootable JAR is not different from developing an application for WildFly server.
+Developing an application packaged as a bootable JAR is not different from developing an application for WildFly server using Maven.
 The extra steps required to package your application inside a bootable JAR are handled by the 
 https://github.com/wildfly-extras/wildfly-jar-maven-plugin[_org.wildfly.plugins:wildfly-jar-maven-plugin_] Maven plugin.
 
+This document contains the minimal information set required to build and run a WildFly bootable JAR. 
+Complete information on the Maven plugin usage can be found in the bootable JAR https://docs.wildfly.org/bootablejar/[documentation].
 
 [[wildfly-jar-maven-plugin-pom-configuration]]
 == Adding the bootable JAR Maven plugin to your pom file
 
-Add the plugin to your Maven build:
+This is done by adding extra build step to your application deployment Maven pom.xml file.
 
 [source,xml]
 ----
@@ -59,7 +58,7 @@ Add the plugin to your Maven build:
 </build>
 ----
 
-The link:#wildfly-jar-maven-plugin-galleon-configuration[next chapter] covers the plugin configuration items that are required to identify the WildFly server version and content.
+The next chapter covers the plugin configuration items that are required to identify the WildFly server version and content.
 
 [[wildfly-jar-maven-plugin-galleon-configuration]]
 == Galleon configuration
@@ -69,7 +68,7 @@ The Bootable JAR Maven plugin depends on https://docs.wildfly.org/galleon/[Galle
 Galleon is configured thanks to the Maven plugin ```<configuration>``` element.
 
 The first required piece of information that Galleon needs is a reference to the WildFly Galleon feature-pack. 
-WildFly Galleon feature-pack is a maven artifact (a zipped file that contains the server content). 
+The WildFly Galleon feature-pack is a maven artifact that contains everything needed to dynamically provision a server. 
 This feature-pack, as well as the feature-packs on which its depends,
 are deployed in public maven repositories. 
 
@@ -77,10 +76,10 @@ When the bootable JAR Maven plugin builds a JAR, WildFly feature-packs are retri
 their content is assembled to create the server contained in the JAR.
 
 Once you have identified a WildFly Galleon feature-pack, you need to select a set of 
-link:#wildfly_defined_galleon_layers[WildFly Galleon layers] that are used to compose the server.
+link:#wildfly_layers[WildFly Layers] that are used to compose the server.
 
 The set of Galleon layers to include is driven by the application you are developing. 
-The list of link:#wildfly_defined_galleon_layers[WildFly Galleon layers] provides details on 
+The list of link:#wildfly_layers[WildFly Layers] provides details on 
 the server features that each layer brings. Make sure that the API and server features you are using (eg: JAX-RS, Eclipse MicroProfile Config, datasources) are brought by the 
 layers you are choosing.
 

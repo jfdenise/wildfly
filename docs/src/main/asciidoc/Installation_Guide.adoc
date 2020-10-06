@@ -56,6 +56,7 @@ Galleon tooling allows you to select the server capabilities you want to see ins
 A WildFly server provisioned with Galleon is well suited when:
 
 * You want to rely on a traditional Jakarta EE application deployment.
+* You want to easily update an installation to the latest WildFly version.
 * Your application requires only a subset of the Jakarta EE APIs (although note that Galleon 
 can provision a server that supports the full set of Jakarta EE APIs).
 * You are concerned by server installation size and memory footprint.
@@ -76,12 +77,17 @@ applications and deploy them to WildFly.
 A bootable JAR contains both a customized WildFly server and your deployment. Such a JAR can
 then run with a simple java command such as ``java -jar myapp-bootable.jar``
 
+A bootable JAR is built using Maven. You need to integrate the  
+link:https://github.com/wildfly-extras/wildfly-jar-maven-plugin[bootable JAR Maven plugin] 
+in the Maven project of your application.
+
 A Bootable JAR is well suited when:
 
 * You want to leverage your existing WildFly applications.
 * You want to build microservices composed of a server and a single application deployment.
 * You are concerned by JAR size and memory footprint.
 * You are only using standalone operating mode (with support for High Availability or not).
+* You are building your application using Maven.
 
 If that is the kind of installation you are aiming at, the guides that you should read next is:
 

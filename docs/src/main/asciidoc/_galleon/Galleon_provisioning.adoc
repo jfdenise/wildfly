@@ -9,7 +9,8 @@ More information on Galleon features and tooling can be found in the Galleon htt
 
 == WildFly Galleon feature-packs
 
-WildFly provides a Galleon feature-pack maven artifact (a zipped file that contains installation content). 
+WildFly provides a Galleon feature-pack maven artifact (a zipped file that contains 
+everything needed to dynamically provision a server). 
 This feature-pack, as well as the feature-packs on which its depends,
 are deployed in public maven repositories. 
 
@@ -101,6 +102,13 @@ include::Galleon_layers.adoc[]
 [[galleon-cli-recipes]]
 === Galleon CLI recipes
 
+Using Galleon CLI tool, you can provision WildFly installations based on a set of layers.
+
+[NOTE]
+====
+In order to exclude an optional layer prefix its name with '-', for example: '-jpa' to exclude jpa layer.
+====
+
 ==== Installation of a cloud-server
 
 [source,options="nowrap"]
@@ -113,6 +121,20 @@ galleon.sh install wildfly:current --dir=my-wildfly-server --layers=cloud-server
 [source,options="nowrap"]
 ----
 galleon.sh install wildfly:current --dir=my-wildfly-server --layers=cloud-server,undertow-legacy-https
+----
+
+==== Installation of a cloud-server and ejb with ejb-dist-cache as alternative to ejb-local-cache
+
+[source,options="nowrap"]
+----
+galleon.sh install wildfly:current --dir=my-wildfly-server --layers=cloud-server,ejb,-ejb-local-cache,ejb-dist-cache
+----
+
+==== Installation of a jaxrs-server with jpa-distributed as an alternative to jpa
+
+[source,options="nowrap"]
+----
+galleon.sh install wildfly:current --dir=my-wildfly-server --layers=jaxrs-server,-jpa,jpa-distributed
 ----
 
 ==== Installation of jaxrs, cdi, elytron and logging
@@ -134,20 +156,6 @@ galleon.sh install wildfly:current --dir=my-wildfly-server --layers=web-server,c
 [source,options="nowrap"]
 ----
 galleon.sh install wildfly:current --dir=my-wildfly-server --layers=web-server,undertow-legacy-https
-----
-
-==== Installation of an Undertow http server with logging
-
-[source,options="nowrap"]
-----
-galleon.sh install wildfly:current --dir=my-wildfly-server --layers=undertow,logging
-----
-
-==== Installation of an Undertow https server (using legacy core ApplicationRealm)
-
-[source,options="nowrap"]
-----
-galleon.sh install wildfly:current --dir=my-wildfly-server --layers=undertow-legacy-https
 ----
 
 ==== Installation of a core server

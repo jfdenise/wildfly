@@ -30,9 +30,8 @@ configuration options generated directly from the management model.
 [[installation-guides]]
 == Installation Guides
 
-* Zipped WildFly installation, WildFly server provisioned with Galleon or WildFly Bootable JAR, the 
-link:Installation_Guide{outfilesuffix}[Installation Guide] 
-help you identify the kind of WildFly installation that best fits your applications deployments needs.
+* link:Installation_Guide{outfilesuffix}[Installation Guide] helps you 
+identify the kind of WildFly installation that best fits your applications deployments needs.
 
 * link:Bootable_Guide{outfilesuffix}[Bootable JAR Guide] shows you how to package your application and the WildFly server
 into a bootable JAR.

@@ -1,4 +1,4 @@
-[[wildfly_defined_galleon_layers]]
+[[wildfly_layers]]
 === WildFly Layers
 
 In the tables below we provide basic information about all of the layers WildFly provides.
@@ -17,7 +17,7 @@ and instead specify the alternative. If a layer has an alternative the Descripti
 [NOTE]
 ====
 If the elytron layer is present, security will be handled by the elytron subsystem.
-The undertow subsystem is configured with an _other_ _application-security-domain_ that references the Elytron _ApplicationDomain_ security domain.
+The undertow and ejb subsystems are configured with an _other_ _application-security-domain_ that references the Elytron _ApplicationDomain_ security domain.
 ====
 
 [[wildfly-galleon-layers-servers]]
