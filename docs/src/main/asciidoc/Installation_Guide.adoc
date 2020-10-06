@@ -20,6 +20,10 @@ ifndef::ebook-format[:leveloffset: 1]
 ifdef::basebackend-html[toc::[]]
 :numbered:
 
+link:#Zipped_Installation[Zipped distribution], 
+link:#Galleon_Provisioning[Galleon provisioning] or link:#Bootable_JAR[bootable JAR], this guide helps you identify the 
+installation strategy that best fits your application requirements.
+
 [[Zipped_Installation]]
 = Installing WildFly from a zipped distribution
 
