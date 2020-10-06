@@ -27,22 +27,23 @@ installation strategy that best fits your application requirements.
 [[Zipped_Installation]]
 = Installing WildFly from a zipped distribution
 
-That is the historical way to install a complete WildFly server with support for standalone and domain modes. A WildFly distribution
+http://www.wildfly.org/downloads[Downloading the WildFly release zip] and unzipping it is the traditional way to install
+a complete WildFly server with support for both standalone and managed domain operating modes. A WildFly distribution
 contains a large number of default configurations allowing you to select the server features and operating modes.
 
-WildFly distribution based installation is well suited when:
+A WildFly distribution based installation is well suited when:
 
 * You want to rely on a traditional Jakarta EE application deployment.
-* You want a Jakarta EE compliant server that offers all Jakarta EE features.
+* You want a Jakarta EE or Eclipse MicroProfile platform compliant server that offers all Jakarta EE or MicroProfile features.
 * You are not (yet) concerned by server installation size and memory footprint.
 * You are not yet sure of the kind of operating mode and application you are targeting.
 * Your server instances will contain one or more application deployments.
 
 If that is the kind of installation you are aiming at, the guides that you should read next are:
 
-* link:Getting_Started_Guide{outfilesuffix}[Getting Started Guide] shows you
+* The link:Getting_Started_Guide{outfilesuffix}[Getting Started Guide] shows you
 how to install, start and configure the server.
-* link:Getting_Started_Developing_Applications_Guide{outfilesuffix}[Getting
+* The link:Getting_Started_Developing_Applications_Guide{outfilesuffix}[Getting
 Started Developing Applications Guide] shows you how to build Jakarta EE
 applications and deploy them to WildFly.
 
@@ -57,17 +58,17 @@ A WildFly server provisioned with Galleon is well suited when:
 
 * You want to rely on a traditional Jakarta EE application deployment.
 * You want to easily update an installation to the latest WildFly version.
-* Your application requires only a subset of the Jakarta EE APIs (although note that Galleon 
-can provision a server that supports the full set of Jakarta EE APIs).
+* Your application requires only a subset of the Jakarta EE or Eclipse MicroProfile platform APIs
+(although Galleon can provision a server that supports the full set of Jakarta EE and MicroProfile platform APIs).
 * You are concerned by server installation size and memory footprint.
 * You are only using standalone operating mode (with support for High Availability or not).
 * Your server instances will contain one or more application deployments.
 
 If that is the kind of installation you are aiming at, the guides that you should read next are:
 
-* link:Galleon_Guide{outfilesuffix}[Galleon Provisioning Guide] shows you how to 
+* The link:Galleon_Guide{outfilesuffix}[Galleon Provisioning Guide] shows you how to
 provision customized WildFly server using Galleon.
-* link:Getting_Started_Developing_Applications_Guide{outfilesuffix}[Getting
+* The link:Getting_Started_Developing_Applications_Guide{outfilesuffix}[Getting
 Started Developing Applications Guide] shows you how to build Jakarta EE
 applications and deploy them to WildFly.
 
@@ -84,12 +85,12 @@ in the Maven project of your application.
 A Bootable JAR is well suited when:
 
 * You want to leverage your existing WildFly applications.
-* You want to build microservices composed of a server and a single application deployment.
+* You want to build a microservice composed of a server and a single application deployment.
 * You are concerned by JAR size and memory footprint.
 * You are only using standalone operating mode (with support for High Availability or not).
 * You are building your application using Maven.
 
-If that is the kind of installation you are aiming at, the guides that you should read next is:
+If that is the kind of installation you are aiming at, the guide that you should read next is:
 
-* link:Bootable_Guide{outfilesuffix}[Bootable JAR Guide] shows you how to package your application and the WildFly server
+* The link:Bootable_Guide{outfilesuffix}[Bootable JAR Guide] shows you how to package your application and the WildFly server
 into a bootable JAR.

@@ -3,10 +3,11 @@
 
 In the tables below we provide basic information about all of the layers WildFly provides.
 
-If the capabilities provided by a layer A require capabilities provided by another layer B, then layer A will _depend on_ layer B.
+Besides the layer names and a brief description of each, the tables below detail the various dependency relationships
+between layers. If the capabilities provided by a layer A require capabilities provided by another layer B, then layer A will _depend on_ layer B.
 If you ask for layer A, then Galleon will automatically provide B as well. In some cases A's dependency on B can be _optional_; that
 is A typically comes with B, but can function without it. In this case if you ask for A by default Galleon will provide B as well,
-but you can tell Galleon to _exclude_ B. The tables below detail the various dependency relationships.
+but you can tell Galleon to _exclude_ B.
 
 Some layers are logical _alternatives_ to other layers. If two layers are alternatives to each other they both provide the same general
 capabilities, but with different implementation characteristics. For example a number of layers provide the capability to cache different
@@ -27,7 +28,7 @@ A single Galleon layer can provide a relatively small set of capabilities, but m
 of capabilities without having to spell out all the details. To help with this WildFly provides a few foundational layers
 all of which provide typical core WildFly capabilities like the logging subsystem and a secure remote management interface.
 
-You don't have to base your WildFly installation on one of these basic server layers, but doing so may be more convenient.
+You don't have to base your WildFly installation on one of these foundational layers, but doing so may be more convenient.
 
 [cols="1,2,1"]
 |===
@@ -61,7 +62,7 @@ link:#gal.resource-adapters[resource-adapters] (optional) +
 
 |[[gal.core-server]]core-server
 |A typical manageable server core. This layer could serve as a base for a more 
-specialized WildFly that doesn't need the capabilities provided by the other server layers.
+specialized WildFly that doesn't need the capabilities provided by the other foundational layers.
 |
 link:#gal.core-management[core-management] (optional) +
 link:#gal.core-security-realms[core-security-realms] (optional) +
