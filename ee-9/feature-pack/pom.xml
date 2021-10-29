@@ -545,6 +545,11 @@
                     <groupId>${project.groupId}</groupId>
                     <artifactId>wildfly-weld-transactions</artifactId>
                 </exclusion>
+                <exclusion>
+                    <!-- exclude the shaded client -->
+                    <groupId>org.wildfly.core</groupId>
+                    <artifactId>wildfly-cli</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -1110,6 +1115,13 @@
             <groupId>${ee.maven.groupId}</groupId>
             <artifactId>wildfly-weld-transactions-jakarta</artifactId>
             <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>${ee.maven.groupId}</groupId>
+            <artifactId>wildfly-cli-jakarta</artifactId>
+            <scope>provided</scope>
+            <version>${project.version}</version>
         </dependency>
 
     </dependencies>
