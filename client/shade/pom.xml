@@ -202,6 +202,12 @@
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>artemis-jms-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>jakarta.jms</groupId>
+                    <artifactId>jakarta.jms-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
