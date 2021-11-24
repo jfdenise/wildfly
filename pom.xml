@@ -355,6 +355,7 @@
         <version.io.vertx.vertx>4.1.4</version.io.vertx.vertx>
         <version.io.vertx.vertx-kafka-client>${version.io.vertx.vertx}</version.io.vertx.vertx-kafka-client>
         <version.jakarta.enterprise>2.0.2</version.jakarta.enterprise>
+        <version.jakarta.jms>2.0.3</version.jakarta.jms>
         <version.jakarta.json.bind.api>1.0.2</version.jakarta.json.bind.api>
         <version.jakarta.mail>1.6.7</version.jakarta.mail>
         <version.jakarta.persistence>2.2.3</version.jakarta.persistence>
@@ -2670,6 +2671,12 @@
                 <groupId>jakarta.validation</groupId>
                 <artifactId>jakarta.validation-api</artifactId>
                 <version>${version.jakarta.validation}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.jms</groupId>
+                <artifactId>jakarta.jms-api</artifactId>
+                <version>${version.jakarta.jms}</version>
             </dependency>
 
             <dependency>
