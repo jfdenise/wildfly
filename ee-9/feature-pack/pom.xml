@@ -609,6 +609,24 @@
                     <groupId>org.wildfly.security</groupId>
                     <artifactId>wildfly-elytron-x500-cert-acme</artifactId>
                 </exclusion>
+                <!-- We need to exclude the wildfly-core wildfly-cli client -->
+                <exclusion>
+                    <groupId>org.wildfly.core</groupId>
+                    <artifactId>wildfly-cli</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- add back wildfly-cli -->
+        <dependency>
+            <groupId>org.wildfly.core</groupId>
+            <artifactId>wildfly-cli</artifactId>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -749,6 +767,11 @@
                     <groupId>org.wildfly.wildfly-http-client</groupId>
                     <artifactId>wildfly-http-transaction-client</artifactId>
                 </exclusion>
+                <!-- We need to exclude the wildfly-core wildfly-cli client -->
+                <exclusion>
+                    <groupId>org.wildfly.core</groupId>
+                    <artifactId>wildfly-cli</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -796,6 +819,11 @@
                 <exclusion>
                     <groupId>org.wildfly.security.elytron-web</groupId>
                     <artifactId>undertow-server-servlet</artifactId>
+                </exclusion>
+                <!-- We need to exclude the wildfly-core wildfly-cli client -->
+                <exclusion>
+                    <groupId>org.wildfly.core</groupId>
+                    <artifactId>wildfly-cli</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
