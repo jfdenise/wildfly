@@ -2064,7 +2064,8 @@
         <dependency>
             <groupId>org.wildfly.core</groupId>
             <artifactId>wildfly-cli</artifactId>
-            <classifier>client</classifier>
+            <classifier>shaded-model</classifier>
+            <type>xml</type>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -2087,6 +2088,41 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>wildfly-client-all</artifactId>
+            <type>xml</type>
+            <classifier>shaded-model</classifier>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wildfly-client-properties</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.jms</groupId>
+            <artifactId>jakarta.jms-api</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>

@@ -264,7 +264,7 @@
         <version.org.wildfly.checkstyle-config>1.0.8.Final</version.org.wildfly.checkstyle-config>
         <version.org.wildfly.common>1.5.2.Final</version.org.wildfly.common>
         <version.org.wildfly.component-matrix-plugin>1.0.3.Final</version.org.wildfly.component-matrix-plugin>
-        <version.org.wildfly.galleon-plugins>5.2.10.Final</version.org.wildfly.galleon-plugins>
+        <version.org.wildfly.galleon-plugins>5.2.11.Final-SNAPSHOT</version.org.wildfly.galleon-plugins>
         <version.org.wildfly.jar.plugin>7.0.0.Final</version.org.wildfly.jar.plugin>
         <version.org.wildfly.maven.plugins>2.2.0.Final</version.org.wildfly.maven.plugins>
         <version.org.wildfly.plugin>2.0.1.Final</version.org.wildfly.plugin>
@@ -356,6 +356,7 @@
         <version.io.vertx.vertx>4.2.1</version.io.vertx.vertx>
         <version.io.vertx.vertx-kafka-client>${version.io.vertx.vertx}</version.io.vertx.vertx-kafka-client>
         <version.jakarta.enterprise>2.0.2</version.jakarta.enterprise>
+        <version.jakarta.jms-api>2.0.3</version.jakarta.jms-api>
         <version.jakarta.json.bind.api>1.0.2</version.jakarta.json.bind.api>
         <version.jakarta.mail>1.6.7</version.jakarta.mail>
         <version.jakarta.persistence>2.2.3</version.jakarta.persistence>
@@ -502,10 +503,10 @@
         <version.org.testcontainers>1.16.0</version.org.testcontainers>
         <version.org.testng>6.14.3</version.org.testng>
         <version.org.wildfly.arquillian>3.0.1.Final</version.org.wildfly.arquillian>
-        <version.org.wildfly.core>19.0.0.Beta3</version.org.wildfly.core>
+        <version.org.wildfly.core>19.0.0.Beta4-SNAPSHOT</version.org.wildfly.core>
         <version.org.wildfly.extras.creaper>1.6.2</version.org.wildfly.extras.creaper>
         <version.org.wildfly.http-client>1.1.10.Final</version.org.wildfly.http-client>
-        <version.org.wildfly.naming-client>1.0.14.Final</version.org.wildfly.naming-client>
+        <version.org.wildfly.naming-client>1.0.15.Final-SNAPSHOT</version.org.wildfly.naming-client>
         <version.org.wildfly.transaction.client>2.0.0.Final</version.org.wildfly.transaction.client>
         <version.org.yaml.snakeyaml>1.26</version.org.yaml.snakeyaml>
         <version.rhino.js>1.7R2</version.rhino.js>
@@ -629,6 +630,11 @@
             </dependency>
             
             <dependency>
+                <groupId>jakarta.jms</groupId>
+                <artifactId>jakarta.jms-api</artifactId>
+                <version>${version.jakarta.jms-api}</version>
+            </dependency>
+            <dependency>
                 <groupId>xml-resolver</groupId>
                 <artifactId>xml-resolver</artifactId>
                 <version>${version.xml-resolver}</version>
@@ -660,11 +666,24 @@
                 <version>${full.maven.version}</version>
                 <type>pom</type>
             </dependency>
-
+<!-- to be removed when we switch to model for ee-9 -->
             <dependency>
                 <groupId>${ee.maven.groupId}</groupId>
                 <artifactId>wildfly-client-all</artifactId>
                 <version>${ee.maven.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>sun.jdk</groupId>
+                        <artifactId>jconsole</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>${ee.maven.groupId}</groupId>
+                <artifactId>wildfly-client-all</artifactId>
+                <version>${ee.maven.version}</version>
+                <type>xml</type>
+                <classifier>shaded-model</classifier>
                 <exclusions>
                     <exclusion>
                         <groupId>sun.jdk</groupId>
