@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="standalone-full-profile">
+    <dependencies>
+        <layer name="standalone-profile"/>
+        <layer name="ejb" optional="true"/>
+        <layer name="iiop-openjdk" optional="true"/>
+        <layer name="embedded-activemq" optional="true"/>
+    </dependencies>
+</layer-spec>

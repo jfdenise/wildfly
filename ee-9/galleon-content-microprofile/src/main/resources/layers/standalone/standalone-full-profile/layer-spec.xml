@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="standalone-full-profile">
+    <dependencies>
+        <layer name="standalone-profile"/>
+        <layer name="ejb" optional="true"/>
+        <layer name="iiop-openjdk" optional="true"/>
+        <layer name="embedded-activemq" optional="true"/>
+        <layer name="microprofile-jwt" optional="true"/>
+        <layer name="microprofile-opentracing"/> <!-- can't be optional, we are adding the jaeger content, would need a jaeger layer -->
+    </dependencies>
+    <!-- The jaeger module is referenced from opentracing extension, using the feature-group is ok -->
+    <feature-group name="microprofile-opentracing-jaeger"/>
+</layer-spec>
