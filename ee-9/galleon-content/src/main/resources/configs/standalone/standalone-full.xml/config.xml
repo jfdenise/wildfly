@@ -24,7 +24,11 @@
         <include name="batch-jberet"/>
 
         <include name="iiop-openjdk"/>
-        <include name="embedded-activemq"/>
+        <!-- Preview does not contain embedded broker that ee and full feature-packs contain -->
+        <include name="remote-activemq"/>
     </layers>
+
     <feature-group name="adjust-standalone-full-config"/>
+    <!-- The jaeger module is referenced from opentracing extension, using the feature-group is ok -->
+    <feature-group name="microprofile-opentracing-jaeger"/>
 </config>
