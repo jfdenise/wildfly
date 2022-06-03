@@ -293,10 +293,12 @@ public class LayersTestCase {
     }
 
     public static String root;
+    public static String defaultConfigsRoot;
 
     @BeforeClass
     public static void setUp() {
         root = System.getProperty("layers.install.root");
+        defaultConfigsRoot = System.getProperty("std.default.install.root");
     }
 
     @AfterClass
@@ -304,6 +306,10 @@ public class LayersTestCase {
         Boolean delete = Boolean.getBoolean("layers.delete.installations");
         if(delete) {
             File[] installations = new File(root).listFiles(File::isDirectory);
+            for(File f : installations) {
+                LayersTest.recursiveDelete(f.toPath());
+            }
+            installations = new File(defaultConfigsRoot).listFiles(File::isDirectory);
             for(File f : installations) {
                 LayersTest.recursiveDelete(f.toPath());
             }
@@ -320,5 +326,10 @@ public class LayersTestCase {
     public void checkBannedModules() throws Exception {
         final HashMap<String, String> results = LayersTest.checkBannedModules(root, BANNED_MODULES_CONF);
         Assert.assertTrue("The following banned modules were provisioned " + results.toString(), results.isEmpty());
+    }
+
+    @Test
+    public void testDefaultConfigs() throws Exception {
+        LayersTest.testExecution(defaultConfigsRoot);
     }
 }

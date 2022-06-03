@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="internal-standalone-full-profile">
+    <dependencies>
+        <layer name="internal-standalone-profile"/>
+        <layer name="iiop-openjdk" optional="true"/>
+        <layer name="remote-activemq" optional="true"/>
+    </dependencies>
+</layer-spec>
