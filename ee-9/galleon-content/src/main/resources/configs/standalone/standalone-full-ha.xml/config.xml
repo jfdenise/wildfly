@@ -33,8 +33,7 @@
         <include name="batch-jberet"/>
 
         <include name="iiop-openjdk"/>
-        <!-- Preview does not contain embedded broker that ee and full feature-packs contain -->
-        <include name="remote-activemq"/>
+        <include name="embedded-activemq"/>
     </layers>
     
     <feature-group name="adjust-standalone-full-ha-config"/>
