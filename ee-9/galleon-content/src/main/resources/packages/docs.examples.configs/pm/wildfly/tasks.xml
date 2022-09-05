@@ -4,34 +4,13 @@
     <example-configs>
         <config model="standalone" name="standalone-genericjms.xml">
             <layers>
-                <include name="jaxrs-server"/>
-                <include name="ee-security"/>
-                <include name="metrics"/>
-                <include name="health"/>
-
-                <include name="h2-default-datasource"/>
-                <include name="elytron-oidc-client"/>
-                <include name="ejb-http-invoker"/>
-                <include name="resource-adapters"/>
-                <include name="remoting"/>
-                        
-                <include name="web-passivation"/>
-                <include name="undertow-https"/>
-                <include name="jdr"/>
-                <include name="jsf"/>
-                <include name="webservices"/>
-                <include name="pojo"/>
-                <include name="mail"/>
-                <include name="sar"/>
-                <include name="batch-jberet"/>
+                <include name="standalone-profile"/>
                 <exclude name="messaging-activemq"/>
-                
+                <exclude name="microprofile-jwt"/>
                 <include name="iiop-openjdk"/>
             </layers>
     
             <feature-group name="adjust-standalone-config"/>
-            <!-- The jaeger module is referenced from opentracing extension, using the feature-group is ok -->
-            <feature-group name="microprofile-opentracing-jaeger"/>
 
             <feature-group name="ejb3-mdb"/>
             <feature spec="subsystem.resource-adapters">
@@ -64,37 +43,12 @@
         </config>
         <config model="standalone" name="standalone-jts.xml">
             <layers>
-                <include name="jaxrs-server"/>
-                <include name="ee-security"/>
-                <include name="metrics"/>
-                <include name="health"/>
-
-                <include name="h2-default-datasource"/>
-                <include name="elytron-oidc-client"/>
-
-                <include name="ejb-http-invoker"/>
-                <include name="resource-adapters"/>
-                <include name="remoting"/>
-                        
-                <include name="web-passivation"/>
-                <include name="undertow-https"/>
-                <include name="jdr"/>
-                <include name="jsf"/>
-                <include name="webservices"/>
-                <include name="pojo"/>
-                <include name="mail"/>
-                <include name="sar"/>
-                <include name="batch-jberet"/>
+                <include name="standalone-profile"/>
                 <exclude name="messaging-activemq"/>
-
                 <include name="iiop-openjdk"/>
-
-                <include name="microprofile-jwt"/>
             </layers>
     
             <feature-group name="adjust-standalone-config"/>
-            <!-- The jaeger module is referenced from opentracing extension, using the feature-group is ok -->
-            <feature-group name="microprofile-opentracing-jaeger"/>
 
             <feature spec="subsystem.transactions">
                 <param name="jts" value="true"/>
@@ -111,35 +65,14 @@
         </config>
         <config model="standalone" name="standalone-rts.xml">
             <layers>
-                <include name="jaxrs-server"/>
-                <include name="ee-security"/>
-                <include name="metrics"/>
-                <include name="health"/>
-
-                <include name="h2-default-datasource"/>
-                <include name="elytron-oidc-client"/>
-                <include name="ejb"/>               
-                <include name="ejb-http-invoker"/>
-
-                <include name="web-passivation"/>
-                <include name="undertow-https"/>
-                <include name="jdr"/>
-                <include name="jsf"/>
-                <include name="webservices"/>
-                <include name="pojo"/>
-                <include name="mail"/>
-                <include name="sar"/>
-                <include name="batch-jberet"/>
-
-                <include name="iiop-openjdk"/>
-                <!-- embedded broker is removed from jts config -->
+                <include name="standalone-full-profile"/>
+                <exclude name="microprofile-jwt"/>
+                <!-- embedded broker is removed from rts config -->
+                <exclude name="embedded-activemq"/>
                 <include name="remote-activemq"/>
-                
             </layers>
 
             <feature-group name="adjust-standalone-full-config"/>
-            <!-- The jaeger module is referenced from opentracing extension, using the feature-group is ok -->
-            <feature-group name="microprofile-opentracing-jaeger"/>
 
             <feature spec="subsystem.rts">
                 <param name="host-feature" value="default-host"/>
@@ -149,33 +82,15 @@
         </config>
         <config model="standalone" name="standalone-xts.xml">
             <layers>
-                <include name="jaxrs-server"/>
-                <include name="ee-security"/>
-                <include name="metrics"/>
-                <include name="health"/>
-
-                <include name="h2-default-datasource"/>
-                <include name="elytron-oidc-client"/>
-                <include name="ejb-http-invoker"/>
-                <include name="ejb"/>
-                <include name="web-passivation"/>
-                <include name="undertow-https"/>
-                <include name="jdr"/>
-                <include name="jsf"/>
-                <include name="webservices"/>
-                <include name="pojo"/>
-                <include name="mail"/>
-                <include name="sar"/>
-
-                <include name="iiop-openjdk"/>
-                <!-- embedded broker is removed from xts config -->
+                <include name="standalone-full-profile"/>
+                <exclude name="batch-jberet"/>
+                <exclude name="microprofile-jwt"/>
+                <!-- embedded broker is removed from rts config -->
+                <exclude name="embedded-activemq"/>
                 <include name="remote-activemq"/>
-                
             </layers>
 
             <feature-group name="adjust-standalone-full-config"/>
-            <!-- The jaeger module is referenced from opentracing extension, using the feature-group is ok -->
-            <feature-group name="microprofile-opentracing-jaeger"/>
 
             <feature spec="subsystem.xts">
                 <param name="host-feature" value="default-host"/>
@@ -185,33 +100,11 @@
         </config>
         <config model="standalone" name="standalone-activemq-colocated.xml">
             <layers>
-                <include name="jaxrs-server"/>
-                <include name="ee-security"/>
-                <include name="metrics"/>
-                <include name="health"/>
-
-                <include name="h2-default-datasource"/>
-                <include name="elytron-oidc-client"/>
-                <include name="ejb"/>               
-                <include name="ejb-http-invoker"/>
-
-                <include name="web-passivation"/>
-                <include name="undertow-https"/>
-                <include name="jdr"/>
-                <include name="jsf"/>
-                <include name="webservices"/>
-                <include name="pojo"/>
-                <include name="mail"/>
-                <include name="sar"/>
-                <include name="batch-jberet"/>
-
-                <include name="iiop-openjdk"/>
-                <include name="embedded-activemq"/>
+                <include name="standalone-full-profile"/>
+                <exclude name="microprofile-jwt"/>
             </layers>
 
             <feature-group name="adjust-standalone-full-config"/>
-            <!-- The jaeger module is referenced from opentracing extension, using the feature-group is ok -->
-            <feature-group name="microprofile-opentracing-jaeger"/>
 
             <exclude feature-id="subsystem.messaging-activemq.server.http-acceptor:server=default,subsystem=messaging-activemq,http-acceptor=http-acceptor-throughput"/>
             <exclude feature-id="subsystem.messaging-activemq.server.http-connector:http-connector=http-connector-throughput,server=default,subsystem=messaging-activemq"/>
@@ -315,33 +208,9 @@
         </config>
         <config model="standalone" name="standalone-activemq-embedded.xml">
             <layers>
-                <include name="jaxrs-server"/>
-                <include name="ee-security"/>
-                <include name="metrics"/>
-                <include name="health"/>
-                <include name="microprofile-jwt"/>
-                <include name="microprofile-opentracing"/>
-                <include name="h2-default-datasource"/>
-                <include name="elytron-oidc-client"/>
-                <include name="ejb"/>               
-                <include name="ejb-http-invoker"/>
-
-                <include name="web-passivation"/>
-                <include name="undertow-https"/>
-                <include name="jdr"/>
-                <include name="jsf"/>
-                <include name="webservices"/>
-                <include name="pojo"/>
-                <include name="mail"/>
-                <include name="sar"/>
-                <include name="batch-jberet"/>
-
-                <include name="iiop-openjdk"/>
-                <include name="embedded-activemq"/>
+                <include name="standalone-full-profile"/>
             </layers>
             <feature-group name="adjust-standalone-full-config"/>
-            <!-- The jaeger module is referenced from opentracing extension, using the feature-group is ok -->
-            <feature-group name="microprofile-opentracing-jaeger"/>
         </config>
     </example-configs>
 </tasks>
