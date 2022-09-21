@@ -5,7 +5,7 @@
         <layer name="ejb-lite"/>
         <layer name="resource-adapters"/>
 
-        <layer name="messaging-activemq"/>    <!-- change to messaging-activemq when available -->
+        <layer name="messaging-activemq" optional="true"/>
         <layer name="remoting"/>
         <layer name="undertow"/>
     </dependencies>
