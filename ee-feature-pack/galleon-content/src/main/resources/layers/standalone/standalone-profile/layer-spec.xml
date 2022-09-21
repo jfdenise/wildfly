@@ -22,5 +22,7 @@
         <layer name="mail" optional="true"/>
         <layer name="sar" optional="true"/>
         <layer name="batch-jberet" optional="true"/>
+        
+        <layer name="hibernate-search" optional="true"/>
     </dependencies>
 </layer-spec>
