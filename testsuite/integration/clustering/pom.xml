@@ -570,6 +570,7 @@
                                     <offline>true</offline>
                                     <scripts>
                                         <script>clustering-ha.cli</script>
+                                        <script>clustering.cli</script>
                                     </scripts>
                                     <jboss-home>${wildfly.dir}</jboss-home>
                                     <stdout>${project.build.directory}/wildfly-plugin.log</stdout>
