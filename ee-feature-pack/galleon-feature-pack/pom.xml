@@ -266,6 +266,7 @@
                             <release-name>${ee.dist.product.release.name}</release-name>
                             <fork-embedded>${galleon.fork.embedded}</fork-embedded>
                             <task-properties>
+                                <org.wildfly.plugins.galleon.all.artifact.requires.channel.resolution>true</org.wildfly.plugins.galleon.all.artifact.requires.channel.resolution>
                                 <product.release.version>${ee.dist.product.release.version}</product.release.version>
                             </task-properties>
                         </configuration>
