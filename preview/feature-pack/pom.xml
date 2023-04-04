@@ -375,10 +375,10 @@
                         </goals>
                         <phase>prepare-package</phase>
                         <configuration>
+                            <wildfly-channel-resolution-mode>REQUIRED</wildfly-channel-resolution-mode>
                             <release-name>${preview.dist.product.release.name}</release-name>
                             <fork-embedded>${galleon.fork.embedded}</fork-embedded>
                             <task-properties>
-                                <org.wildfly.plugins.galleon.all.artifact.requires.channel.resolution>true</org.wildfly.plugins.galleon.all.artifact.requires.channel.resolution>
                                 <product.release.version>${preview.dist.product.release.version}</product.release.version>
                             </task-properties>
                         </configuration>
