@@ -3,6 +3,7 @@
     <props>
         <prop name="expected-file" value="/WEB-INF/classes/META-INF/persistence.xml"/>
         <prop name="annotations" value="jakarta.persistence"/>
+        <prop name="constant-pool-class-info" value="jakarta.persistence"/>
     </props>
     <dependencies>
         <layer name="datasources"/>

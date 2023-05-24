@@ -3,6 +3,7 @@
     <props>
         <prop name="annotations" value="jakarta.servlet.annotation,jakarta.websocket"/>
         <prop name="xml-path" value="/WEB-INF/web.xml,/web-app/servlet"/>
+        <prop name="constant-pool-class-info" value="jakarta.servlet.*"/>
     </props>
     <dependencies>
         <layer name="ee-integration"/>

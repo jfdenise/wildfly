@@ -2,6 +2,7 @@
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="batch-jberet">
     <props>
         <prop name="expected-file" value="/WEB-INF/classes/META-INF/batch-jobs"/>
+        <prop name="constant-pool-class-info" value="jakarta.batch.api.*"/>
     </props>
     <dependencies>
         <!-- CDI should be optional but to be conservative in the first cut at this, require it
