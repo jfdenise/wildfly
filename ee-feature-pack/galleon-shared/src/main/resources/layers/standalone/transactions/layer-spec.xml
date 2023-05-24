@@ -2,6 +2,7 @@
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="transactions">
     <props>
         <prop name="annotations" value="jakarta.transaction"/>
+        <prop name="constant-pool-class-info" value="jakarta.transaction"/>
     </props>
     <dependencies>
         <layer name="elytron"/>
