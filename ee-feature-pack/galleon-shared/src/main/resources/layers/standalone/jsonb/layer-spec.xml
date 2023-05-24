@@ -2,6 +2,7 @@
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="jsonb">
     <props>
         <prop name="annotations" value="jakarta.json.bind.annotation" />
+        <prop name="constant-pool-class-info" value="jakarta.json.bind.*"/>
     </props>
     <dependencies>
         <layer name="base-server"/>
