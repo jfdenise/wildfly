@@ -1,7 +1,8 @@
 <?xml version="1.0" ?>
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="webservices">
     <props>
-        <prop name="annotations" value="jakarta.jws"/>
+        <prop name="annotations" value="jakarta.jws,jakarta.jws.soap,jakarta.xml.ws.soap"/>
+        <prop name="constant-pool-class-info" value="jakarta.jws.*,jakarta.xml.ws.*"/>
     </props>
     <dependencies>
         <layer name="web-server"/>
