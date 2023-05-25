@@ -24,6 +24,7 @@
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="reactive-messaging">
     <props>
         <prop name="annotations" value="org.eclipse.microprofile.reactive.messaging"/>
+        <prop name="constant-pool-class-info" value="org.eclipse.microprofile.reactive.messaging.*"/>
     </props>
     <dependencies>
         <layer name="cdi"/>
