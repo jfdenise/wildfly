@@ -25,6 +25,7 @@
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="microprofile-config">
     <props>
         <prop name="annotations" value="org.eclipse.microprofile.config.inject"/>
+        <prop name="constant-pool-class-info" value="org.eclipse.microprofile.config.*"/>
     </props>
     <dependencies>
         <layer name="cdi"/>
