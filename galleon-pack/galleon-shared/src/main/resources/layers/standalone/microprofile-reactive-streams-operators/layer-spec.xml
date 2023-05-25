@@ -22,6 +22,9 @@
   -->
 
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="microprofile-reactive-streams-operators">
+    <props>
+        <prop name="constant-pool-class-info" value="org.eclipse.microprofile.reactive.streams.operators.*"/>
+    </props>
     <dependencies>
         <layer name="cdi"/>
     </dependencies>
