@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="core-tools">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="core-tools">
     <props>
         <prop name="add-on-depends-on" value="all-dependencies"/>
         <prop name="add-on" value="management,wildfly-cli"/>

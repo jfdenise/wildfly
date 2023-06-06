@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="bean-validation">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="bean-validation">
     <props>
         <prop name="annotations" value="jakarta.validation"/>
         <prop name="constant-pool-class-info" value="jakarta.validation.*"/>
