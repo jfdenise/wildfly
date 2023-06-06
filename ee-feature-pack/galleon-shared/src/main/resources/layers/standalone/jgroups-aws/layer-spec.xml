@@ -21,7 +21,7 @@
   ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
   -->
 
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="jgroups-aws">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="jgroups-aws">
     <props>
         <prop name="add-on-depends-on" value="only:jgroups"/>
         <prop name="add-on" value="clustering,jgroups-aws"/>

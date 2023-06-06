@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="cdi">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="cdi">
     <props>
         <prop name="expected-file" value="/WEB-INF/beans.xml"/>
         <prop name="annotations" value="jakarta.inject,jakarta.enterprise.context"/>

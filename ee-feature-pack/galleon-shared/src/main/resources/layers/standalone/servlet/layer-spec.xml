@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="servlet">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="servlet">
     <props>
         <prop name="annotations" value="jakarta.servlet.annotation,jakarta.websocket"/>
         <prop name="xml-path" value="/WEB-INF/web.xml,/web-app/servlet"/>
