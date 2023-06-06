@@ -561,7 +561,7 @@
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
-                                    <provisioning-file>target/provisioning.xml</provisioning-file>
+                                    <provisioning-file>target/glow-scan/provisioning.xml</provisioning-file>
                                 </configuration>
                             </execution>
                         </executions>
