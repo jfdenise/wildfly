@@ -691,6 +691,51 @@
                             </execution>
                         </executions>
                     </plugin>
+
+                    <plugin>
+                        <groupId>org.wildfly.glow</groupId>
+                        <artifactId>glow-arquillian-plugin</artifactId>
+                        <configuration>
+                            <feature-packs>
+                                <feature-pack>
+                                    <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
+                                    <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
+                                    <version>${testsuite.ee.galleon.pack.version}</version>
+                                </feature-pack>
+                            </feature-packs>
+                            <config-name>standalone.xml</config-name>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>scan-observability</id>
+                                <goals>
+                                    <goal>scan</goal>
+                                </goals>
+                                <phase>test-compile</phase>
+                                <configuration>
+                                    <surefire-execution-for-included-classes>microprofile.surefire</surefire-execution-for-included-classes>
+                                    <add-ons>
+                                        <add-on>h2-database:default</add-on>
+                                    </add-ons>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>scan-legacy-sar-layers</id>
+                                <goals>
+                                    <goal>scan</goal>
+                                </goals>
+                                <phase>test-compile</phase>
+                                <configuration>
+                                    <surefire-execution-for-included-classes>legacy-sar-layers.surefire</surefire-execution-for-included-classes>
+                                    <add-ons>
+                                        <add-on>h2-database:default</add-on>
+                                    </add-ons>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+
                     <plugin>
                         <groupId>org.jboss.galleon</groupId>
                         <artifactId>galleon-maven-plugin</artifactId>
@@ -699,9 +744,9 @@
                             <execution>
                                 <id>observability-provisioning</id>
                                 <goals>
-                                    <goal>provision</goal>
+                                    <goal>provision-file</goal>
                                 </goals>
-                                <phase>compile</phase>
+                                <phase>test-compile</phase>
                                 <configuration>
                                     <install-dir>${project.build.directory}/wildfly</install-dir>
                                     <record-state>false</record-state>
@@ -712,25 +757,7 @@
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
-                                    <feature-packs>
-                                        <feature-pack>
-                                            <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
-                                            <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
-                                            <version>${testsuite.ee.galleon.pack.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
-                                        </feature-pack>
-                                    </feature-packs>
-                                    <configurations>
-                                        <config>
-                                            <model>standalone</model>
-                                            <name>standalone.xml</name>
-                                            <layers>
-                                                <layer>cloud-server</layer>
-                                                <layer>h2-default-datasource</layer>
-                                            </layers>
-                                        </config>
-                                    </configurations>
+                                    <provisioning-file>target/glow-scan/microprofile.surefire/provisioning.xml</provisioning-file>
                                 </configuration>
                             </execution>
 
@@ -738,9 +765,9 @@
                             <execution>
                                 <id>legacy-sar-provisioning</id>
                                 <goals>
-                                    <goal>provision</goal>
+                                    <goal>provision-file</goal>
                                 </goals>
-                                <phase>compile</phase>
+                                <phase>test-compile</phase>
                                 <configuration>
                                     <install-dir>${project.build.directory}/wildfly-legacy-sar</install-dir>
                                     <record-state>false</record-state>
@@ -751,31 +778,7 @@
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
-                                    <feature-packs>
-                                        <feature-pack>
-                                            <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
-                                            <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
-                                            <version>${testsuite.ee.galleon.pack.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
-                                        </feature-pack>
-                                    </feature-packs>
-                                    <configurations>
-                                        <config>
-                                            <model>standalone</model>
-                                            <name>standalone.xml</name>
-                                            <layers>
-                                                <layer>sar</layer>
-
-                                                <!-- Needed by arquillian: protocol and security manager -->
-                                                <layer>jmx-remoting</layer>
-                                                <layer>security-manager</layer>
-
-                                                <!-- Needed by org.jboss.as.test.smoke.sar.ConfigService -->
-                                                <layer>logging</layer>
-                                            </layers>
-                                        </config>
-                                    </configurations>
+                                    <provisioning-file>target/glow-scan/legacy-sar-layers.surefire/provisioning.xml</provisioning-file>
                                 </configuration>
                             </execution>
                         </executions>
