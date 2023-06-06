@@ -22,12 +22,6 @@
 
 package org.wildfly.test.integration.microprofile.jwt;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.wildfly.test.microprofile.jwt.TokenUtil.generateJWT;
-
-import java.net.URL;
-
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -36,14 +30,21 @@ import org.apache.http.util.EntityUtils;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Test;
 
+import java.net.URL;
+import java.nio.file.Paths;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.wildfly.test.microprofile.jwt.TokenUtil.generateJWT;
+
 /**
  * A base for MicroProfile JWT test cases.
  *
  * @author <a href="mailto:darran.lofthouse@jboss.com">Darran Lofthouse</a>
  */
-public abstract class BaseCase {
+public abstract class BaseJWTCase {
 
-    private static final String KEY_LOCATION = "src/test/resources/jwt/private.pem";
+    private static final URL KEY_LOCATION = BaseJWTCase.class.getResource("private.pem");
 
     private static final String ROOT_PATH = "/rest/Sample/";
     private static final String SUBSCRIPTION = "subscription";
@@ -74,7 +75,7 @@ public abstract class BaseCase {
 
     @Test
     public void testAuthorized() throws Exception {
-        String jwtToken = generateJWT(KEY_LOCATION, PRINCIPAL_NAME, DATE, ECHOER_GROUP, SUBSCRIBER_GROUP);
+        String jwtToken = generateJWT(Paths.get(KEY_LOCATION.toURI()).toAbsolutePath().toString(), PRINCIPAL_NAME, DATE, ECHOER_GROUP, SUBSCRIBER_GROUP);
 
         HttpGet httpGet = new HttpGet(deploymentUrl.toString() + ROOT_PATH + SUBSCRIPTION);
         httpGet.addHeader(AUTHORIZATION, BEARER + " " + jwtToken);
