@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="batch-jberet">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="batch-jberet">
     <props>
         <prop name="expected-file" value="/WEB-INF/classes/META-INF/batch-jobs"/>
         <prop name="constant-pool-class-info" value="jakarta.batch.api.*"/>
