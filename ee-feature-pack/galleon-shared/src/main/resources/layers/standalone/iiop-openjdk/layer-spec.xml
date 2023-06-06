@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="iiop-openjdk">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="iiop-openjdk">
     <props>
         <prop name="add-on" value="rpc,iiop" />
         <prop name="add-on-depends-on" value="none" />

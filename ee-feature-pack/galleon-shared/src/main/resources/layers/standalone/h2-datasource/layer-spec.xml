@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="h2-datasource">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="h2-datasource">
     <props>
         <prop name="add-on" value="database,h2-database"/>
         <prop name="add-on-depends-on" value="only:datasources"/>

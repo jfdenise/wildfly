@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="opentelemetry">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="opentelemetry">
     <props>
         <prop name="annotations" value="io.opentelemetry.instrumentation.annotations"/>
         <prop name="constant-pool-class-info" value="io.opentelemetry.api.*"/>
