@@ -22,7 +22,7 @@
   ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
   -->
 
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="health">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="health">
     <props>
         <prop name="add-on" value="observability,health"/>
         <prop name="add-on-depends-on" value="only:management"/>
