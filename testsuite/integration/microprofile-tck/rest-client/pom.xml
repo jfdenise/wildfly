@@ -37,9 +37,7 @@
         <jbossas.ts.integ.dir>${basedir}/../..</jbossas.ts.integ.dir>
         <jbossas.ts.dir>${jbossas.ts.integ.dir}/..</jbossas.ts.dir>
         <jbossas.project.dir>${jbossas.ts.dir}/..</jbossas.project.dir>
-        <!-- These properties control what layers are provisioned if galleon slimmed provisioning occurs -->
-        <ts.microprofile-tck-provisioning.base.layer>jaxrs-server</ts.microprofile-tck-provisioning.base.layer>
-        <ts.microprofile-tck-provisioning.decorator.layer>observability</ts.microprofile-tck-provisioning.decorator.layer>
+        <ts.microprofile-tck-tests-dependency>org.eclipse.microprofile.rest.client:microprofile-rest-client-tck</ts.microprofile-tck-tests-dependency>
         <!-- properties to enable plugins shared by various bootable profiles -->
         <bootable-jar-generate-properties-file.phase>none</bootable-jar-generate-properties-file.phase>
         <!-- Resource path -->
