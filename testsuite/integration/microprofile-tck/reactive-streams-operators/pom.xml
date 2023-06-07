@@ -49,7 +49,8 @@
             Essentially by default it will work like -Dts.layers
         -->
         <ts.copy-wildfly.phase>none</ts.copy-wildfly.phase>
-        <ts.microprofile-tck-provisioning.phase>compile</ts.microprofile-tck-provisioning.phase>
+        <ts.microprofile-tck-provisioning.phase>test-compile</ts.microprofile-tck-provisioning.phase>
+        <ts.microprofile-tck-glow.phase>test-compile</ts.microprofile-tck-glow.phase>
         <ts.microprofile-tck-tests-dependency>org.eclipse.microprofile.reactive-streams-operators:microprofile-reactive-streams-operators-tck</ts.microprofile-tck-tests-dependency>
     </properties>
 
