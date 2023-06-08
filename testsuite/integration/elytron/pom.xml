@@ -725,6 +725,35 @@
                     </plugin>
                     <!-- Instead provision slimmed installations -->
                     <plugin>
+                        <groupId>org.wildfly.glow</groupId>
+                        <artifactId>glow-arquillian-plugin</artifactId>
+                        <configuration>
+                            <feature-packs>
+                                <feature-pack>
+                                    <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
+                                    <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
+                                    <version>${testsuite.ee.galleon.pack.version}</version>
+                                </feature-pack>
+                            </feature-packs>
+                            <config-name>standalone-full.xml</config-name>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>scan</id>
+                                <goals>
+                                    <goal>scan</goal>
+                                </goals>
+                                <phase>test-compile</phase>
+                                <configuration>
+                                    <add-ons>
+                                        <add-on>h2-database:default</add-on>
+                                        <add-on>ssl</add-on>
+                                    </add-ons>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <groupId>org.jboss.galleon</groupId>
                         <artifactId>galleon-maven-plugin</artifactId>
                         <executions>
@@ -737,9 +766,9 @@
                             <execution>
                                 <id>cloud-profile-provisioning</id>
                                 <goals>
-                                    <goal>provision</goal>
+                                    <goal>provision-file</goal>
                                 </goals>
-                                <phase>generate-test-resources</phase>
+                                <phase>test-compile</phase>
                                 <configuration>
                                     <install-dir>${project.build.directory}/${wildfly.instance.name}</install-dir>
                                     <record-state>false</record-state>
@@ -750,7 +779,8 @@
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
-                                    <feature-packs>
+                                    <provisioning-file>target/glow-scan/provisioning.xml</provisioning-file>
+                                   <!-- <feature-packs>
                                         <feature-pack>
                                             <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
                                             <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
@@ -769,7 +799,7 @@
                                                 <layer>h2-default-datasource</layer>
                                             </layers>
                                         </config>
-                                    </configurations>
+                                    </configurations>-->
                                 </configuration>
                             </execution>
                         </executions>
