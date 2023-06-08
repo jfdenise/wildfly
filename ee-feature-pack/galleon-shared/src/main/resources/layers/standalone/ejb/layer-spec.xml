@@ -2,7 +2,7 @@
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="ejb">
     <!-- Aggregates EJB functionality, excluding ejb-iiop. -->
     <props>
-        <prop name="annotations" value="jakarta.ejb.MessageDriven"/>
+        <prop name="annotations" value="jakarta.ejb.MessageDriven,jakarta.ejb.Remote"/>
     </props>
     <dependencies>
         <layer name="ejb-lite"/>
