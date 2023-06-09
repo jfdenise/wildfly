@@ -3,6 +3,7 @@ package org.jboss.as.test.integration.jaxrs.deployment;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.as.test.shared.GlowUtil;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -27,7 +28,9 @@ public class DupliciteApplicationPathTestCase {
 
     @Deployment
     public static Archive<?> deploy_true() {
-        initWarningsCount = getWarningCount("WFLYUT0101");
+        if (!GlowUtil.isGlowScan()) {
+            initWarningsCount = getWarningCount("WFLYUT0101");
+        }
         WebArchive war = ShrinkWrap.create(WebArchive.class, DupliciteApplicationPathTestCase.class.getSimpleName() + ".war");
         war.addClass(DupliciteApplicationOne.class);
         war.addClass(DupliciteApplicationTwo.class);
