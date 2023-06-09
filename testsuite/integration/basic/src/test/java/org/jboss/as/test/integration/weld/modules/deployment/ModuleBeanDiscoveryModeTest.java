@@ -29,6 +29,7 @@ import org.hamcrest.MatcherAssert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.as.test.module.util.TestModule;
+import org.jboss.as.test.shared.GlowUtil;
 import org.jboss.as.test.shared.ModuleUtils;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -88,9 +89,11 @@ public class ModuleBeanDiscoveryModeTest {
 
     @Deployment
     public static Archive<?> getDeployment() throws Exception {
-        doSetup();
+        if (!GlowUtil.isGlowScan()) {
+            doSetup();
+        }
         return ShrinkWrap.create(WebArchive.class)
-                .addClasses(ModuleBeanDiscoveryModeTest.class, TestModule.class)
+                .addClasses(ModuleBeanDiscoveryModeTest.class, TestModule.class, GlowUtil.class)
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsManifestResource(new StringAsset("Dependencies: test." + MODULE_NAME + " meta-inf\n"), "MANIFEST.MF");
     }
