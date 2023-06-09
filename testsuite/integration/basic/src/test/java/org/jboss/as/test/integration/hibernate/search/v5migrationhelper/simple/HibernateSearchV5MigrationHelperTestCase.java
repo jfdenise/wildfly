@@ -25,6 +25,7 @@ import jakarta.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.as.test.integration.hibernate.search.backend.lucene.simple.HibernateSearchLuceneSimpleTestCase;
+import org.jboss.as.test.integration.hibernate.search.v5migrationhelper.V5MigrationHelperMarker;
 import org.jboss.as.test.shared.util.AssumeTestGroupUtil;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
@@ -63,7 +64,7 @@ public class HibernateSearchV5MigrationHelperTestCase {
     }
 
     @Deployment
-    public static WebArchive createArchive() {
+    public static WebArchive createArchive() throws Exception {
 
         // TODO maybe just use managed=false and deploy in the @BeforeClass / undeploy in an @AfterClass
         if (AssumeTestGroupUtil.isSecurityManagerEnabled()) {
@@ -78,8 +79,9 @@ public class HibernateSearchV5MigrationHelperTestCase {
                 .addAsResource(persistenceXml(), "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 // These JARs are copied to target/ using the maven-dependency-plugin; see pom.xml.
-                .addAsLibraries(new File("target/testlib/hibernate-search-v5migrationhelper-engine.jar"),
-                        new File("target/testlib/hibernate-search-v5migrationhelper-orm.jar"));
+                .addAsLibraries(
+                        new File(V5MigrationHelperMarker.class.getResource("hibernate-search-v5migrationhelper-engine.jar").toURI()),
+                        new File(V5MigrationHelperMarker.class.getResource("hibernate-search-v5migrationhelper-orm.jar").toURI()));
     }
 
     private static Asset warManifest() {
