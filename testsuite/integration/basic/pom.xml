@@ -1749,6 +1749,7 @@
             <properties>
                 <jboss.dist>${project.build.directory}/wildfly</jboss.dist>
                 <extra.server.jvm.args>-Dmaven.repo.local=${settings.localRepository}</extra.server.jvm.args>
+                <ts.config-as.copy-mgmt-users.phase>process-test-classes</ts.config-as.copy-mgmt-users.phase>
             </properties>
             <build>
                 <plugins>
@@ -1850,9 +1851,9 @@
                         <configuration>
                             <feature-packs>
                                 <feature-pack>
-                                    <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
-                                    <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
-                                    <version>${testsuite.ee.galleon.pack.version}</version>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>wildfly-test-galleon-pack</artifactId>
+                                    <version>${project.version}</version>
                                 </feature-pack>
                             </feature-packs>
                             <config-name>standalone.xml</config-name>
@@ -1975,6 +1976,7 @@
                                     <surefire-execution-for-included-classes>ejb-layers.surefire</surefire-execution-for-included-classes>
                                     <add-ons>
                                         <add-on>h2-database:default</add-on>
+                                        <add-on>ejb-elytron-testsuite</add-on>
                                     </add-ons>
                                 </configuration>
                             </execution>
@@ -1988,10 +1990,10 @@
                                     <surefire-execution-for-included-classes>ejb-embedded-broker-layers.surefire</surefire-execution-for-included-classes>
                                     <add-ons>
                                         <add-on>h2-database:default</add-on>
+                                        <add-on>embedded-activemq</add-on>
                                     </add-ons>
                                 </configuration>
                             </execution>
-<!--
                             <execution>
                                 <id>scan-ejb-remote-broker-layers</id>
                                 <goals>
@@ -2006,7 +2008,6 @@
                                     </add-ons>
                                 </configuration>
                             </execution>
--->
                             <execution>
                                 <id>scan-jsf-layers</id>
                                 <goals>
@@ -2289,28 +2290,6 @@
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
                                     <provisioning-file>target/glow-scan/ejb-layers.surefire/provisioning.xml</provisioning-file>
-<!--
-                                    <feature-packs>
-                                        <feature-pack>
-                                            <groupId>${project.groupId}</groupId>
-                                            <artifactId>wildfly-test-galleon-pack</artifactId>
-                                            <version>${ee.maven.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
-                                        </feature-pack>
-                                    </feature-packs>
-                                    <configurations>
-                                        <config>
-                                            <model>standalone</model>
-                                            <name>standalone.xml</name>
-                                            <layers>
-                                                <layer>cloud-server</layer>
-                                                <layer>h2-default-datasource</layer>
-                                                <layer>ejb</layer>
-                                                <layer>ejb-elytron-testsuite</layer>
-                                            </layers>
-                                        </config>
-                                    </configurations>-->
                                 </configuration>
                             </execution>
                             <!-- Provision a cloud-profile server with ejb and embedded-broker -->
@@ -2331,74 +2310,29 @@
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
                                     <provisioning-file>target/glow-scan/ejb-embedded-broker-layers.surefire/provisioning.xml</provisioning-file>
-<!--
-                                    <feature-packs>
-                                        <feature-pack>
-                                            <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
-                                            <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
-                                            <version>${testsuite.ee.galleon.pack.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
-                                        </feature-pack>
-                                    </feature-packs>
-                                    <configurations>
-                                        <config>
-                                            <model>standalone</model>
-                                            <name>standalone.xml</name>
-                                            <layers>
-                                                <layer>cloud-server</layer>
-                                                <layer>h2-default-datasource</layer>
-                                                <layer>ejb</layer>
-                                                <layer>embedded-activemq</layer>
-                                            </layers>
-                                        </config>
-                                    </configurations>-->
                                 </configuration>
-                      </execution>
-                            <!--
-                                                        &lt;!&ndash; Provision a cloud-profile server with ejb for remote Artemis broker &ndash;&gt;
-                                                        <execution>
-                                                            <id>ejb-remote-broker-provisioning</id>
-                                                            <goals>
-                                                                <goal>provision-file</goal>
-                                                            </goals>
-                                                            <phase>test-compile</phase>
-                                                            <configuration>
-                                                                <install-dir>${project.build.directory}/wildfly-ejb-remote-broker</install-dir>
-                                                                <record-state>false</record-state>
-                                                                <log-time>${galleon.log.time}</log-time>
-                                                                <offline>${galleon.offline}</offline>
-                                                                <plugin-options>
-                                                                    <jboss-maven-dist/>
-                                                                    <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
-                                                                    <optional-packages>passive+</optional-packages>
-                                                                </plugin-options>
-                                                                <provisioning-file>target/glow-scan/ejb-remote-broker-layers.surefire/provisioning.xml</provisioning-file>
-                            &lt;!&ndash;
-                                                                <feature-packs>
-                                                                    <feature-pack>
-                                                                        <groupId>${project.groupId}</groupId>
-                                                                        <artifactId>wildfly-test-galleon-pack</artifactId>
-                                                                        <version>${project.version}</version>
-                                                                        <inherit-configs>false</inherit-configs>
-                                                                        <inherit-packages>false</inherit-packages>
-                                                                    </feature-pack>
-                                                                </feature-packs>
-                                                                <configurations>
-                                                                    <config>
-                                                                        <model>standalone</model>
-                                                                        <name>standalone.xml</name>
-                                                                        <layers>
-                                                                            <layer>cloud-server</layer>
-                                                                            <layer>h2-default-datasource</layer>
-                                                                            <layer>ejb</layer>
-                                                                            <layer>remote-activemq-cf</layer>
-                                                                            <layer>remote-naming</layer>
-                                                                        </layers>
-                                                                    </config>
-                                                                </configurations>&ndash;&gt;
-                                                            </configuration>
-                                                        </execution>-->
+                            </execution>
+
+                            <!-- Provision a cloud-profile server with ejb for remote Artemis broker -->
+                            <execution>
+                                <id>ejb-remote-broker-provisioning</id>
+                                <goals>
+                                    <goal>provision-file</goal>
+                                </goals>
+                                <phase>test-compile</phase>
+                                <configuration>
+                                    <install-dir>${project.build.directory}/wildfly-ejb-remote-broker</install-dir>
+                                    <record-state>false</record-state>
+                                    <log-time>${galleon.log.time}</log-time>
+                                    <offline>${galleon.offline}</offline>
+                                    <plugin-options>
+                                        <jboss-maven-dist/>
+                                        <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
+                                        <optional-packages>passive+</optional-packages>
+                                    </plugin-options>
+                                    <provisioning-file>target/glow-scan/ejb-remote-broker-layers.surefire/provisioning.xml</provisioning-file>
+                                </configuration>
+                            </execution>
 
                             <!-- Provision a server with JSF support. -->
                             <execution>
@@ -2960,7 +2894,7 @@
                             <!-- Tests against the install with ejb -->
                             <execution>
                                 <id>ejb-layers.surefire</id>
-                                <!-- TODO Failures, mainly due to ejb-elytron-testsuite layer not found -->
+                                <!-- works -->
                                 <phase>none</phase>
                                 <goals>
                                     <goal>test</goal>
@@ -3087,7 +3021,7 @@
                             <!-- Tests against the install with ejb and embedded broker-->
                             <execution>
                                 <id>ejb-embedded-broker-layers.surefire</id>
-                                <!-- TODO test failures - then again not even the original tests work on my Mac -->
+                                <!-- works -->
                                 <phase>none</phase>
                                 <goals>
                                     <goal>test</goal>
@@ -3117,7 +3051,7 @@
                             <!-- Tests against the install with ejb and remote broker-->
                             <execution>
                                 <id>ejb-remote-broker-layers.surefire</id>
-                                <!-- TODO my addon doesn't seem to work properly -->
+                                <!-- works -->
                                 <phase>none</phase>
                                 <goals>
                                     <goal>test</goal>
