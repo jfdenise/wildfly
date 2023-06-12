@@ -24,6 +24,7 @@
     <props>
         <prop name="expected-file-in-jar" value="/META-INF/singleton-deployment.xml"/>
         <prop name="expected-file-in-war" value="/WEB-INF/classes/META-INF/singleton-deployment.xml"/>
+        <prop name="constant-pool-class-info" value="org.wildfly.clustering.singleton.*"/>
     </props>
 
     <dependencies>
