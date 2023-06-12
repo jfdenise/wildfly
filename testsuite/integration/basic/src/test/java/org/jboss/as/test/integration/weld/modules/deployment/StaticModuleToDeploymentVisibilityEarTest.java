@@ -26,6 +26,7 @@ import jakarta.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.as.test.module.util.TestModule;
+import org.jboss.as.test.shared.GlowUtil;
 import org.jboss.as.test.shared.ModuleUtils;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -67,9 +68,11 @@ public class StaticModuleToDeploymentVisibilityEarTest {
 
     @Deployment
     public static Archive<?> getDeployment() throws Exception {
-        doSetup();
+        if (!GlowUtil.isGlowScan()) {
+            doSetup();
+        }
         WebArchive war1 = ShrinkWrap.create(WebArchive.class)
-                .addClasses(StaticModuleToDeploymentVisibilityEarTest.class, FooImpl1.class, TestModule.class)
+                .addClasses(StaticModuleToDeploymentVisibilityEarTest.class, FooImpl1.class, TestModule.class, GlowUtil.class)
                 .addAsWebInfResource(new StringAsset("<beans bean-discovery-mode=\"all\"></beans>"), "beans.xml");
         WebArchive war2 = ShrinkWrap.create(WebArchive.class)
                 .addClasses(FooImpl2.class)
