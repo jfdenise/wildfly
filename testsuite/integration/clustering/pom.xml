@@ -51,6 +51,10 @@
         <bootable-jar-cloud-profile-packaging.phase>none</bootable-jar-cloud-profile-packaging.phase>
         <bootable-jar-load-balancer-packaging.phase>none</bootable-jar-load-balancer-packaging.phase>
         <glow.phase>none</glow.phase>
+        <ts.config-as.configure-wildfly.phase>process-test-resources</ts.config-as.configure-wildfly.phase>
+        <ts.config-as.configure-lb.phase>generate-test-resources</ts.config-as.configure-lb.phase>
+        <genkey-keystore.phase>generate-test-resources</genkey-keystore.phase>
+        <ts.config-as.clustering.phase>test-compile</ts.config-as.clustering.phase>
         <!-- Disable the default surefire test execution. All profiles use custom executions. -->
         <surefire.default-test.phase>none</surefire.default-test.phase>
         <infinispan.server.home.override/>
@@ -617,7 +621,7 @@
                         <executions>
                             <execution>
                                 <id>ts.config-as.configure-wildfly</id>
-                                <phase>process-test-classes</phase>
+                                <phase>${ts.config-as.configure-wildfly.phase}</phase>
                                 <goals>
                                     <goal>execute-commands</goal>
                                 </goals>
@@ -639,7 +643,7 @@
                             </execution>
                             <execution>
                                 <id>ts.config-as.configure-lb</id>
-                                <phase>process-test-classes</phase>
+                                <phase>${ts.config-as.configure-lb.phase}</phase>
                                 <goals>
                                     <goal>execute-commands</goal>
                                 </goals>
@@ -679,7 +683,7 @@
                                 </goals>
                             </execution>
                             <execution>
-                                <phase>generate-test-resources</phase>
+                                <phase>${genkey-keystore.phase}</phase>
                                 <id>genkey-keystore</id>
                                 <goals>
                                     <goal>generateKeyPair</goal>
@@ -706,7 +710,7 @@
                         <executions combine.children="append">
                             <execution>
                                 <id>ts.config-as.clustering</id>
-                                <phase>process-test-classes</phase>
+                                <phase>${ts.config-as.clustering.phase}</phase>
                                 <goals>
                                     <goal>run</goal>
                                 </goals>
@@ -1495,7 +1499,11 @@
             <properties>
                 <jboss.dist>${project.build.directory}/wildfly</jboss.dist>
                 <extra.server.jvm.args>-Dmaven.repo.local=${settings.localRepository}</extra.server.jvm.args>
-                <ts.config-as.copy-mgmt-users.phase>test-compile</ts.config-as.copy-mgmt-users.phase>
+                <ts.config-as.copy-mgmt-users.phase>process-test-classes</ts.config-as.copy-mgmt-users.phase>
+                <ts.config-as.configure-wildfly.phase>process-test-classes</ts.config-as.configure-wildfly.phase>
+                <ts.config-as.configure-lb.phase>process-test-classes</ts.config-as.configure-lb.phase>
+                <genkey-keystore.phase>process-test-classes</genkey-keystore.phase>
+                <ts.config-as.clustering.phase>process-test-classes</ts.config-as.clustering.phase>
             </properties>
             <build>
                 <plugins>
@@ -2630,6 +2638,9 @@
                 <bootable-jar-load-balancer-packaging.phase>test-compile</bootable-jar-load-balancer-packaging.phase>
                 <extra.server.jvm.args>-Dmaven.repo.local=${settings.localRepository}</extra.server.jvm.args>
                 <glow.phase>test-compile</glow.phase>
+                <ts.config-as.configure-wildfly.phase>none</ts.config-as.configure-wildfly.phase>
+                <ts.config-as.configure-lb.phase>none</ts.config-as.configure-lb.phase>
+                <ts.config-as.clustering.phase>none</ts.config-as.clustering.phase>
             </properties>
             <build>
                 <plugins>
@@ -2644,42 +2655,6 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- Disable the standard configurations -->
-                    <plugin>
-                        <groupId>org.wildfly.plugins</groupId>
-                        <artifactId>wildfly-maven-plugin</artifactId>
-                        <version>${version.org.wildfly.plugin}</version>
-                        <executions>
-                            <execution>
-                                <id>ts.config-as.configure-lb</id>
-                                <phase>none</phase>
-                                <goals>
-                                    <goal>execute-commands</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>ts.config-as.configure-wildfly</id>
-                                <phase>none</phase>
-                                <goals>
-                                    <goal>execute-commands</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- Disable copying the generated resources into server directories -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions combine.children="append">
-                            <execution>
-                                <id>ts.config-as.clustering</id>
-                                <phase>none</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
                             </execution>
                         </executions>
                     </plugin>
