@@ -1,5 +1,9 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="ejb-elytron-testsuite">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="ejb-elytron-testsuite">
+    <props>
+        <prop name="add-on" value="elytron,ejb-elytron-testsuite"/>
+        <prop name="add-on-depends-on" value="only:elytron"/>
+    </props>
     <!-- Enables the EJB authentication via HTTP -->
     <feature spec="subsystem.elytron.http-authentication-factory">
         <param name="http-authentication-factory" value="ejb-http-authentication"/>
