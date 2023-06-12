@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="remote-activemq-cf">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="remote-activemq-cf">
     <props>
-        <prop name="add-on-depends-on" value="only:remote-activemq"/>
+        <prop name="add-on-depends-on" value="only:messaging-activemq"/>
         <prop name="add-on" value="messaging,remote-activemq-cf"/>
     </props>
     <dependencies>
