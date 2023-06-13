@@ -1323,6 +1323,13 @@
                         <phase>${glow.legacy-sar.phase}</phase>
                         <configuration>
                             <surefire-execution-for-included-classes>legacy-sar-layers.surefire</surefire-execution-for-included-classes>
+                            <systemPropertyVariables>
+                                <!--
+                                The org.jboss.as.test.integration.sar.injection.resource.X class does a @Resource inject of
+                                java:jboss/mail on a jakarta.naming.Context class. This is 'weakly typed' so we cannot
+                                infer that the mail layer is needed at present. -->
+                                <org.wildfly.glow.manual.layers>mail</org.wildfly.glow.manual.layers>
+                            </systemPropertyVariables>
                         </configuration>
                     </execution>
                     <execution>
@@ -2408,27 +2415,6 @@
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
                                     <provisioning-file>target/glow-scan/legacy-sar-layers.surefire/provisioning.xml</provisioning-file>
-<!--
-                                    <feature-packs>
-                                        <feature-pack>
-                                            <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
-                                            <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
-                                            <version>${testsuite.ee.galleon.pack.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
-                                        </feature-pack>
-                                    </feature-packs>
-                                    <configurations>
-                                        <config>
-                                            <model>standalone</model>
-                                            <name>standalone.xml</name>
-                                            <layers>
-                                                <layer>sar</layer>
-                                                <layer>mail</layer>
-                                                <layer>datasources-web-server</layer>
-                                            </layers>
-                                        </config>
-                                    </configurations>-->
                                 </configuration>
                             </execution>
                             <!-- Provision a server with mail support. -->
@@ -2543,8 +2529,7 @@
                             <!-- Tests against the install with batch-jberet -->
                             <execution>
                                 <id>batch-jberet-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2574,8 +2559,7 @@
                             <!-- Tests against the install with JSF support -->
                             <execution>
                                 <id>jsf-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2607,8 +2591,7 @@
                             <!-- Tests against the install with both JSF and EJB support -->
                             <execution>
                                 <id>jsf-ejb-lite-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2635,8 +2618,7 @@
                             <!-- Tests against a server provisioned with Jboss Diagnostic Reporting layer -->
                             <execution>
                                 <id>jdr.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2662,8 +2644,7 @@
                             <!-- Tests against a server provisioned with Jsonp layer -->
                             <execution>
                                 <id>jsonp-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2692,8 +2673,7 @@
                             <!-- Tests against a server provisioned with Jsonb layer -->
                             <execution>
                                 <id>jsonb-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2721,8 +2701,7 @@
                                 <!-- We reuse the microprofile.surefire execution used for testing standalone-microprofile.xml
                                      as the set of tests we want is the same -->
                                 <id>microprofile.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2738,8 +2717,7 @@
                             <!-- Tests against the install with legacy sar support -->
                             <execution>
                                 <id>legacy-sar-layers.surefire</id>
-                                <!-- TODO failing test due to mail not picked up (no classes/annotations, just a naming Context referencing the JNDI name -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2767,8 +2745,7 @@
                             <!-- Tests against the install with ejb-lite -->
                             <execution>
                                 <id>ee-concurrency-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2798,8 +2775,7 @@
                             <!-- Tests against the install with ejb-lite -->
                             <execution>
                                 <id>ejb-lite-layers.surefire</id>
-                                <!-- works (one failing test which also fails on my clean checkout....) -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2909,8 +2885,7 @@
                             <!-- Tests against the install with ejb -->
                             <execution>
                                 <id>ejb-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -2978,8 +2953,7 @@
                             <!-- Tests against a server provisioned with jpa -->
                             <execution>
                                 <id>jpa-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -3009,8 +2983,7 @@
                             <!-- Tests against a server provisioned with hibernate-search -->
                             <execution>
                                 <id>hibernate-search-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -3036,8 +3009,7 @@
                             <!-- Tests against the install with ejb and embedded broker-->
                             <execution>
                                 <id>ejb-embedded-broker-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -3066,8 +3038,7 @@
                             <!-- Tests against the install with ejb and remote broker-->
                             <execution>
                                 <id>ejb-remote-broker-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -3119,8 +3090,7 @@
                             <!-- Tests against the install with mail support -->
                             <execution>
                                 <id>mail-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -3150,8 +3120,7 @@
                             <!-- Tests against the install with mail and ejb support -->
                             <execution>
                                 <id>mail-ejb-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -3178,8 +3147,7 @@
                             <!-- Tests against the install with legacy pojo support -->
                             <execution>
                                 <id>pojo-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
@@ -3205,8 +3173,7 @@
                             <!-- Tests against a server provisioned with the Web Console -->
                             <execution>
                                 <id>web-console-layers.surefire</id>
-                                <!-- works -->
-                                <phase>none</phase>
+                                <phase>test</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
