@@ -52,6 +52,7 @@
         -->
         <mp.tck.properties>-Dmp.tck.prop.dummy=dummy -Dcustomer.hobby=Tennis -Dconfig_ordinal=120</mp.tck.properties>
 
+        <ts.microprofile-tck-glow.expected-discovery>[cdi, ee-integration, microprofile-config]==>ee-core-profile-server,microprofile-config</ts.microprofile-tck-glow.expected-discovery>
 
     </properties>
 

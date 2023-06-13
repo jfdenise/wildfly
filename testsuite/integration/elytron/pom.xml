@@ -760,6 +760,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[batch-jberet, cdi, datasources, ee-integration, ee-security, ejb, ejb-lite, elytron, h2-datasource, h2-default-datasource, naming, servlet, undertow, undertow-https]==>ee-core-profile-server,batch-jberet,ee-security,ejb,h2-default-datasource,undertow-https</expected-discovery>
                                     <add-ons>
                                         <add-on>h2-database:default</add-on>
                                         <add-on>ssl</add-on>
@@ -961,6 +962,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[batch-jberet, cdi, datasources, ee-integration, ee-security, ejb, ejb-lite, elytron, h2-datasource, h2-default-datasource, naming, servlet, undertow, undertow-https]==>ee-core-profile-server,batch-jberet,ee-security,ejb,h2-default-datasource,undertow-https</expected-discovery>
                                     <add-ons>
                                         <add-on>h2-database:default</add-on>
                                         <add-on>ssl</add-on>

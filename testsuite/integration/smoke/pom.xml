@@ -558,6 +558,7 @@
                         </goals>
                         <phase>${glow.phase.observability}</phase>
                         <configuration>
+                            <expected-discovery>[datasources, ee-integration, h2-datasource, h2-default-datasource, jaxrs, messaging-activemq, naming, resource-adapters, servlet]==>ee-core-profile-server,h2-default-datasource,jaxrs,messaging-activemq</expected-discovery>
                             <surefire-execution-for-included-classes>microprofile.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
@@ -571,6 +572,7 @@
                         </goals>
                         <phase>${glow.phase.sar}</phase>
                         <configuration>
+                            <expected-discovery>[datasources, h2-datasource, h2-default-datasource, sar]==>ee-core-profile-server,h2-default-datasource,sar</expected-discovery>
                             <surefire-execution-for-included-classes>legacy-sar-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>

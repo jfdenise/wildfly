@@ -185,6 +185,9 @@
                             <goal>scan</goal>
                         </goals>
                         <phase>${glow.phase}</phase>
+                        <configuration>
+                            <expected-discovery>[ee-integration, ejb, ejb-lite, elytron-oidc-client, naming, servlet]==>ee-core-profile-server,ejb,elytron-oidc-client</expected-discovery>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
