@@ -55,6 +55,7 @@
         <ts.bootable-jar-microprofile-tck-packaging.phase>none</ts.bootable-jar-microprofile-tck-packaging.phase>
         <ts.microprofile-tck-glow.phase>none</ts.microprofile-tck-glow.phase>
         <ts.microprofile-tck-glow.config.name>standalone-microprofile.xml</ts.microprofile-tck-glow.config.name>
+        <ts.microprofile-tck-glow.expected-discovery>FIXME-must-override</ts.microprofile-tck-glow.expected-discovery>
         <!-- Child modules override these properties to control what feature packs are used
              and what layers are provisioned if galleon provision occurs -->
         <ts.microprofile-tck-provisioning.fp.groupId>${full.maven.groupId}</ts.microprofile-tck-provisioning.fp.groupId>
@@ -136,6 +137,9 @@
                             <goal>scan</goal>
                         </goals>
                         <phase>${ts.microprofile-tck-glow.phase}</phase>
+                        <configuration>
+                            <expected-discovery>${ts.microprofile-tck-glow.expected-discovery}</expected-discovery>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

@@ -1153,6 +1153,7 @@
                         </goals>
                         <phase>${glow.cloud-profile.phase}</phase>
                         <configuration>
+                            <expected-discovery>[bean-validation, cdi, datasources, ee-concurrency, ee-integration, ejb-lite, h2-datasource, h2-default-datasource, jaxrs, jpa, jsonb, jsonp, mail, messaging-activemq, naming, resource-adapters, servlet, transactions]==>ee-core-profile-server,ejb-lite,h2-default-datasource,jaxrs,jpa,mail,messaging-activemq</expected-discovery>
                             <surefire-execution-for-included-classes>microprofile.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
@@ -1166,6 +1167,7 @@
                         </goals>
                         <phase>${glow.jdr.phase}</phase>
                         <configuration>
+                            <expected-discovery>[base-server, jdr, management]==>ee-core-profile-server,jdr</expected-discovery>
                             <surefire-execution-for-included-classes>jdr.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>jdr</add-on>
@@ -1180,6 +1182,7 @@
                         </goals>
                         <phase>${glow.jberet.phase}</phase>
                         <configuration>
+                            <expected-discovery>[batch-jberet, cdi, datasources, ee-integration, ejb-lite, h2-datasource, jpa, jsonp, servlet]==>ee-core-profile-server,batch-jberet,ejb-lite,h2-datasource,jpa</expected-discovery>
                             <surefire-execution-for-included-classes>batch-jberet-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1190,6 +1193,7 @@
                         </goals>
                         <phase>${glow.jpa.phase}</phase>
                         <configuration>
+                            <expected-discovery>[cdi, datasources, ee-integration, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions]==>ee-core-profile-server,h2-default-datasource,jpa</expected-discovery>
                             <surefire-execution-for-included-classes>jpa-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
@@ -1203,6 +1207,7 @@
                         </goals>
                         <phase>${glow.hibernate-search.phase}</phase>
                         <configuration>
+                            <expected-discovery>[cdi, datasources, ejb-lite, h2-datasource, h2-default-datasource, hibernate-search, jpa, transactions]==>ee-core-profile-server,ejb-lite,h2-default-datasource,hibernate-search</expected-discovery>
                             <surefire-execution-for-included-classes>hibernate-search-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
@@ -1217,6 +1222,7 @@
                         </goals>
                         <phase>${glow.jsonp.phase}</phase>
                         <configuration>
+                            <expected-discovery>[jsonp, servlet]==>ee-core-profile-server</expected-discovery>
                             <surefire-execution-for-included-classes>jsonp-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1227,6 +1233,7 @@
                         </goals>
                         <phase>${glow.jsonb.phase}</phase>
                         <configuration>
+                            <expected-discovery>[jsonb, jsonp, servlet]==>ee-core-profile-server</expected-discovery>
                             <surefire-execution-for-included-classes>jsonb-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1237,6 +1244,7 @@
                         </goals>
                         <phase>${glow.ee-concurrency.phase}</phase>
                         <configuration>
+                            <expected-discovery>[ee-concurrency, ee-integration, ejb-lite, naming, transactions]==>ee-core-profile-server,ejb-lite</expected-discovery>
                             <surefire-execution-for-included-classes>ee-concurrency-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1247,6 +1255,7 @@
                         </goals>
                         <phase>${glow.ejb-lite.phase}</phase>
                         <configuration>
+                            <expected-discovery>[bean-validation, cdi, datasources, ee-concurrency, ee-integration, ejb-lite, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions]==>ee-core-profile-server,ejb-lite,h2-default-datasource,jpa</expected-discovery>
                             <surefire-execution-for-included-classes>ejb-lite-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
@@ -1260,6 +1269,7 @@
                         </goals>
                         <phase>${glow.ejb.phase}</phase>
                         <configuration>
+                            <expected-discovery>[bean-validation, cdi, datasources, ee-integration, ejb, ejb-elytron-testsuite, ejb-lite, h2-datasource, h2-default-datasource, jaxrs, jpa, messaging-activemq, naming, servlet, transactions, webservices]==>ee-core-profile-server,ejb,ejb-elytron-testsuite,h2-default-datasource,jaxrs,jpa,webservices</expected-discovery>
                             <surefire-execution-for-included-classes>ejb-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
@@ -1274,6 +1284,7 @@
                         </goals>
                         <phase>${glow.ejb-embedded-broker.phase}</phase>
                         <configuration>
+                            <expected-discovery>[cdi, datasources, ee, ee-concurrency, ee-integration, ejb, ejb-lite, elytron, embedded-activemq, h2-datasource, h2-default-datasource, messaging-activemq, naming, remoting, resource-adapters, servlet, transactions, undertow]==>ee-core-profile-server,ejb,embedded-activemq,h2-default-datasource</expected-discovery>
                             <surefire-execution-for-included-classes>ejb-embedded-broker-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
@@ -1288,6 +1299,7 @@
                         </goals>
                         <phase>${glow.ejb-remote-broker.phase}</phase>
                         <configuration>
+                            <expected-discovery>[cdi, datasources, ee-concurrency, ee-integration, ejb, ejb-lite, h2-datasource, h2-default-datasource, messaging-activemq, naming, remote-activemq, remote-activemq-cf, resource-adapters, servlet, transactions]==>ee-core-profile-server,ejb,h2-default-datasource,remote-activemq-cf</expected-discovery>
                             <surefire-execution-for-included-classes>ejb-remote-broker-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
@@ -1302,6 +1314,7 @@
                         </goals>
                         <phase>${glow.jsf.phase}</phase>
                         <configuration>
+                            <expected-discovery>[bean-validation, cdi, ee-integration, jsf, servlet, web-passivation]==>ee-core-profile-server,jsf,web-passivation</expected-discovery>
                             <surefire-execution-for-included-classes>jsf-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1312,6 +1325,7 @@
                         </goals>
                         <phase>${glow.ejb-lite.phase}</phase>
                         <configuration>
+                            <expected-discovery>[cdi, ejb-lite, jsf, servlet]==>ee-core-profile-server,ejb-lite,jsf</expected-discovery>
                             <surefire-execution-for-included-classes>jsf-ejb-lite-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1322,6 +1336,7 @@
                         </goals>
                         <phase>${glow.legacy-sar.phase}</phase>
                         <configuration>
+                            <expected-discovery>[ee-integration, mail, naming, sar, transactions]==>ee-core-profile-server,mail,sar,transactions</expected-discovery>
                             <surefire-execution-for-included-classes>legacy-sar-layers.surefire</surefire-execution-for-included-classes>
                             <systemPropertyVariables>
                                 <!--
@@ -1339,6 +1354,7 @@
                         </goals>
                         <phase>${glow.mail.phase}</phase>
                         <configuration>
+                            <expected-discovery>[mail, servlet]==>ee-core-profile-server,mail</expected-discovery>
                             <surefire-execution-for-included-classes>mail-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1349,6 +1365,7 @@
                         </goals>
                         <phase>${glow.mail-ejb.phase}</phase>
                         <configuration>
+                            <expected-discovery>[ee-integration, ejb, ejb-lite, mail, naming]==>ee-core-profile-server,ejb,mail</expected-discovery>
                             <surefire-execution-for-included-classes>mail-ejb-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1359,6 +1376,7 @@
                         </goals>
                         <phase>${glow.pojo.phase}</phase>
                         <configuration>
+                            <expected-discovery>[pojo]==>ee-core-profile-server,pojo</expected-discovery>
                             <surefire-execution-for-included-classes>pojo-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1369,6 +1387,7 @@
                         </goals>
                         <phase>${glow.web-console.phase}</phase>
                         <configuration>
+                            <expected-discovery>[management, web-console]==>ee-core-profile-server,web-console</expected-discovery>
                             <surefire-execution-for-included-classes>web-console-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>hal-web-console</add-on>
