@@ -317,6 +317,9 @@
                             <goal>scan</goal>
                         </goals>
                         <phase>${glow.phase}</phase>
+                        <configuration>
+                            <expected-discovery>[cdi, ee-concurrency, ee-integration, elytron, naming, servlet, undertow, undertow-https]==>ee-core-profile-server,ee-concurrency,undertow-https</expected-discovery>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

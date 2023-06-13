@@ -569,6 +569,9 @@
                                     <goal>scan</goal>
                                 </goals>
                                 <phase>test-compile</phase>
+                                <configuration>
+                                    <expected-discovery>[cdi, ee-integration, ejb, ejb-lite, jsf, naming, servlet, webservices]==>ee-core-profile-server,ejb,jsf,webservices</expected-discovery>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>

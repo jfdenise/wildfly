@@ -116,6 +116,7 @@
                 <groupId>org.wildfly.glow</groupId>
                 <artifactId>glow-arquillian-plugin</artifactId>
                 <configuration>
+                    <expected-discovery>[bean-validation, ee-integration, jaxrs, microprofile-config, microprofile-openapi, microprofile-rest-client]==>ee-core-profile-server,microprofile-openapi,microprofile-rest-client</expected-discovery>
                     <add-ons>
                         <add-on>openapi</add-on>
                     </add-ons>

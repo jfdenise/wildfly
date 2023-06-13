@@ -41,6 +41,7 @@
     <properties>
         <jbossas.ts.integ.dir>${basedir}/../..</jbossas.ts.integ.dir>
         <ts.microprofile-tck-tests-dependency>org.eclipse.microprofile.telemetry.tracing:microprofile-telemetry-tracing-tck</ts.microprofile-tck-tests-dependency>
+        <ts.microprofile-tck-glow.expected-discovery>[cdi, microprofile-config, microprofile-telemetry, opentelemetry]==>ee-core-profile-server,microprofile-telemetry</ts.microprofile-tck-glow.expected-discovery>
     </properties>
 
     <dependencies>
