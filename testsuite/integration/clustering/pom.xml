@@ -473,6 +473,7 @@
                         </goals>
                         <phase>${glow.phase}</phase>
                         <configuration>
+                            <expected-discovery>[ha][cdi, ee-integration, ejb, ejb-lite, infinispan, naming, servlet, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,infinispan,web-clustering,-ejb-local-cache</expected-discovery>
                             <add-ons>
                                 <add-on>infinispan</add-on>
                             </add-ons>
@@ -486,6 +487,7 @@
                         </goals>
                         <phase>${glow.phase}</phase>
                         <configuration>
+                            <expected-discovery>[ha][cdi, datasources, ee-integration, h2-datasource, h2-default-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-default-datasource,jaxrs,jpa-distributed</expected-discovery>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
                             </add-ons>
@@ -499,6 +501,7 @@
                         </goals>
                         <phase>${glow.phase}</phase>
                         <configuration>
+                            <expected-discovery>[ha][base-server, io, undertow-load-balancer]==>ee-core-profile-server,undertow-load-balancer</expected-discovery>
                             <add-ons>
                                 <add-on>load-balancer</add-on>
                             </add-ons>
@@ -1549,6 +1552,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][cdi, datasources, ee-integration, ejb, ejb-lite, h2-datasource, h2-default-datasource, infinispan, naming, servlet, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,infinispan,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
                                     <add-ons>
@@ -1575,6 +1579,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][base-server, io, undertow-load-balancer]==>ee-core-profile-server,undertow-load-balancer</expected-discovery>
                                     <aggregate>wildfly-server</aggregate>
                                     <config-name>standalone-load-balancer.xml</config-name>
                                     <add-ons>
@@ -1596,6 +1601,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][cdi, datasources, ee-integration, ejb, ejb-lite, h2-datasource, h2-default-datasource, infinispan, naming, servlet, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,infinispan,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
                                     <add-ons>
@@ -1614,6 +1620,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][cdi, datasources, ejb, ejb-lite, h2-datasource, h2-default-datasource, infinispan, mod_cluster, naming, servlet, web-passivation, web-server]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,infinispan,mod_cluster,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-mod-cluster</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
                                     <add-ons>
@@ -1641,6 +1648,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][base-server, io, undertow-load-balancer]==>ee-core-profile-server,undertow-load-balancer</expected-discovery>
                                     <aggregate>wildfly-server-mod-cluster</aggregate>
                                     <config-name>standalone-load-balancer.xml</config-name>
                                     <add-ons>
@@ -1662,6 +1670,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][cdi, datasources, ejb, ejb-lite, h2-datasource, h2-default-datasource, infinispan, mod_cluster, naming, servlet, web-passivation, web-server]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,infinispan,mod_cluster,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-mod-cluster</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
                                     <add-ons>
@@ -1681,6 +1690,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][cdi, datasources, ee-integration, h2-datasource, h2-default-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-default-datasource,jaxrs,jpa-distributed</expected-discovery>
                                     <aggregate>wildfly-server-jpa-dist</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
                                     <add-ons>
@@ -1696,6 +1706,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][cdi, datasources, ee-integration, h2-datasource, h2-default-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-default-datasource,jaxrs,jpa-distributed</expected-discovery>
                                     <aggregate>wildfly-server-jpa-dist</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
                                     <add-ons>
@@ -1713,6 +1724,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][cdi, datasources, ee-integration, ejb, ejb-lite, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,jpa-distributed,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-ejb</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
                                     <add-ons>
@@ -1728,6 +1740,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][cdi, datasources, ee-integration, ejb, ejb-lite, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,jpa-distributed,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-ejb</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
                                     <add-ons>
@@ -1745,6 +1758,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][cdi, ee-integration, jsf, web-passivation]==>ee-core-profile-server,jsf,web-clustering</expected-discovery>
                                     <aggregate>wildfly-server-jaxrs-jsf</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.jsf</surefireExecutionForIncludedClasses>
@@ -1757,6 +1771,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][cdi, ee-integration, jsf, web-passivation]==>ee-core-profile-server,jsf,web-clustering</expected-discovery>
                                     <aggregate>wildfly-server-jaxrs-jsf</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.jsf</surefireExecutionForIncludedClasses>
@@ -1771,6 +1786,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][servlet, singleton-local]==>ee-core-profile-server,singleton-ha</expected-discovery>
                                     <aggregate>wildfly-server-singleton-ha</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.singleton-ha</surefireExecutionForIncludedClasses>
@@ -1783,6 +1799,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[ha][servlet, singleton-local]==>ee-core-profile-server,singleton-ha</expected-discovery>
                                     <aggregate>wildfly-server-singleton-ha</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.singleton-ha</surefireExecutionForIncludedClasses>
@@ -1797,6 +1814,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[standalone][servlet, web-passivation]==>ee-core-profile-server,web-passivation</expected-discovery>
                                     <profiles>
                                         <profile>standalone</profile>
                                     </profiles>
@@ -1812,6 +1830,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-discovery>[standalone][servlet, singleton-local]==>ee-core-profile-server,singleton-local</expected-discovery>
                                     <profiles>
                                         <profile>standalone</profile>
                                     </profiles>

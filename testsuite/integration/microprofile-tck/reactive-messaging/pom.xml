@@ -55,6 +55,7 @@
         <ts.microprofile-tck-tests-dependency>org.eclipse.microprofile.reactive.messaging:microprofile-reactive-messaging-tck</ts.microprofile-tck-tests-dependency>
         <!-- Temporary property until we are fully aligned with Jakarta -->
         <version.eclipse.mp.rm.for.jakarta>3.0-RC2</version.eclipse.mp.rm.for.jakarta>
+        <ts.microprofile-tck-glow.expected-discovery>[cdi, ee-integration, microprofile-config, microprofile-reactive-messaging, microprofile-reactive-streams-operators]==>ee-core-profile-server,microprofile-reactive-messaging</ts.microprofile-tck-glow.expected-discovery>
     </properties>
 
     <dependencies>
