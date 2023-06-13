@@ -1319,6 +1319,13 @@
                         <phase>${glow.legacy-sar.phase}</phase>
                         <configuration>
                             <surefire-execution-for-included-classes>legacy-sar-layers.surefire</surefire-execution-for-included-classes>
+                            <systemPropertyVariables>
+                                <!--
+                                The org.jboss.as.test.integration.sar.injection.resource.X class does a @Resource inject of
+                                java:jboss/mail on a jakarta.naming.Context class. This is 'weakly typed' so we cannot
+                                infer that the mail layer is needed at present. -->
+                                <org.wildfly.glow.manual.layers>mail</org.wildfly.glow.manual.layers>
+                            </systemPropertyVariables>
                         </configuration>
                     </execution>
                     <execution>
@@ -2404,27 +2411,6 @@
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
                                     <provisioning-file>target/glow-scan/legacy-sar-layers.surefire/provisioning.xml</provisioning-file>
-<!--
-                                    <feature-packs>
-                                        <feature-pack>
-                                            <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
-                                            <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
-                                            <version>${testsuite.ee.galleon.pack.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
-                                        </feature-pack>
-                                    </feature-packs>
-                                    <configurations>
-                                        <config>
-                                            <model>standalone</model>
-                                            <name>standalone.xml</name>
-                                            <layers>
-                                                <layer>sar</layer>
-                                                <layer>mail</layer>
-                                                <layer>datasources-web-server</layer>
-                                            </layers>
-                                        </config>
-                                    </configurations>-->
                                 </configuration>
                             </execution>
                             <!-- Provision a server with mail support. -->
@@ -2734,7 +2720,7 @@
                             <!-- Tests against the install with legacy sar support -->
                             <execution>
                                 <id>legacy-sar-layers.surefire</id>
-                                <!-- TODO failing test due to mail not picked up (no classes/annotations, just a naming Context referencing the JNDI name -->
+                                <!-- works -->
                                 <phase>none</phase>
                                 <goals>
                                     <goal>test</goal>
