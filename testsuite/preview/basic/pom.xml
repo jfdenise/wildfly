@@ -133,6 +133,7 @@
                         </goals>
                         <phase>${glow.cloud-profile.phase}</phase>
                         <configuration>
+                            <expected-discovery>[datasources, h2-datasource, h2-default-datasource]==>ee-core-profile-server,h2-default-datasource</expected-discovery>
                             <surefire-execution-for-included-classes>cloud-server.layer.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
@@ -146,6 +147,7 @@
                         </goals>
                         <phase>${glow.jpa.phase}</phase>
                         <configuration>
+                            <expected-discovery>[datasources, h2-datasource, h2-default-datasource]==>ee-core-profile-server,h2-default-datasource</expected-discovery>
                             <surefire-execution-for-included-classes>jpa-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
@@ -159,6 +161,7 @@
                         </goals>
                         <phase>${glow.hibernate-search.phase}</phase>
                         <configuration>
+                            <expected-discovery>[cdi, datasources, h2-datasource, h2-default-datasource, hibernate-search, jpa, transactions]==>ee-core-profile-server,h2-default-datasource,hibernate-search</expected-discovery>
                             <surefire-execution-for-included-classes>hibernate-search.layer.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
