@@ -162,7 +162,6 @@
                             <surefire-execution-for-included-classes>hibernate-search.layer.surefire</surefire-execution-for-included-classes>
                             <add-ons>
                                 <add-on>h2-database:default</add-on>
-                                <add-on>hibernate-search</add-on>
                             </add-ons>
                         </configuration>
                     </execution>

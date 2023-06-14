@@ -1,8 +1,7 @@
 <?xml version="1.0" ?>
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="hibernate-search">
     <props>
-        <prop name="add-on-depends-on" value="only:jpa"/>
-        <prop name="add-on" value="jpa,hibernate-search"/>
+         <prop name="annotations" value="org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed"/>
     </props>
     <dependencies>
         <!-- 'jpa-distributed' can be used instead.
