@@ -44,6 +44,7 @@
         <jbossas.project.dir>${jbossas.ts.dir}/..</jbossas.project.dir>
         <!-- These properties control what layers are provisioned if galleon provision occurs -->
         <ts.microprofile-tck-tests-dependency>org.eclipse.microprofile.openapi:microprofile-openapi-tck</ts.microprofile-tck-tests-dependency>
+        <ts.microprofile-tck-glow.expected-discovery>[bean-validation, ee-integration, jaxrs, microprofile-config, microprofile-openapi, microprofile-rest-client]==>ee-core-profile-server,microprofile-openapi,microprofile-rest-client</ts.microprofile-tck-glow.expected-discovery>
     </properties>
 
     <dependencies>
@@ -116,7 +117,6 @@
                 <groupId>org.wildfly.glow</groupId>
                 <artifactId>glow-arquillian-plugin</artifactId>
                 <configuration>
-                    <expected-discovery>[bean-validation, ee-integration, jaxrs, microprofile-config, microprofile-openapi, microprofile-rest-client]==>ee-core-profile-server,microprofile-openapi,microprofile-rest-client</expected-discovery>
                     <add-ons>
                         <add-on>openapi</add-on>
                     </add-ons>
