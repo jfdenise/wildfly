@@ -61,6 +61,7 @@
         <connect.to.server>true</connect.to.server>
         <wait.for.ports>9990</wait.for.ports>
         <port.waiting.timeout>10</port.waiting.timeout>
+        <ts.microprofile-tck-glow.expected-discovery>[cdi, ee-integration, jaxrs, microprofile-config, microprofile-lra-coordinator, microprofile-lra-participant, transactions]==>ee-core-profile-server,microprofile-config,microprofile-lra-coordinator,microprofile-lra-participant</ts.microprofile-tck-glow.expected-discovery>
     </properties>
 
     <dependencies>
@@ -106,7 +107,6 @@
                 <groupId>org.wildfly.glow</groupId>
                 <artifactId>glow-arquillian-plugin</artifactId>
                 <configuration>
-                    <expected-discovery>[cdi, ee-integration, jaxrs, microprofile-config, microprofile-lra-coordinator, microprofile-lra-participant, transactions]==>ee-core-profile-server,microprofile-config,microprofile-lra-coordinator,microprofile-lra-participant</expected-discovery>
                     <add-ons>
                         <add-on>lra-coordinator</add-on>
                     </add-ons>
