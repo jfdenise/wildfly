@@ -558,6 +558,7 @@
                         </goals>
                         <phase>${glow.phase.observability}</phase>
                         <configuration>
+                            <ignore-expected-error>true</ignore-expected-error>
                             <expected-discovery>[datasources, ee-integration, h2-datasource, jaxrs, messaging-activemq, naming, resource-adapters, servlet]==>ee-core-profile-server,h2-datasource,jaxrs,messaging-activemq</expected-discovery>
                             <surefire-execution-for-included-classes>microprofile.surefire</surefire-execution-for-included-classes>
                             <systemPropertyVariables>
