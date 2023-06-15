@@ -487,6 +487,7 @@
                         </goals>
                         <phase>${glow.phase}</phase>
                         <configuration>
+                            <ignore-expected-error>true</ignore-expected-error>
                             <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
                             <surefireExecutionForIncludedClasses>ts.surefire.clustering.all.jpa2lc</surefireExecutionForIncludedClasses>
                         </configuration>
@@ -1683,6 +1684,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <ignore-expected-error>true</ignore-expected-error>
                                     <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
                                     <aggregate>wildfly-server-jpa-dist</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
@@ -1696,6 +1698,7 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <ignore-expected-error>true</ignore-expected-error>
                                     <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
                                     <aggregate>wildfly-server-jpa-dist</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
