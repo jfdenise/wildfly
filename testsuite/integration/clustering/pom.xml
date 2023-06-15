@@ -1549,12 +1549,11 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
-                                    <expected-discovery>[ha][cdi, datasources, ee-integration, ejb, ejb-lite, h2-datasource, h2-default-datasource, infinispan, naming, servlet, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,infinispan,web-clustering,-ejb-local-cache</expected-discovery>
+                                    <expected-discovery>[ha][cdi, ee-integration, ejb, ejb-lite, infinispan, naming, servlet, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,infinispan,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
                                     <add-ons>
                                         <add-on>infinispan</add-on>
-                                        <add-on>h2-database:default</add-on>
                                     </add-ons>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.microprofile</surefireExecutionForIncludedClasses>
                                 </configuration>
@@ -1598,12 +1597,11 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
-                                    <expected-discovery>[ha][cdi, datasources, ee-integration, ejb, ejb-lite, h2-datasource, h2-default-datasource, infinispan, naming, servlet, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,infinispan,web-clustering,-ejb-local-cache</expected-discovery>
+                                    <expected-discovery>[ha][cdi, ee-integration, ejb, ejb-lite, infinispan, naming, servlet, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,infinispan,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
                                     <add-ons>
                                         <add-on>infinispan</add-on>
-                                        <add-on>h2-database:default</add-on>
                                     </add-ons>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.microprofile</surefireExecutionForIncludedClasses>
                                 </configuration>
@@ -1617,12 +1615,11 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
-                                    <expected-discovery>[ha][cdi, datasources, ejb, ejb-lite, h2-datasource, h2-default-datasource, infinispan, mod_cluster, naming, servlet, web-passivation, web-server]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,infinispan,mod_cluster,web-clustering,-ejb-local-cache</expected-discovery>
+                                    <expected-discovery>[ha][cdi, ejb, ejb-lite, infinispan, mod_cluster, naming, servlet, web-passivation, web-server]==>ee-core-profile-server,ejb,ejb-dist-cache,infinispan,mod_cluster,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-mod-cluster</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
                                     <add-ons>
                                         <add-on>infinispan</add-on>
-                                        <add-on>h2-database:default</add-on>
                                         <add-on>mod_cluster</add-on>
                                     </add-ons>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.mod_cluster</surefireExecutionForIncludedClasses>
@@ -1667,12 +1664,11 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
-                                    <expected-discovery>[ha][cdi, datasources, ejb, ejb-lite, h2-datasource, h2-default-datasource, infinispan, mod_cluster, naming, servlet, web-passivation, web-server]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,infinispan,mod_cluster,web-clustering,-ejb-local-cache</expected-discovery>
+                                    <expected-discovery>[ha][cdi, ejb, ejb-lite, infinispan, mod_cluster, naming, servlet, web-passivation, web-server]==>ee-core-profile-server,ejb,ejb-dist-cache,infinispan,mod_cluster,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-mod-cluster</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
                                     <add-ons>
                                         <add-on>infinispan</add-on>
-                                        <add-on>h2-database:default</add-on>
                                         <add-on>mod_cluster</add-on>
                                     </add-ons>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.mod_cluster</surefireExecutionForIncludedClasses>
@@ -1687,12 +1683,9 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
-                                    <expected-discovery>[ha][cdi, datasources, ee-integration, h2-datasource, h2-default-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-default-datasource,jaxrs,jpa-distributed</expected-discovery>
+                                    <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
                                     <aggregate>wildfly-server-jpa-dist</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
-                                    <add-ons>
-                                        <add-on>h2-database:default</add-on>
-                                    </add-ons>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.all.jpa2lc</surefireExecutionForIncludedClasses>
                                 </configuration>
                             </execution>
@@ -1703,12 +1696,9 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
-                                    <expected-discovery>[ha][cdi, datasources, ee-integration, h2-datasource, h2-default-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-default-datasource,jaxrs,jpa-distributed</expected-discovery>
+                                    <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
                                     <aggregate>wildfly-server-jpa-dist</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
-                                    <add-ons>
-                                        <add-on>h2-database:default</add-on>
-                                    </add-ons>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.all.jpa2lc</surefireExecutionForIncludedClasses>
                                 </configuration>
                             </execution>
@@ -1721,12 +1711,9 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
-                                    <expected-discovery>[ha][cdi, datasources, ee-integration, ejb, ejb-lite, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,jpa-distributed,web-clustering,-ejb-local-cache</expected-discovery>
+                                    <expected-discovery>[ha][cdi, ee-integration, ejb, ejb-lite, h2-datasource, jpa, naming, servlet, transactions, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-datasource,jpa-distributed,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-ejb</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
-                                    <add-ons>
-                                        <add-on>h2-database:default</add-on>
-                                    </add-ons>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.ejb</surefireExecutionForIncludedClasses>
                                 </configuration>
                             </execution>
@@ -1737,12 +1724,9 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
-                                    <expected-discovery>[ha][cdi, datasources, ee-integration, ejb, ejb-lite, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-default-datasource,jpa-distributed,web-clustering,-ejb-local-cache</expected-discovery>
+                                    <expected-discovery>[ha][cdi, ee-integration, ejb, ejb-lite, h2-datasource, jpa, naming, servlet, transactions, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-datasource,jpa-distributed,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-ejb</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
-                                    <add-ons>
-                                        <add-on>h2-database:default</add-on>
-                                    </add-ons>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.ejb</surefireExecutionForIncludedClasses>
                                 </configuration>
                             </execution>
