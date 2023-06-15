@@ -576,11 +576,8 @@
                         </goals>
                         <phase>${glow.phase.sar}</phase>
                         <configuration>
-                            <expected-discovery>[datasources, h2-datasource, h2-default-datasource, sar]==>ee-core-profile-server,h2-default-datasource,sar</expected-discovery>
+                            <expected-discovery>[sar]==>ee-core-profile-server,sar</expected-discovery>
                             <surefire-execution-for-included-classes>legacy-sar-layers.surefire</surefire-execution-for-included-classes>
-                            <add-ons>
-                                <add-on>h2-database:default</add-on>
-                            </add-ons>
                         </configuration>
                     </execution>
                 </executions>
