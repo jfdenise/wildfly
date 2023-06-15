@@ -487,10 +487,7 @@
                         </goals>
                         <phase>${glow.phase}</phase>
                         <configuration>
-                            <expected-discovery>[ha][cdi, datasources, ee-integration, h2-datasource, h2-default-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-default-datasource,jaxrs,jpa-distributed</expected-discovery>
-                            <add-ons>
-                                <add-on>h2-database:default</add-on>
-                            </add-ons>
+                            <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
                             <surefireExecutionForIncludedClasses>ts.surefire.clustering.all.jpa2lc</surefireExecutionForIncludedClasses>
                         </configuration>
                     </execution>
