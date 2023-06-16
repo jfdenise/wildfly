@@ -1149,7 +1149,9 @@
                         </goals>
                         <phase>${glow.cloud-profile.phase}</phase>
                         <configuration>
-                            <ignore-expected-error>true</ignore-expected-error>
+                            <expected-errors>
+                                <error>an add-on of the messaging family is expected by the messaging-activemq layer</error>
+                            </expected-errors>
                             <expected-discovery>[bean-validation, cdi, datasources, ee-concurrency, ee-integration, ejb-lite, h2-datasource, h2-driver, jaxrs, jpa, jsonb, jsonp, mail, messaging-activemq, naming, resource-adapters, servlet, transactions]==>ee-core-profile-server,ejb-lite,h2-datasource,jaxrs,jpa,mail,messaging-activemq</expected-discovery>
                             <surefire-execution-for-included-classes>microprofile.surefire</surefire-execution-for-included-classes>
                             <add-ons>
@@ -1190,7 +1192,9 @@
                         </goals>
                         <phase>${glow.jpa.phase}</phase>
                         <configuration>
-                            <ignore-expected-error>true</ignore-expected-error>
+                            <expected-errors>
+                                <error>unbounded datasources error: java:comp/DefaultDataSource</error>
+                            </expected-errors>
                             <expected-discovery>[cdi, datasources, ee-integration, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions]==>ee-core-profile-server,h2-default-datasource,jpa</expected-discovery>
                             <surefire-execution-for-included-classes>jpa-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
@@ -1252,7 +1256,9 @@
                         </goals>
                         <phase>${glow.ejb-lite.phase}</phase>
                         <configuration>
-                            <ignore-expected-error>true</ignore-expected-error>
+                            <expected-errors>
+                                <error>unbounded datasources error: java:comp/DefaultDataSource</error>
+                            </expected-errors>
                             <expected-discovery>[bean-validation, cdi, datasources, ee-concurrency, ee-integration, ejb-lite, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions]==>ee-core-profile-server,ejb-lite,h2-default-datasource,jpa</expected-discovery>
                             <surefire-execution-for-included-classes>ejb-lite-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
@@ -1267,7 +1273,9 @@
                         </goals>
                         <phase>${glow.ejb.phase}</phase>
                         <configuration>
-                            <ignore-expected-error>true</ignore-expected-error>
+                            <expected-errors>
+                                <error>an add-on of the messaging family is expected by the messaging-activemq layer</error>
+                            </expected-errors>
                             <expected-discovery>[bean-validation, cdi, datasources, ee-integration, ejb, ejb-elytron-testsuite, ejb-lite, h2-datasource, h2-driver, jaxrs, jpa, messaging-activemq, naming, servlet, transactions, webservices]==>ee-core-profile-server,ejb,ejb-elytron-testsuite,h2-datasource,jaxrs,jpa,webservices</expected-discovery>
                             <surefire-execution-for-included-classes>ejb-layers.surefire</surefire-execution-for-included-classes>
                             <add-ons>
