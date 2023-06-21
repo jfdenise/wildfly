@@ -570,6 +570,10 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-errors>
+                                        <error>ambiguous resource injection</error>
+                                        <error>jakarta.naming.Context or InitialContext lookup</error>
+                                    </expected-errors>
                                     <expected-discovery>[cdi, ee-integration, ejb, ejb-lite, jsf, naming, servlet, webservices]==>ee-core-profile-server,ejb,jsf,webservices</expected-discovery>
                                 </configuration>
                             </execution>
