@@ -318,6 +318,9 @@
                         </goals>
                         <phase>${glow.phase}</phase>
                         <configuration>
+                            <expected-errors>
+                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                            </expected-errors>
                             <expected-discovery>[cdi, ee-concurrency, ee-integration, elytron, naming, servlet, undertow, undertow-https]==>ee-core-profile-server,ee-concurrency,undertow-https</expected-discovery>
                         </configuration>
                     </execution>

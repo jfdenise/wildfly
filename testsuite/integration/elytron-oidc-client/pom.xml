@@ -186,6 +186,10 @@
                         </goals>
                         <phase>${glow.phase}</phase>
                         <configuration>
+                            <expected-errors>
+                                <error>ambiguous resource injection</error>
+                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                            </expected-errors>
                             <expected-discovery>[ee-integration, ejb, ejb-lite, elytron-oidc-client, naming, servlet]==>ee-core-profile-server,ejb,elytron-oidc-client</expected-discovery>
                         </configuration>
                     </execution>

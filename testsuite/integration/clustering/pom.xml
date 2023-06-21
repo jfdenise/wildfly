@@ -471,6 +471,10 @@
                         </goals>
                         <phase>${glow.phase}</phase>
                         <configuration>
+                            <expected-errors>
+                                <error>ambiguous resource injection</error>
+                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                            </expected-errors>
                             <expected-discovery>[ha][cdi, ee-integration, ejb, ejb-lite, infinispan, naming, servlet, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,infinispan,web-clustering,-ejb-local-cache</expected-discovery>
                             <add-ons>
                                 <add-on>infinispan</add-on>
@@ -487,6 +491,7 @@
                         <configuration>
                             <expected-errors>
                                 <error>unbounded datasources error: java:jboss/datasources/H2</error>
+                                <error>ambiguous resource injection</error>
                             </expected-errors>
                             <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
                             <surefireExecutionForIncludedClasses>ts.surefire.clustering.all.jpa2lc</surefireExecutionForIncludedClasses>
@@ -1550,6 +1555,10 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-errors>
+                                        <error>ambiguous resource injection</error>
+                                        <error>jakarta.naming.Context or InitialContext lookup</error>
+                                    </expected-errors>
                                     <expected-discovery>[ha][cdi, ee-integration, ejb, ejb-lite, infinispan, naming, servlet, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,infinispan,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
@@ -1598,6 +1607,10 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-errors>
+                                        <error>ambiguous resource injection</error>
+                                        <error>jakarta.naming.Context or InitialContext lookup</error>
+                                    </expected-errors>
                                     <expected-discovery>[ha][cdi, ee-integration, ejb, ejb-lite, infinispan, naming, servlet, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,infinispan,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
@@ -1616,6 +1629,9 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-errors>
+                                        <error>jakarta.naming.Context or InitialContext lookup</error>
+                                    </expected-errors>
                                     <expected-discovery>[ha][cdi, ejb, ejb-lite, infinispan, mod_cluster, naming, servlet, web-passivation, web-server]==>ee-core-profile-server,ejb,ejb-dist-cache,infinispan,mod_cluster,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-mod-cluster</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
@@ -1665,6 +1681,9 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
+                                    <expected-errors>
+                                        <error>jakarta.naming.Context or InitialContext lookup</error>
+                                    </expected-errors>
                                     <expected-discovery>[ha][cdi, ejb, ejb-lite, infinispan, mod_cluster, naming, servlet, web-passivation, web-server]==>ee-core-profile-server,ejb,ejb-dist-cache,infinispan,mod_cluster,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-mod-cluster</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
@@ -1686,6 +1705,7 @@
                                 <configuration>
                                     <expected-errors>
                                         <error>unbounded datasources error: java:jboss/datasources/H2</error>
+                                        <error>ambiguous resource injection</error>
                                     </expected-errors>
                                     <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
                                     <aggregate>wildfly-server-jpa-dist</aggregate>
@@ -1702,6 +1722,7 @@
                                 <configuration>
                                     <expected-errors>
                                         <error>unbounded datasources error: java:jboss/datasources/H2</error>
+                                        <error>ambiguous resource injection</error>
                                     </expected-errors>
                                     <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
                                     <aggregate>wildfly-server-jpa-dist</aggregate>
@@ -1718,7 +1739,12 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
-                                    <expected-discovery>[ha][cdi, ee-integration, ejb, ejb-lite, h2-datasource, jpa, naming, servlet, transactions, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-datasource,jpa-distributed,web-clustering,-ejb-local-cache</expected-discovery>
+                                    <expected-errors>
+                                        <error>an add-on of the messaging family is expected by the messaging-activemq layer</error>
+                                        <error>ambiguous resource injection</error>
+                                        <error>jakarta.naming.Context or InitialContext lookup</error>
+                                    </expected-errors>
+                                    <expected-discovery>[ha][cdi, datasources, ee-integration, ejb, ejb-lite, h2-datasource, jpa, messaging-activemq, naming, servlet, transactions, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-datasource,jpa-distributed,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-ejb</aggregate>
                                     <config-name>standalone-full-ha.xml</config-name>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.ejb</surefireExecutionForIncludedClasses>
@@ -1731,7 +1757,12 @@
                                 </goals>
                                 <phase>test-compile</phase>
                                 <configuration>
-                                    <expected-discovery>[ha][cdi, ee-integration, ejb, ejb-lite, h2-datasource, jpa, naming, servlet, transactions, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-datasource,jpa-distributed,web-clustering,-ejb-local-cache</expected-discovery>
+                                    <expected-errors>
+                                        <error>an add-on of the messaging family is expected by the messaging-activemq layer</error>
+                                        <error>ambiguous resource injection</error>
+                                        <error>jakarta.naming.Context or InitialContext lookup</error>
+                                    </expected-errors>
+                                    <expected-discovery>[ha][cdi, datasources, ee-integration, ejb, ejb-lite, h2-datasource, jpa, messaging-activemq, naming, servlet, transactions, web-passivation]==>ee-core-profile-server,ejb,ejb-dist-cache,h2-datasource,jpa-distributed,web-clustering,-ejb-local-cache</expected-discovery>
                                     <aggregate>wildfly-server-ejb</aggregate>
                                     <config-name>standalone-ha.xml</config-name>
                                     <surefireExecutionForIncludedClasses>ts.surefire.clustering.ejb</surefireExecutionForIncludedClasses>
