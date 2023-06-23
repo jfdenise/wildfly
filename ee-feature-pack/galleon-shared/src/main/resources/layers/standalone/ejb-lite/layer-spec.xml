@@ -4,6 +4,7 @@
          Note that the timer-service feature provides persistent timers which goes beyond EJB Lite requirements. -->
     <props>
         <prop name="annotations" value="jakarta.ejb"/>
+        <prop name="constant-pool-class-info" value="jakarta.ejb"/>
     </props>
     <dependencies>
         <layer name="transactions"/>
