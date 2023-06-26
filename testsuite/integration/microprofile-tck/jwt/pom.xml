@@ -189,11 +189,6 @@
             <plugin>
                 <groupId>org.wildfly.glow</groupId>
                 <artifactId>glow-arquillian-plugin</artifactId>
-                <configuration>
-                    <expected-errors>
-                        <error>ambiguous resource injection</error>
-                    </expected-errors>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -1249,7 +1249,6 @@
                         <phase>${glow.ee-concurrency.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>ambiguous resource injection</error>
                                 <error>jakarta.naming.Context or InitialContext lookup</error>
                             </expected-errors>
                             <expected-discovery>[ee-concurrency, ee-integration, ejb-lite, naming, transactions]==>ee-core-profile-server,ejb-lite</expected-discovery>
@@ -1303,7 +1302,6 @@
                         <phase>${glow.ejb-embedded-broker.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>ambiguous resource injection</error>
                                 <error>jakarta.naming.Context or InitialContext lookup</error>
                             </expected-errors>
                             <expected-discovery>[cdi, datasources, ee, ee-concurrency, ee-integration, ejb, ejb-lite, elytron, embedded-activemq, h2-datasource, h2-driver, messaging-activemq, naming, remoting, resource-adapters, servlet, transactions, undertow]==>ee-core-profile-server,ejb,embedded-activemq,h2-datasource</expected-discovery>
@@ -1322,7 +1320,6 @@
                         <phase>${glow.ejb-remote-broker.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>ambiguous resource injection</error>
                                 <error>jakarta.naming.Context or InitialContext lookup</error>
                             </expected-errors>
                             <expected-discovery>[cdi, datasources, ee-concurrency, ee-integration, ejb, ejb-lite, h2-datasource, h2-driver, messaging-activemq, naming, remote-activemq, remote-activemq-cf, resource-adapters, servlet, transactions]==>ee-core-profile-server,ejb,h2-datasource,remote-activemq-cf</expected-discovery>
@@ -1391,7 +1388,6 @@
                         <phase>${glow.mail-ejb.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>ambiguous resource injection</error>
                                 <error>jakarta.naming.Context or InitialContext lookup</error>
                             </expected-errors>
                             <expected-discovery>[ee-integration, ejb, ejb-lite, mail, naming]==>ee-core-profile-server,ejb,mail</expected-discovery>
