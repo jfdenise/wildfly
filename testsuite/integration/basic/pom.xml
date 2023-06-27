@@ -1151,8 +1151,8 @@
                         <configuration>
                             <expected-errors>
                                 <error>an add-on of the messaging family is expected by the messaging-activemq layer</error>
-                                <error>ambiguous resource injection</error>
-                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                                <error>ambiguous resource injection. Enable verbose output to see the locations.</error>
+                                <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <expected-discovery>[bean-validation, cdi, datasources, ee-concurrency, ee-integration, ejb-lite, h2-datasource, h2-driver, jaxrs, jpa, jsonb, jsonp, mail, messaging-activemq, naming, resource-adapters, servlet, transactions]==>ee-core-profile-server,ejb-lite,h2-datasource,jaxrs,jpa,mail,messaging-activemq</expected-discovery>
                             <surefire-execution-for-included-classes>microprofile.surefire</surefire-execution-for-included-classes>
@@ -1196,7 +1196,7 @@
                         <configuration>
                             <expected-errors>
                                 <error>unbounded datasources error: java:comp/DefaultDataSource</error>
-                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                                <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <expected-discovery>[cdi, datasources, ee-integration, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions]==>ee-core-profile-server,h2-default-datasource,jpa</expected-discovery>
                             <surefire-execution-for-included-classes>jpa-layers.surefire</surefire-execution-for-included-classes>
@@ -1249,7 +1249,7 @@
                         <phase>${glow.ee-concurrency.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                                <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <expected-discovery>[ee-concurrency, ee-integration, ejb-lite, naming, transactions]==>ee-core-profile-server,ejb-lite</expected-discovery>
                             <surefire-execution-for-included-classes>ee-concurrency-layers.surefire</surefire-execution-for-included-classes>
@@ -1264,8 +1264,8 @@
                         <configuration>
                             <expected-errors>
                                 <error>unbounded datasources error: java:comp/DefaultDataSource</error>
-                                <error>ambiguous resource injection</error>
-                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                                <error>ambiguous resource injection. Enable verbose output to see the locations.</error>
+                                <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <expected-discovery>[bean-validation, cdi, datasources, ee-concurrency, ee-integration, ejb-lite, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions]==>ee-core-profile-server,ejb-lite,h2-default-datasource,jpa</expected-discovery>
                             <surefire-execution-for-included-classes>ejb-lite-layers.surefire</surefire-execution-for-included-classes>
@@ -1283,8 +1283,8 @@
                         <configuration>
                             <expected-errors>
                                 <error>an add-on of the messaging family is expected by the messaging-activemq layer</error>
-                                <error>ambiguous resource injection</error>
-                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                                <error>ambiguous resource injection. Enable verbose output to see the locations.</error>
+                                <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <expected-discovery>[bean-validation, cdi, datasources, ee-integration, ejb, ejb-elytron-testsuite, ejb-lite, h2-datasource, h2-driver, jaxrs, jpa, messaging-activemq, naming, servlet, transactions, webservices]==>ee-core-profile-server,ejb,ejb-elytron-testsuite,h2-datasource,jaxrs,jpa,webservices</expected-discovery>
                             <surefire-execution-for-included-classes>ejb-layers.surefire</surefire-execution-for-included-classes>
@@ -1302,7 +1302,7 @@
                         <phase>${glow.ejb-embedded-broker.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                                <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <expected-discovery>[cdi, datasources, ee, ee-concurrency, ee-integration, ejb, ejb-lite, elytron, embedded-activemq, h2-datasource, h2-driver, messaging-activemq, naming, remoting, resource-adapters, servlet, transactions, undertow]==>ee-core-profile-server,ejb,embedded-activemq,h2-datasource</expected-discovery>
                             <surefire-execution-for-included-classes>ejb-embedded-broker-layers.surefire</surefire-execution-for-included-classes>
@@ -1320,7 +1320,7 @@
                         <phase>${glow.ejb-remote-broker.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                                <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <expected-discovery>[cdi, datasources, ee-concurrency, ee-integration, ejb, ejb-lite, h2-datasource, h2-driver, messaging-activemq, naming, remote-activemq, remote-activemq-cf, resource-adapters, servlet, transactions]==>ee-core-profile-server,ejb,h2-datasource,remote-activemq-cf</expected-discovery>
                             <surefire-execution-for-included-classes>ejb-remote-broker-layers.surefire</surefire-execution-for-included-classes>
@@ -1360,7 +1360,7 @@
                         <phase>${glow.legacy-sar.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>ambiguous resource injection</error>
+                                <error>ambiguous resource injection. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <add-layers-for-jndi>
                                 <layer>mail</layer>
@@ -1388,7 +1388,7 @@
                         <phase>${glow.mail-ejb.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                                <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <expected-discovery>[ee-integration, ejb, ejb-lite, mail, naming]==>ee-core-profile-server,ejb,mail</expected-discovery>
                             <surefire-execution-for-included-classes>mail-ejb-layers.surefire</surefire-execution-for-included-classes>
