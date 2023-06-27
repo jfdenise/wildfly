@@ -571,8 +571,8 @@
                                 <phase>test-compile</phase>
                                 <configuration>
                                     <expected-errors>
-                                        <error>ambiguous resource injection</error>
-                                        <error>jakarta.naming.Context or InitialContext lookup</error>
+                                        <error>ambiguous resource injection. Enable verbose output to see the locations.</error>
+                                        <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                                     </expected-errors>
                                     <expected-discovery>[cdi, ee-integration, ejb, ejb-lite, jsf, naming, servlet, webservices]==>ee-core-profile-server,ejb,jsf,webservices</expected-discovery>
                                 </configuration>
