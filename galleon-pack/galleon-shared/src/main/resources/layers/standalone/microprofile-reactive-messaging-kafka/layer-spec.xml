@@ -24,7 +24,12 @@
     <props>
         <prop name="add-on-depends-on" value="all-dependencies"/>
         <prop name="add-on" value="reactive-messaging,kafka"/>
-        <prop name="properties-file-contains-key" value="/WEB-INF/classes/META-INF/microprofile-config.properties,mp.messaging.connector.smallrye-kafka"/>
+        <prop name="properties-file-match-mp-kafka-web-inf-property" value="/WEB-INF/classes/META-INF/microprofile-config.properties,mp.messaging.connector.smallrye-kafka.*"/>
+        <prop name="properties-file-match-mp-kafka-web-inf-outgoing" value="/WEB-INF/classes/META-INF/microprofile-config.properties,mp.messaging.outgoing.*.connector,smallrye-kafka"/>
+        <prop name="properties-file-match-mp-kafka-web-inf-incoming" value="/WEB-INF/classes/META-INF/microprofile-config.properties,mp.messaging.incoming.*.connector,smallrye-kafka"/>
+        <prop name="properties-file-match-mp-kafka-meta-inf-property" value="/META-INF/microprofile-config.properties,mp.messaging.connector.smallrye-kafka.*"/>
+        <prop name="properties-file-match-mp-kafka-meta-inf-outgoing" value="/META-INF/microprofile-config.properties,mp.messaging.outgoing.*.connector,smallrye-kafka"/>
+        <prop name="properties-file-match-mp-kafka-meta-inf-incoming" value="/META-INF/microprofile-config.properties,mp.messaging.incoming.*.connector,smallrye-kafka"/>
     </props>
     <dependencies>
         <layer name="microprofile-reactive-messaging"/>
