@@ -54,7 +54,7 @@ import java.util.Properties;
 @ServerSetup(JNDIBindingsNoAppNameTestCase.TestLogHandlerSetup.class)
 public class JNDIBindingsNoAppNameTestCase {
 
-    private static final String JAR_NAME = "ejb-jndi";
+    private static final String JAR_NAME = "ejb-jndi.jar";
     private static String HOST = TestSuiteEnvironment.getServerAddress();
     private static int PORT = TestSuiteEnvironment.getHttpPort();
     private static final String TEST_HANDLER_NAME = "test-" + JNDIBindingsNoAppNameTestCase.class.getSimpleName();

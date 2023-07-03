@@ -1325,6 +1325,11 @@
                         </attributes>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.wildfly.glow</groupId>
+                    <artifactId>wildfly-glow-arquillian-plugin</artifactId>
+                    <version>${version.org.wildfly.glow}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -1348,6 +1353,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 

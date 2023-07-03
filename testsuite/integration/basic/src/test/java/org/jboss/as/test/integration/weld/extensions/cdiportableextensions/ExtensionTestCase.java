@@ -32,6 +32,7 @@ import jakarta.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.as.test.shared.GlowUtil;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
@@ -66,11 +67,13 @@ public class ExtensionTestCase extends AbstractModuleTest {
     @Deployment
     public static Archive<?> deploy() throws Exception {
 
-        doSetup();
+        if (!GlowUtil.isGlowScan()) {
+            doSetup();
+        }
 
         JavaArchive jar = ShrinkWrap
                 .create(JavaArchive.class, "test.jar")
-                .addClasses(Clown.class, ExtensionTestCase.class, AbstractModuleTest.class)
+                .addClasses(Clown.class, ExtensionTestCase.class, AbstractModuleTest.class, GlowUtil.class)
                 .addAsManifestResource(new StringAsset("<beans bean-discovery-mode=\"all\"></beans>"), "beans.xml")
                 .addAsManifestResource(new StringAsset("Dependencies: cidExtensionModule services\n"),
                         "MANIFEST.MF");

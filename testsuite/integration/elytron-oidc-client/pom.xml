@@ -48,6 +48,7 @@
         <surefire.forked.process.timeout>3600</surefire.forked.process.timeout>
         <!-- properties to enable plugins shared by various bootable jar executions -->
         <bootable-jar-packaging.phase>none</bootable-jar-packaging.phase>
+        <glow.phase>none</glow.phase>
     </properties>
 
     <dependencies>
@@ -161,6 +162,34 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.wildfly.glow</groupId>
+                <artifactId>wildfly-glow-arquillian-plugin</artifactId>
+                <configuration>
+                    <feature-packs>
+                        <feature-pack>
+                            <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
+                            <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
+                            <version>${testsuite.ee.galleon.pack.version}</version>
+                        </feature-pack>
+                    </feature-packs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>scan-oidc</id>
+                        <goals>
+                            <goal>scan</goal>
+                        </goals>
+                        <phase>${glow.phase}</phase>
+                        <configuration>
+                            <expected-errors>
+                                <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
+                            </expected-errors>
+                            <expected-discovery>[ee-integration, ejb, ejb-lite, elytron-oidc-client, naming, servlet]==>ee-core-profile-server,ejb,elytron-oidc-client</expected-discovery>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-jar-maven-plugin</artifactId>
                 <version>${version.org.wildfly.jar.plugin}</version>
@@ -184,18 +213,7 @@
                                 <jboss-maven-dist/>
                                 <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                             </plugin-options>
-                            <feature-packs>
-                                <feature-pack>
-                                    <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
-                                    <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
-                                    <version>${testsuite.ee.galleon.pack.version}</version>
-                                </feature-pack>
-                            </feature-packs>
-                            <layers>
-                                <layer>cloud-server</layer>
-                                <layer>elytron-oidc-client</layer>
-                                <layer>ejb</layer>
-                            </layers>
+                            <provisioning-file>target/glow-scan/provisioning.xml</provisioning-file>
                         </configuration>
                     </execution>
                 </executions>
@@ -254,6 +272,7 @@
             </activation>
             <properties>
                 <jboss.dist>${project.build.directory}/wildfly</jboss.dist>
+                <glow.phase>test-compile</glow.phase>
             </properties>
             <build>
                 <plugins>
@@ -291,9 +310,9 @@
                             <execution>
                                 <id>elytron-oidc-client-provisioning</id>
                                 <goals>
-                                    <goal>provision</goal>
+                                    <goal>provision-file</goal>
                                 </goals>
-                                <phase>compile</phase>
+                                <phase>test-compile</phase>
                                 <configuration>
                                     <install-dir>${project.build.directory}/wildfly</install-dir>
                                     <record-state>false</record-state>
@@ -304,26 +323,7 @@
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
-                                    <feature-packs>
-                                        <feature-pack>
-                                            <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
-                                            <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
-                                            <version>${testsuite.ee.galleon.pack.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
-                                        </feature-pack>
-                                    </feature-packs>
-                                    <configurations>
-                                        <config>
-                                            <model>standalone</model>
-                                            <name>standalone.xml</name>
-                                            <layers>
-                                                <layer>cloud-server</layer>
-                                                <layer>elytron-oidc-client</layer>
-                                                <layer>ejb</layer>
-                                            </layers>
-                                        </config>
-                                    </configurations>
+                                    <provisioning-file>target/glow-scan/provisioning.xml</provisioning-file>
                                 </configuration>
                             </execution>
                         </executions>
@@ -372,6 +372,8 @@
             </activation>
             <properties>
                 <jboss.dist>${project.build.directory}/wildfly</jboss.dist>
+                <testsuite.ee.galleon.pack.artifactId>wildfly-preview-feature-pack</testsuite.ee.galleon.pack.artifactId>
+                <glow.phase>test-compile</glow.phase>
             </properties>
             <build>
                 <plugins>
@@ -401,7 +403,7 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
+                    </plugin>                   
                     <plugin>
                         <groupId>org.jboss.galleon</groupId>
                         <artifactId>galleon-maven-plugin</artifactId>
@@ -409,9 +411,9 @@
                             <execution>
                                 <id>elytron-oidc-client-provisioning</id>
                                 <goals>
-                                    <goal>provision</goal>
+                                    <goal>provision-file</goal>
                                 </goals>
-                                <phase>compile</phase>
+                                <phase>test-compile</phase>
                                 <configuration>
                                     <install-dir>${project.build.directory}/wildfly</install-dir>
                                     <record-state>false</record-state>
@@ -422,26 +424,7 @@
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
-                                    <feature-packs>
-                                        <feature-pack>
-                                            <groupId>${full.maven.groupId}</groupId>
-                                            <artifactId>wildfly-preview-feature-pack</artifactId>
-                                            <version>${full.maven.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
-                                        </feature-pack>
-                                    </feature-packs>
-                                    <configurations>
-                                        <config>
-                                            <model>standalone</model>
-                                            <name>standalone.xml</name>
-                                            <layers>
-                                                <layer>cloud-server</layer>
-                                                <layer>elytron-oidc-client</layer>
-                                                <layer>ejb</layer>
-                                            </layers>
-                                        </config>
-                                    </configurations>
+                                    <provisioning-file>target/glow-scan/provisioning.xml</provisioning-file>
                                 </configuration>
                             </execution>
                         </executions>
@@ -579,7 +562,8 @@
                 </dependency>
             </dependencies>
             <properties>
-                <bootable-jar-packaging.phase>process-test-resources</bootable-jar-packaging.phase>
+                <bootable-jar-packaging.phase>test-compile</bootable-jar-packaging.phase>
+                <glow.phase>test-compile</glow.phase>
             </properties>
             <build>
                 <plugins>
@@ -670,7 +654,8 @@
                 </dependency>
             </dependencies>
             <properties>
-                <bootable-jar-packaging.phase>process-test-resources</bootable-jar-packaging.phase>
+                <bootable-jar-packaging.phase>test-compile</bootable-jar-packaging.phase>
+                <glow.phase>test-compile</glow.phase>
                 <extra.server.jvm.args>-Dmaven.repo.local=${settings.localRepository}</extra.server.jvm.args>
             </properties>
             <build>
