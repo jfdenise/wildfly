@@ -1,5 +1,9 @@
 <?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="resource-adapters">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="resource-adapters">
+     <props>
+        <prop name="org.wildfly.rule.expected-file" value="/META-INF/ra.xml"/>
+        <prop name="org.wildfly.rule.expected-file-ij" value="/META-INF/ironjacamar.xml"/>
+    </props>
     <dependencies>
         <layer name="transactions"/>
     </dependencies>
