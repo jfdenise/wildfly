@@ -1195,7 +1195,7 @@
                         <phase>${glow.jpa.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>unbounded datasources error: java:comp/DefaultDataSource</error>
+                                <error>unbound datasources error: java:comp/DefaultDataSource</error>
                                 <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <expected-discovery>[cdi, datasources, ee-integration, h2-datasource, h2-default-datasource, jpa, naming, servlet, transactions]==>ee-core-profile-server,h2-default-datasource,jpa</expected-discovery>
@@ -1263,7 +1263,7 @@
                         <phase>${glow.ejb-lite.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>unbounded datasources error: java:comp/DefaultDataSource</error>
+                                <error>unbound datasources error: java:comp/DefaultDataSource</error>
                                 <error>ambiguous resource injection. Enable verbose output to see the locations.</error>
                                 <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>

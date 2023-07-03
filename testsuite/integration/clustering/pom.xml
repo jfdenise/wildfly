@@ -492,7 +492,7 @@
                         <phase>${glow.phase}</phase>
                         <configuration>
                             <expected-errors>
-                                <error>unbounded datasources error: java:jboss/datasources/H2</error>
+                                <error>unbound datasources error: java:jboss/datasources/H2</error>
                                 <error>ambiguous resource injection. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
@@ -1706,7 +1706,7 @@
                                 <phase>test-compile</phase>
                                 <configuration>
                                     <expected-errors>
-                                        <error>unbounded datasources error: java:jboss/datasources/H2</error>
+                                        <error>unbound datasources error: java:jboss/datasources/H2</error>
                                         <error>ambiguous resource injection. Enable verbose output to see the locations.</error>
                                     </expected-errors>
                                     <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
@@ -1723,7 +1723,7 @@
                                 <phase>test-compile</phase>
                                 <configuration>
                                     <expected-errors>
-                                        <error>unbounded datasources error: java:jboss/datasources/H2</error>
+                                        <error>unbound datasources error: java:jboss/datasources/H2</error>
                                         <error>ambiguous resource injection. Enable verbose output to see the locations.</error>
                                     </expected-errors>
                                     <expected-discovery>[ha][cdi, ee-integration, h2-datasource, jaxrs, jpa, transactions]==>ee-core-profile-server,h2-datasource,jaxrs,jpa-distributed</expected-discovery>
