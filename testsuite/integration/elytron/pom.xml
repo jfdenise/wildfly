@@ -761,7 +761,7 @@
                                 <phase>test-compile</phase>
                                 <configuration>
                                     <expected-errors>
-                                        <error>jakarta.naming.Context or InitialContext lookup</error>
+                                        <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                                     </expected-errors>
                                     <expected-discovery>[batch-jberet, cdi, datasources, ee-integration, ee-security, ejb, ejb-lite, elytron, h2-datasource, h2-driver, naming, servlet, undertow, undertow-https]==>ee-core-profile-server,batch-jberet,ee-security,ejb,h2-datasource,undertow-https</expected-discovery>
                                     <add-ons>
@@ -799,26 +799,6 @@
                                         <optional-packages>passive+</optional-packages>
                                     </plugin-options>
                                     <provisioning-file>target/glow-scan/provisioning.xml</provisioning-file>
-                                   <!-- <feature-packs>
-                                        <feature-pack>
-                                            <groupId>${testsuite.ee.galleon.pack.groupId}</groupId>
-                                            <artifactId>${testsuite.ee.galleon.pack.artifactId}</artifactId>
-                                            <version>${testsuite.ee.galleon.pack.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
-                                        </feature-pack>
-                                    </feature-packs>
-                                    <configurations>
-                                        <config>
-                                            <model>standalone</model>
-                                            <name>standalone-full.xml</name>
-                                            <layers>
-                                                <layer>cloud-server</layer>
-                                                <layer>undertow-https</layer>
-                                                <layer>h2-default-datasource</layer>
-                                            </layers>
-                                        </config>
-                                    </configurations>-->
                                 </configuration>
                             </execution>
                         </executions>
@@ -966,7 +946,7 @@
                                 <phase>test-compile</phase>
                                 <configuration>
                                     <expected-errors>
-                                        <error>jakarta.naming.Context or InitialContext lookup</error>
+                                        <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                                     </expected-errors>
                                     <expected-discovery>[batch-jberet, cdi, datasources, ee-integration, ee-security, ejb, ejb-lite, elytron, h2-datasource, h2-driver, naming, servlet, undertow, undertow-https]==>ee-core-profile-server,batch-jberet,ee-security,ejb,h2-datasource,undertow-https</expected-discovery>
                                     <add-ons>

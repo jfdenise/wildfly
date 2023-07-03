@@ -560,7 +560,7 @@
                         <configuration>
                             <expected-errors>
                                 <error>an add-on of the messaging family is expected by the messaging-activemq layer</error>
-                                <error>jakarta.naming.Context or InitialContext lookup</error>
+                                <error>jakarta.naming.Context or InitialContext lookup. Enable verbose output to see the locations.</error>
                             </expected-errors>
                             <add-layers-for-jndi>h2-datasource</add-layers-for-jndi>
                             <expected-discovery>[datasources, ee-integration, h2-datasource, jaxrs, messaging-activemq, naming, resource-adapters, servlet]==>ee-core-profile-server,h2-datasource,jaxrs,messaging-activemq</expected-discovery>
