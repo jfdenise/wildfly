@@ -41,7 +41,7 @@ public class WSViewEJBInjectionTestCase {
 
     @Deployment
     public static Archive createDeployment() {
-        final JavaArchive jar = ShrinkWrap.create(JavaArchive.class, "multiple-view-ejb-injection");
+        final JavaArchive jar = ShrinkWrap.create(JavaArchive.class, "multiple-view-ejb-injection.jar");
         jar.addPackage(WSViewEJBInjectionTestCase.class.getPackage());
         return jar;
     }

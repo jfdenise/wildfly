@@ -28,6 +28,7 @@ import jakarta.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.as.test.module.util.TestModule;
+import org.jboss.as.test.shared.GlowUtil;
 import org.jboss.as.test.shared.ModuleUtils;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -75,7 +76,9 @@ public class StaticCdiModulesDependencyTest {
     @Deployment
     public static WebArchive getDeployment() throws Exception {
         // create modules and deploy them
-        doSetup();
+        if (!GlowUtil.isGlowScan()) {
+            doSetup();
+        }
         return ShrinkWrap.create(WebArchive.class)
             .addClasses(StaticCdiModulesDependencyTest.class, WarBean.class, TestModule.class)
             .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
