@@ -4,9 +4,7 @@
         <prop name="org.wildfly.rule.add-on-depends-on" value="only:messaging-activemq"/>
         <prop name="org.wildfly.rule.add-on" value="messaging,embedded-activemq"/>
         <prop name="org.wildfly.rule.add-on-cardinality" value="1"/>
-        <prop name="org.wildfly.rule.pattern-xml-path" value="/WEB-INF/*-jms.xml,/messaging-deployment/server/jms-destinations"/>
-        <prop name="org.wildfly.rule.pattern-xml-path-webinf" value="/WEB-INF/*-jms.xml,/messaging-deployment/server/jms-destinations"/>
-        <prop name="org.wildfly.rule.pattern-xml-path-metainf" value="/META-INF/*-jms.xml,/messaging-deployment/server/jms-destinations"/>
+        <prop name="org.wildfly.rule.xml-path" value="[/WEB-INF/*-jms.xml,/META-INF/*-jms.xml],/messaging-deployment/server/jms-destinations"/>
     </props>
     <dependencies>
         <layer name="messaging-activemq"/>

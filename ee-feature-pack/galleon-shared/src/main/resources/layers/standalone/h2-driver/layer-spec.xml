@@ -1,12 +1,8 @@
 <?xml version="1.0" ?>
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="h2-driver">
     <props>
-        <prop name="org.wildfly.rule.pattern-xml-path" value="/WEB-INF/*.xml,/datasources/datasource/driver,h2"/>
-        <prop name="org.wildfly.rule.pattern-xml-path-xa" value="/WEB-INF/*.xml,/datasources/xa-datasource/driver,h2"/>
-        <prop name="org.wildfly.rule.pattern-xml-path-webinf" value="/WEB-INF/*.xml,/datasources/datasource/driver,h2"/>
-        <prop name="org.wildfly.rule.pattern-xml-path-webinf-xa" value="/WEB-INF/*.xml,/datasources/xa-datasource/driver,h2"/>
-        <prop name="org.wildfly.rule.pattern-xml-path-metainf" value="/META-INF/*.xml,/datasources/datasource/driver,h2"/>
-        <prop name="org.wildfly.rule.pattern-xml-path-metainf-xa" value="/META-INF/*.xml,/datasources/xa-datasource/driver,h2"/>
+        <prop name="org.wildfly.rule.xml-path" value="[/WEB-INF/*.xml,/META-INF/*.xml],/datasources/datasource/driver,h2"/>
+        <prop name="org.wildfly.rule.xml-path-xa" value="[/WEB-INF/*.xml,/META-INF/*.xml],/datasources/xa-datasource/driver,h2"/>
     </props>
     <dependencies>
         <layer name="datasources"/>
