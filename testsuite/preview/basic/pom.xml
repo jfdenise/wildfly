@@ -115,7 +115,7 @@
             </plugin>
             <plugin>
                 <groupId>org.wildfly.glow</groupId>
-                <artifactId>glow-arquillian-plugin</artifactId>
+                <artifactId>wildfly-glow-arquillian-plugin</artifactId>
                 <configuration>
                     <feature-packs>
                         <feature-pack>
