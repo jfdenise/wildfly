@@ -257,7 +257,10 @@
             </activation>
             <properties>
                 <!-- Enable galleon provisioning -->
-                <ts.microprofile-tck-provisioning.phase>compile</ts.microprofile-tck-provisioning.phase>
+                <ts.microprofile-tck-provisioning.phase>test-compile</ts.microprofile-tck-provisioning.phase>
+                <ts.microprofile-tck-glow.phase>test-compile</ts.microprofile-tck-glow.phase>
+                <!-- Disable 'configure-weld-subsystem' since that is for a standalone server -->
+                <config.configure-weld-subsystem.phase>test-compile</config.configure-weld-subsystem.phase>
             </properties>
         </profile>
 
