@@ -53,6 +53,7 @@
         <ts.microprofile-tck-glow.phase>test-compile</ts.microprofile-tck-glow.phase>
         <ts.microprofile-tck-tests-dependency>org.eclipse.microprofile.reactive-streams-operators:microprofile-reactive-streams-operators-tck</ts.microprofile-tck-tests-dependency>
         <ts.microprofile-tck-glow.expected-discovery>[cdi, microprofile-reactive-streams-operators]==>ee-core-profile-server,microprofile-reactive-streams-operators</ts.microprofile-tck-glow.expected-discovery>
+        <ts.microprofile-tck-glow.verbose>true</ts.microprofile-tck-glow.verbose>
     </properties>
 
     <dependencies>

@@ -63,6 +63,7 @@
         <wait.for.ports>9990</wait.for.ports>
         <port.waiting.timeout>10</port.waiting.timeout>
         <ts.microprofile-tck-glow.expected-discovery>[cdi, ee-integration, jaxrs, microprofile-config, microprofile-lra-coordinator, microprofile-lra-participant, transactions]==>ee-core-profile-server,microprofile-lra-coordinator,microprofile-lra-participant</ts.microprofile-tck-glow.expected-discovery>
+        <ts.microprofile-tck-glow.verbose>true</ts.microprofile-tck-glow.verbose>
     </properties>
 
     <dependencies>
