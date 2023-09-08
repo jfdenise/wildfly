@@ -641,6 +641,8 @@
                 <!-- Enable galleon provisioning -->
                 <ts.microprofile-tck-provisioning.phase>test-compile</ts.microprofile-tck-provisioning.phase>
                 <ts.microprofile-tck-glow.phase>test-compile</ts.microprofile-tck-glow.phase>
+                <ts.add-wiremock-module.phase>process-test-classes</ts.add-wiremock-module.phase>
+                <ts.install-as-module-wiremock.phase>process-test-classes</ts.install-as-module-wiremock.phase>
             </properties>
             <build>
                 <plugins>
