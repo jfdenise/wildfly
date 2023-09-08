@@ -83,6 +83,13 @@
                 <module>manualmode-expansion</module>
             </modules>
         </profile>
+                <profile>
+            <id>ts.integ.mp-tck</id>
+            <activation><property><name>mptckTests</name></property></activation>
+            <modules>
+                <module>microprofile-tck</module>
+            </modules>
+        </profile>
         <!-- Define ts.integration uber-group. -->
         <profile>
             <id>ts.integ.allGroupsIntegration</id>
