@@ -355,7 +355,6 @@
                     </feature-packs>
                     <config-name>${ts.glow.config-name}</config-name>
                     <add-ons>
-                        <add-on>openapi</add-on>
                         <add-on>kafka</add-on>
                         <add-on>micrometer</add-on>
                         <add-on>lra-coordinator</add-on>
