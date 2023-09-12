@@ -1337,7 +1337,7 @@
                         </goals>
                         <phase>${glow.jsf.phase}</phase>
                         <configuration>
-                            <expected-discovery>[bean-validation, cdi, ee-integration, jsf, servlet, web-passivation]==>ee-core-profile-server,jsf,web-passivation</expected-discovery>
+                            <expected-discovery>[bean-validation, cdi, ee-integration, jaxrs, jsf, servlet, web-passivation]==>ee-core-profile-server,jaxrs,jsf,web-passivation</expected-discovery>
                             <surefire-execution-for-included-classes>jsf-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1348,7 +1348,7 @@
                         </goals>
                         <phase>${glow.ejb-lite.phase}</phase>
                         <configuration>
-                            <expected-discovery>[cdi, ejb-lite, jsf, servlet]==>ee-core-profile-server,ejb-lite,jsf</expected-discovery>
+                            <expected-discovery>[cdi, ejb-lite, jaxrs, jsf, servlet]==>ee-core-profile-server,ejb-lite,jaxrs,jsf</expected-discovery>
                             <surefire-execution-for-included-classes>jsf-ejb-lite-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
@@ -1376,7 +1376,7 @@
                         </goals>
                         <phase>${glow.mail.phase}</phase>
                         <configuration>
-                            <expected-discovery>[mail, servlet]==>ee-core-profile-server,mail</expected-discovery>
+                            <expected-discovery>[cdi, mail, servlet]==>ee-core-profile-server,mail</expected-discovery>
                             <surefire-execution-for-included-classes>mail-layers.surefire</surefire-execution-for-included-classes>
                         </configuration>
                     </execution>
