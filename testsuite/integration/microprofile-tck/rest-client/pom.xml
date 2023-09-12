@@ -48,7 +48,7 @@
         <wiremock.resource.path>${project.build.directory}/wildfly/wiremock/wiremock.jar${:}${project.build.directory}/wildfly/wiremock/junit.jar${:}${project.build.directory}/wildfly/wiremock/jetty-io.jar${:}${project.build.directory}/wildfly/wiremock/jetty-http.jar${:}${project.build.directory}/wildfly/wiremock/jetty-server.jar${:}${project.build.directory}/wildfly/wiremock/jetty-util.jar${:}${project.build.directory}/wildfly/wiremock/jboss-servlet-api_4.0_spec.jar</wiremock.resource.path>
         <!-- Expose timeout property to be configurable from CLI because of environment issues -->
         <org.eclipse.microprofile.rest.client.tck.timeoutCushion>90000</org.eclipse.microprofile.rest.client.tck.timeoutCushion>
-        <ts.microprofile-tck-glow.expected-discovery>[cdi, ee-integration, jaxrs, jsonb, jsonp, microprofile-rest-client]==>ee-core-profile-server,jaxrs,microprofile-rest-client</ts.microprofile-tck-glow.expected-discovery>
+        <ts.microprofile-tck-glow.expected-discovery>[cdi, ee-integration, jaxrs, jsonb, jsonp, microprofile-config, microprofile-rest-client]==>ee-core-profile-server,jaxrs,microprofile-rest-client</ts.microprofile-tck-glow.expected-discovery>
     </properties>
     <dependencies>
         <!-- Required by the RESTEasy Client -->
