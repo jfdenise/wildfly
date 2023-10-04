@@ -963,6 +963,17 @@
         </dependency>
         <dependency>
             <groupId>${full.maven.groupId}</groupId>
+            <artifactId>wildfly-feature-pack-product-conf</artifactId>
+            <licenses>
+                <license>
+                    <name>Apache License 2.0</name>
+                    <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+                    <distribution>repo</distribution>
+                </license>
+            </licenses>
+        </dependency>
+        <dependency>
+            <groupId>${full.maven.groupId}</groupId>
             <artifactId>wildfly-microprofile-config-smallrye</artifactId>
             <licenses>
                 <license>

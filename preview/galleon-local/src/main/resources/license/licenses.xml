@@ -55,6 +55,17 @@
             </licenses>
         </dependency>
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wildfly-preview-feature-pack-product-conf</artifactId>
+            <licenses>
+                <license>
+                    <name>Apache License 2.0</name>
+                    <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+                    <distribution>repo</distribution>
+                </license>
+            </licenses>
+        </dependency>
+        <dependency>
             <groupId>org.wildfly.deployment</groupId>
             <artifactId>wildfly-ee-9-deployment-transformer</artifactId>
             <licenses>
