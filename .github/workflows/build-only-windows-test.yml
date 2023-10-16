@@ -1,7 +1,7 @@
 name: WildFly Windows Test Build
 
 on:
-  push_request:
+  push:
 
 jobs:
   build:
@@ -28,7 +28,9 @@ jobs:
           if [ -d "$LOCAL_REPO" ]; then find "$LOCAL_REPO" -name "*SNAPSHOT*" | xargs -I {} rm -rfv "{}"; fi
         shell: bash
       - name: Build with Maven Java 11 - ${{ matrix.os }}
-        run: mvn clean install -U -B -DskipTests -X -e
+        run: |
+          mvn --version
+          mvn clean install -U -B -DskipTests -X -e
   quick-build:
     name: WildFly Build -Dquickly
     runs-on: ${{ matrix.os }}
