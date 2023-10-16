@@ -28,4 +28,9 @@ jobs:
           if [ -d "$LOCAL_REPO" ]; then find "$LOCAL_REPO" -name "*SNAPSHOT*" | xargs -I {} rm -rfv "{}"; fi
         shell: bash
       - name: Build with Maven Java 11 - ${{ matrix.os }} -Dquickly
-        run: mvn -U -B -Dquickly -X -e
+        run: |
+          mvn --version
+          cd galleon-pack/galleon-local
+          mvn dependency:tree
+          cd ../..
+          mvn -U -B -Dquickly -X -e
