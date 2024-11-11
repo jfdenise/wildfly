@@ -472,6 +472,13 @@
                             <goal>execute-commands</goal>
                         </goals>
                     </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jboss.eap.plugins</groupId>
+                <artifactId>eap-maven-plugin</artifactId>
+                <version>${version.org.eap.plugin}</version>
+                <executions>
                     <!-- Provision a cloud server including all the MicroProfile specs layers -->
                     <execution>
                         <id>bootable-jar-packaging</id>
@@ -594,9 +601,6 @@
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-maven-plugin</artifactId>
                         <version>${version.org.wildfly.plugin}</version>
-                        <configuration>
-                            <overwrite-provisioned-server>true</overwrite-provisioned-server>
-                        </configuration>
                         <executions>
                             <execution>
                                 <phase>none</phase>
@@ -604,6 +608,16 @@
                                     <goal>execute-commands</goal>
                                 </goals>
                             </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jboss.eap.plugins</groupId>
+                        <artifactId>eap-maven-plugin</artifactId>
+                        <version>${version.org.eap.plugin}</version>
+                        <configuration>
+                            <overwrite-provisioned-server>true</overwrite-provisioned-server>
+                        </configuration>
+                        <executions>
                             <execution>
                                 <id>microprofile-provisioning</id>
                                 <goals>
@@ -699,9 +713,6 @@
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-maven-plugin</artifactId>
                         <version>${version.org.wildfly.plugin}</version>
-                        <configuration>
-                            <overwrite-provisioned-server>true</overwrite-provisioned-server>
-                        </configuration>
                         <executions>
                             <execution>
                                 <phase>none</phase>
@@ -709,6 +720,16 @@
                                     <goal>execute-commands</goal>
                                 </goals>
                             </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jboss.eap.plugins</groupId>
+                        <artifactId>eap-maven-plugin</artifactId>
+                        <version>${version.org.eap.plugin}</version>
+                        <configuration>
+                            <overwrite-provisioned-server>true</overwrite-provisioned-server>
+                        </configuration>
+                        <executions>
                             <execution>
                                 <id>microprofile-provisioning</id>
                                 <goals>
@@ -891,6 +912,13 @@
                                 </goals>
                                 <phase>none</phase>
                             </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jboss.eap.plugins</groupId>
+                        <artifactId>eap-maven-plugin</artifactId>
+                        <version>${version.org.eap.plugin}</version>
+                        <executions>
                             <!-- Disable the default provisioning -->
                             <execution>
                                 <id>server-provisioning</id>
@@ -984,6 +1012,13 @@
                                 </goals>
                                 <phase>none</phase>
                             </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jboss.eap.plugins</groupId>
+                        <artifactId>eap-maven-plugin</artifactId>
+                        <version>${version.org.eap.plugin}</version>
+                        <executions>
                             <!-- Disable the default provisioning -->
                             <execution>
                                 <id>server-provisioning</id>

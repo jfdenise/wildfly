@@ -413,9 +413,6 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>${version.org.wildfly.plugin}</version>
-                <configuration>
-                    <overwrite-provisioned-server>true</overwrite-provisioned-server>
-                </configuration>
                 <executions>
                     <execution>
                         <id>add-wiremock-module</id>
@@ -441,6 +438,16 @@
                             </scripts>
                         </configuration>
                     </execution>
+                </executions>
+            </plugin>
+            <plugin>                       
+                <groupId>org.jboss.eap.plugins</groupId>
+                <artifactId>eap-maven-plugin</artifactId>
+                <version>${version.org.eap.plugin}</version>
+                <configuration>
+                    <overwrite-provisioned-server>true</overwrite-provisioned-server>
+                </configuration>
+                <executions>
                     <execution>
                         <id>mp-server-provisioning</id>
                         <goals>
@@ -573,9 +580,9 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.wildfly.plugins</groupId>
-                        <artifactId>wildfly-maven-plugin</artifactId>
-                        <version>${version.org.wildfly.plugin}</version>
+                        <groupId>org.jboss.eap.plugins</groupId>
+                        <artifactId>eap-maven-plugin</artifactId>
+                        <version>${version.org.eap.plugin}</version>
                         <executions>
                             <execution>
                                 <!-- Disable the default provisioning -->
@@ -603,15 +610,22 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.wildfly.plugins</groupId>
-                        <artifactId>wildfly-maven-plugin</artifactId>
-                        <version>${version.org.wildfly.plugin}</version>
+                        <groupId>org.jboss.eap.plugins</groupId>
+                        <artifactId>eap-maven-plugin</artifactId>
+                        <version>${version.org.eap.plugin}</version>
                         <executions>
                             <execution>
                                 <!-- Disable the default provisioning -->
                                 <id>mp-server-provisioning</id>
                                 <phase>none</phase>
                             </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
+                        <version>${version.org.wildfly.plugin}</version>
+                        <executions>
                             <execution>
                                 <!-- Disable the default module addition -->
                                 <id>add-wiremock-module</id>
@@ -653,15 +667,22 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.wildfly.plugins</groupId>
-                        <artifactId>wildfly-maven-plugin</artifactId>
-                        <version>${version.org.wildfly.plugin}</version>
+                        <groupId>org.jboss.eap.plugins</groupId>
+                        <artifactId>eap-maven-plugin</artifactId>
+                        <version>${version.org.eap.plugin}</version>
                         <executions>
                             <execution>
                                 <!-- Disable the default provisioning -->
                                 <id>mp-server-provisioning</id>
                                 <phase>none</phase>
                             </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
+                        <version>${version.org.wildfly.plugin}</version>
+                        <executions>
                             <execution>
                                 <!-- Disable the default module addition -->
                                 <id>add-wiremock-module</id>
@@ -706,9 +727,9 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.wildfly.plugins</groupId>
-                        <artifactId>wildfly-maven-plugin</artifactId>
-                        <version>${version.org.wildfly.plugin}</version>
+                        <groupId>org.jboss.eap.plugins</groupId>
+                        <artifactId>eap-maven-plugin</artifactId>
+                        <version>${version.org.eap.plugin}</version>
                         <executions>
                             <execution>
                                 <!-- Disable the default provisioning -->

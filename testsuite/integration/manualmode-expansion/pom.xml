@@ -157,6 +157,13 @@
                             <goal>execute-commands</goal>
                         </goals>
                     </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jboss.eap.plugins</groupId>
+                <artifactId>eap-maven-plugin</artifactId>
+                <version>${version.org.eap.plugin}</version>
+                <executions>
                     <execution>
                         <id>channel-provisioning-comparison</id>
                         <goals>
@@ -365,9 +372,9 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>org.wildfly.plugins</groupId>
-                        <artifactId>wildfly-maven-plugin</artifactId>
-                        <version>${version.org.wildfly.plugin}</version>
+                        <groupId>org.jboss.eap.plugins</groupId>
+                        <artifactId>eap-maven-plugin</artifactId>
+                        <version>${version.org.eap.plugin}</version>
                         <executions>
                             <execution>
                                 <id>channel-provisioning-comparison</id>
