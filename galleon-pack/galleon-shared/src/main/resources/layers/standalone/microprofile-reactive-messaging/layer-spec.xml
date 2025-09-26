@@ -4,7 +4,7 @@
   ~ SPDX-License-Identifier: Apache-2.0
   -->
 
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="reactive-messaging">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="microprofile-reactive-messaging">
     <props>
         <prop name="org.wildfly.category" value="Microprofile"/>
         <prop name="org.wildfly.description" value="Support for MicroProfile Reactive Messaging."/>

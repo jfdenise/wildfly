@@ -217,7 +217,6 @@
                             <fork-embedded>${galleon.fork.embedded}</fork-embedded>
                             <generate-channel-manifest>true</generate-channel-manifest>
                             <deploy-channel-manifest>false</deploy-channel-manifest>
-                            <add-feature-packs-dependencies-in-metadata>true</add-feature-packs-dependencies-in-metadata>
                             <generate-complete-model>true</generate-complete-model>
                         </configuration>
                     </execution>
