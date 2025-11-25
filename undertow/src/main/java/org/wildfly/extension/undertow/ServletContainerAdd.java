@@ -23,7 +23,6 @@ import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.Property;
 import org.jboss.msc.Service;
 import org.jboss.msc.service.ServiceController;
-import org.xnio.XnioWorker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +31,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
+import org.wildfly.io.XnioWorkerSupplier;
+import org.xnio.XnioWorker;
 
 /**
  * @author <a href="mailto:tomaz.cerar@redhat.com">Tomaz Cerar</a> (c) 2013 Red Hat Inc.
@@ -88,7 +89,7 @@ final class ServletContainerAdd extends AbstractBoottimeAddStepHandler {
         final Supplier<SessionPersistenceManager> sessionPersistenceManager = persistentSessions ? builder.requires(AbstractPersistentSessionManager.SERVICE_NAME) : null;
         final Supplier<DirectBufferCache> directBufferCache = bufferCache != null ? builder.requires(BufferCacheService.SERVICE_NAME.append(bufferCache)) : null;
         final Supplier<ByteBufferPool> byteBufferPool = webSocketInfo != null ? builder.requiresCapability(Capabilities.CAPABILITY_BYTE_BUFFER_POOL, ByteBufferPool.class, webSocketInfo.getBufferPool()) : null;
-        final Supplier<XnioWorker> xnioWorker = webSocketInfo != null ? builder.requiresCapability(Capabilities.REF_IO_WORKER, XnioWorker.class, webSocketInfo.getWorker()) : null;
+        final Supplier<XnioWorkerSupplier> xnioWorker = webSocketInfo != null ? builder.requiresCapability(Capabilities.REF_IO_WORKER, XnioWorkerSupplier.class, webSocketInfo.getWorker()) : null;
 
         ServletStackTraces traces = ServletStackTraces.valueOf(stackTracesString.toUpperCase(Locale.ENGLISH).replace('-', '_'));
         ServletContainer container = ServletContainer.Factory.newInstance();
@@ -165,7 +166,7 @@ final class ServletContainerAdd extends AbstractBoottimeAddStepHandler {
 
             @Override
             public XnioWorker getWebsocketsWorker() {
-                return (xnioWorker != null) ? xnioWorker.get() : null;
+                return (xnioWorker != null) ? xnioWorker.get().get() : null;
             }
 
             @Override
@@ -266,6 +267,11 @@ final class ServletContainerAdd extends AbstractBoottimeAddStepHandler {
             @Override
             public boolean isOrphanSessionAllowed() {
                 return orphanSessionAllowed;
+            }
+
+            @Override
+            public XnioWorkerSupplier getWebsocketsWorkerSupplier() {
+                return (xnioWorker != null) ? xnioWorker.get() : null;
             }
         };
         builder.setInstance(Service.newInstance(builder.provides(ServletContainerDefinition.SERVLET_CONTAINER_CAPABILITY), service));

@@ -42,7 +42,7 @@ public class WeldExecutorServices extends AbstractExecutorServices implements Se
     private final int bound;
     private final Consumer<ExecutorServices> executorServicesConsumer;
     private ExecutorService executor;
-
+    private ThreadFactory factory;
     public WeldExecutorServices() {
         this(null, DEFAULT_BOUND);
     }
@@ -54,7 +54,7 @@ public class WeldExecutorServices extends AbstractExecutorServices implements Se
 
     @Override
     public void start(final StartContext context) throws StartException {
-        final ThreadFactory factory = new JBossThreadFactory(null, Boolean.FALSE, null, THREAD_NAME_PATTERN, null, null);
+        factory = new JBossThreadFactory(null, Boolean.FALSE, null, THREAD_NAME_PATTERN, null, null);
         // set TCCL to null for new threads to make sure no deployment classloader leaks through this executor's TCCL
         // Weld does not mind having null TCCL in this executor
         this.executor = new WeldExecutor(bound, runnable -> {
@@ -73,6 +73,29 @@ public class WeldExecutorServices extends AbstractExecutorServices implements Se
         }
         );
         if (executorServicesConsumer != null) executorServicesConsumer.accept(this);
+    }
+
+    @Override
+    public void passivate() {
+        executor.shutdownNow();
+    }
+    @Override
+    public void activate() {
+        this.executor = new WeldExecutor(bound, runnable -> {
+            Thread thread = factory.newThread(runnable);
+            if (WildFlySecurityManager.isChecking()) {
+                AccessController.doPrivileged(new PrivilegedAction<Void>() {
+                    public Void run() {
+                        thread.setContextClassLoader(null);
+                        return null;
+                    }
+                });
+            } else {
+                thread.setContextClassLoader(null);
+            }
+            return thread;
+        }
+        );
     }
 
     @Override

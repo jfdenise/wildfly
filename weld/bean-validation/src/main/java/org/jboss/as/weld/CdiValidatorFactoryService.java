@@ -24,6 +24,7 @@ import org.jboss.msc.Service;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StopContext;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 import org.wildfly.security.manager.WildFlySecurityManager;
 
 /**
@@ -68,6 +69,23 @@ public class CdiValidatorFactoryService implements Service {
             LazyValidatorFactory lazyValidatorFactory = (LazyValidatorFactory)(deploymentUnit.getAttachment(BeanValidationAttachments.VALIDATOR_FACTORY));
             lazyValidatorFactory.replaceDelegate(validatorFactory);
             lazyValidatorFactory.replaceDelegate(validatorFactory.getConstraintValidatorFactory());
+
+            // That doesn't work, we see CDI proxy being used as key to retrieve Bean metadata
+            // So forcing those classes is incomplete
+            // XXX CREMA NOT NEEDED
+            if (WildFlyGraalSetup.isBuildTime()) {
+                Class[] classes = WildFlyGraalSetup.getCDIClasses();
+                for (Class clazz : classes) {
+                    System.out.println("Force Validation metadata creation for " + clazz.getName());
+                    try {
+                        validatorFactory.getValidator().getConstraintsForClass(clazz);
+                    } catch (Exception ex) {
+                        // OK, attempt to create an instance that can be invalid for transient scopes (e.g.: request).
+                        System.err.println(ex);
+                        ex.printStackTrace();
+                    }
+                }
+            }
         } finally {
             WildFlySecurityManager.setCurrentContextClassLoaderPrivileged(cl);
         }

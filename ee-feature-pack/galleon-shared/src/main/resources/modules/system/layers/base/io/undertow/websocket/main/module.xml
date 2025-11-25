@@ -22,5 +22,6 @@
         <module name="io.undertow.servlet"/>
         <module name="org.jboss.xnio"/>
         <module name="org.wildfly.common"/>
+        <module name="org.wildfly.graal.runtime"/>
     </dependencies>
 </module>

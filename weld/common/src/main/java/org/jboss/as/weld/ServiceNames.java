@@ -21,6 +21,8 @@ public final class ServiceNames {
 
     public static final ServiceName WELD_START_COMPLETION_SERVICE_NAME = ServiceName.of("WeldEndInitService");
 
+    public static final ServiceName WELD_REGISTER_BEANS_SERVICE_NAME = ServiceName.of("WeldRegisterBeansService");
+
     /**
      * Gets the Bean Manager MSC service name relative to the Deployment Unit.
      * <p>

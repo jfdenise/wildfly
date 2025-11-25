@@ -23,7 +23,9 @@ public class ClassLoadingUtils {
         final ClassLoader oldTccl = WildFlySecurityManager.getCurrentContextClassLoaderPrivileged();
         try {
             WildFlySecurityManager.setCurrentContextClassLoaderPrivileged(module.getClassLoader());
-            return Class.forName(className, false, module.getClassLoader());
+            // Can retrieve the class from the cache.
+            // Class.forName is detected by Graal VM and forbidden.
+            return module.getClassLoader().loadClass(className, false);
         } finally {
             WildFlySecurityManager.setCurrentContextClassLoaderPrivileged(oldTccl);
         }

@@ -23,6 +23,7 @@ import org.jboss.as.server.deployment.module.ModuleSpecification;
 import org.jboss.as.server.deployment.module.ResourceRoot;
 import org.jboss.modules.security.ImmediatePermissionFactory;
 import org.jboss.modules.security.PermissionFactory;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 
 /**
  * A processor which sets up the default Jakarta EE permission set.
@@ -61,16 +62,19 @@ public final class EEDefaultPermissionsProcessor implements DeploymentUnitProces
             permissions.add(new ImmediatePermissionFactory(e.nextElement()));
         }
 
-        //make sure they can read the contents of the deployment
-        ResourceRoot root = deploymentUnit.getAttachment(Attachments.DEPLOYMENT_ROOT);
-        try {
-            File file = root.getRoot().getPhysicalFile();
-            if(file != null && file.isDirectory()) {
-                FilePermission permission = new FilePermission(file.getAbsolutePath() + File.separatorChar + "-", "read");
-                permissions.add(new ImmediatePermissionFactory(permission));
+        // Permissions are becoming irrelevant, we can ignore them
+        if (!WildFlyGraalSetup.isBuildTime()) {
+            //make sure they can read the contents of the deployment
+            ResourceRoot root = deploymentUnit.getAttachment(Attachments.DEPLOYMENT_ROOT);
+            try {
+                File file = root.getRoot().getPhysicalFile();
+                if (file != null && file.isDirectory()) {
+                    FilePermission permission = new FilePermission(file.getAbsolutePath() + File.separatorChar + "-", "read");
+                    permissions.add(new ImmediatePermissionFactory(permission));
+                }
+            } catch (IOException ex) {
+                throw new DeploymentUnitProcessingException(ex);
             }
-        } catch (IOException ex) {
-            throw new DeploymentUnitProcessingException(ex);
         }
 
     }

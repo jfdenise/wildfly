@@ -21,6 +21,7 @@
              1. The implementation is loaded
              2. It is done last via the hard-coded class name in the spec API
          -->
-        <module name="org.eclipse.yasson"/>
+         <!-- Services must be exported for the Service Loader to find the default provider, required by Graal  mode -->
+        <module name="org.eclipse.yasson" export="true" services="export"/>
     </dependencies>
 </module>

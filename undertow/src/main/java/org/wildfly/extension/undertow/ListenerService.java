@@ -37,6 +37,8 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
+import org.wildfly.io.XnioWorkerSupplier;
 
 /**
  * @author Tomaz Cerar
@@ -52,7 +54,7 @@ public abstract class ListenerService implements Service<UndertowListener>, Unde
             .getMap();
 
     protected Consumer<ListenerService> serviceConsumer;
-    protected final DelegatingSupplier<XnioWorker> worker = new DelegatingSupplier<>();
+    protected final DelegatingSupplier<XnioWorkerSupplier> worker = new DelegatingSupplier<>();
     protected final DelegatingSupplier<SocketBinding> binding = new DelegatingSupplier<>();
     protected final DelegatingSupplier<SocketBinding> redirectSocket = new DelegatingSupplier<>();
     @SuppressWarnings("rawtypes")
@@ -78,7 +80,7 @@ public abstract class ListenerService implements Service<UndertowListener>, Unde
         this.proxyProtocol = proxyProtocol;
     }
 
-    public DelegatingSupplier<XnioWorker> getWorker() {
+    public DelegatingSupplier<XnioWorkerSupplier> getWorker() {
         return worker;
     }
 
@@ -130,7 +132,7 @@ public abstract class ListenerService implements Service<UndertowListener>, Unde
                 final InetSocketAddress socketAddress = binding.get().getSocketAddress();
                 final ChannelListener<AcceptingChannel<StreamConnection>> acceptListener = ChannelListeners.openListenerAdapter(openListener);
                 try {
-                    startListening(worker.get(), socketAddress, acceptListener);
+                    startListening(worker.get().get(), socketAddress, acceptListener);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -153,9 +155,19 @@ public abstract class ListenerService implements Service<UndertowListener>, Unde
     }
 
     protected abstract void preStart(StartContext context);
+    private StartContext context;
 
     @Override
+    public void activate() throws StartException {
+        start(context);
+    }
+    @Override
     public void start(final StartContext context) throws StartException {
+        if (WildFlyGraalSetup.isBuildTime()) {
+            UndertowLogger.ROOT_LOGGER.info("[WildFly Graal], undertow not started at build time, will be activated at runtime");
+            this.context = context;
+            return;
+        }
         started = true;
         preStart(context);
         serverService.get().registerListener(this);
@@ -202,7 +214,7 @@ public abstract class ListenerService implements Service<UndertowListener>, Unde
                 } else {
                     acceptListener = ChannelListeners.openListenerAdapter(openListener);
                 }
-                startListening(worker.get(), socketAddress, acceptListener);
+                startListening(worker.get().get(), socketAddress, acceptListener);
             } catch (IOException e) {
                 cleanFailedStart();
                 try {
@@ -262,8 +274,8 @@ public abstract class ListenerService implements Service<UndertowListener>, Unde
 
     @Override
     public boolean isShutdown() {
-        final DelegatingSupplier<XnioWorker> workerSupplier = getWorker();
-        XnioWorker worker = workerSupplier != null ? workerSupplier.get() : null;
+        final DelegatingSupplier<XnioWorkerSupplier> workerSupplier = getWorker();
+        XnioWorker worker = workerSupplier != null ? workerSupplier.get().get() : null;
         return worker == null || worker.isShutdown();
     }
 

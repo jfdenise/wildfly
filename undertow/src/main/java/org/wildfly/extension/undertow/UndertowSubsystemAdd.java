@@ -79,7 +79,9 @@ class UndertowSubsystemAdd extends AbstractBoottimeAddStepHandler {
         try {
             Class.forName("org.apache.jasper.compiler.JspRuntimeContext", true, this.getClass().getClassLoader());
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
             UndertowLogger.ROOT_LOGGER.couldNotInitJsp(e);
+            throw new OperationFailedException(e);
         }
         final ModelNode model = resource.getModel();
 

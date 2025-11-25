@@ -71,7 +71,7 @@ public class HttpsListenerService extends HttpListenerService {
         SSLContext sslContext = sslContextSupplier.get();
         OptionMap combined = getSSLOptions(sslContext);
 
-        return new UndertowXnioSsl(worker.get().getXnio(), combined, sslContext);
+        return new UndertowXnioSsl(((XnioWorker)worker.get().get()).getXnio(), combined, sslContext);
     }
 
     protected OptionMap getSSLOptions(SSLContext sslContext) {

@@ -41,6 +41,7 @@ import org.jboss.vfs.VirtualFileFilter;
 import org.jboss.vfs.VisitorAttributes;
 import org.jboss.vfs.util.SuffixMatchFilter;
 import org.wildfly.extension.undertow.logging.UndertowLogger;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 
 /**
  * Create and mount classpath entries in the .war deployment.
@@ -126,9 +127,10 @@ public class WarStructureDeploymentProcessor implements DeploymentUnitProcessor 
         File tempDir = new File(pathManager.getPathEntry(TEMP_DIR).resolvePath(), deploymentName);
         tempDir.mkdirs();
         warMetaData.setTempDir(tempDir);
-
-        moduleSpecification.addPermissionFactory(new ImmediatePermissionFactory(new FilePermission(tempDir.getAbsolutePath() + File.separatorChar + "-", "read,write,delete")));
-
+        // Permissions are becoming irrelevant, we can ignore them
+        if (!WildFlyGraalSetup.isBuildTime()) {
+            moduleSpecification.addPermissionFactory(new ImmediatePermissionFactory(new FilePermission(tempDir.getAbsolutePath() + File.separatorChar + "-", "read,write,delete")));
+        }
         // Add the shared TLDs metadata
         final TldsMetaData tldsMetaData = new TldsMetaData();
         tldsMetaData.setSharedTlds(sharedTldsMetaData);

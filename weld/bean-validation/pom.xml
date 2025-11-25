@@ -24,6 +24,11 @@
     <dependencies>
 
        <dependency>
+           <groupId>org.wildfly.graal</groupId>
+           <artifactId>wildfly-graal-runtime</artifactId>
+       </dependency>
+       
+       <dependency>
            <groupId>jakarta.enterprise</groupId>
            <artifactId>jakarta.enterprise.cdi-api</artifactId>
        </dependency>

@@ -16,6 +16,7 @@ import org.xnio.XnioWorker;
 
 import java.util.List;
 import java.util.Map;
+import org.wildfly.io.XnioWorkerSupplier;
 
 /**
  * Central Undertow 'Container' HTTP listeners will make this container accessible whilst deployers will add content.
@@ -54,6 +55,7 @@ public interface ServletContainerService {
     SessionPersistenceManager getSessionPersistenceManager();
 
     XnioWorker getWebsocketsWorker();
+    XnioWorkerSupplier getWebsocketsWorkerSupplier();
 
     ByteBufferPool getWebsocketsBufferPool();
 
