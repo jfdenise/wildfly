@@ -27,7 +27,12 @@ public class JSPConfig {
             servletInfo = null;
         } else {
 
-            final io.undertow.servlet.api.ServletInfo jspServlet = new ServletInfo("jsp", JspServlet.class);
+            io.undertow.servlet.api.ServletInfo jspServlet = null;
+            if (Boolean.getBoolean("org.wildfly.graal")) {
+                jspServlet = ServiceLoaderInitializer.getJspServletInfo();
+            } else {
+                jspServlet = new ServletInfo("jsp", JspServlet.class);
+            }
             jspServlet.setRequireWelcomeFileMapping(true);
 
             jspServlet.addInitParam("development", Boolean.toString(developmentMode));
