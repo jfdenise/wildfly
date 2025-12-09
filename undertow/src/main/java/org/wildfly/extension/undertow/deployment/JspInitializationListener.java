@@ -30,6 +30,9 @@ public class JspInitializationListener implements ServletContextListener {
     private static final String DISABLE_IMPORTED_CLASS_EL_RESOLVER_PROPERTY = "org.wildfly.extension.undertow.deployment.disableImportedClassELResolver";
     private static JspFactory JSP_FACTORY = JspFactory.getDefaultFactory();
     private static ExpressionFactory exFactory = ELManager.getExpressionFactory();
+    public static void init() {
+        System.out.println("FACTOPRY EX is " + exFactory);
+    }
     @Override
     public void contextInitialized(final ServletContextEvent sce) {
         // if the servlet version is 3.1 or higher, setup a ELResolver which allows usage of static fields java.lang.*

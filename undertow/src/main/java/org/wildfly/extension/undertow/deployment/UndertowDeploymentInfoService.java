@@ -214,6 +214,7 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
 
     }
     static {
+        System.out.println("INITIALIZE UNDERTOW DEPLOYMENT INFO SERVICE ");
         LISTENER_INFO = new ListenerInfo(JspInitializationListener.class);
         try {
             Module module = Module.getBootModuleLoader().loadModule("deployment.helloworld.war");
@@ -222,8 +223,12 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
             DEFAULT_SERVLET_CLASS = DefaultServlet.class;
             DEFAULT_SERVLET_CONSTRUCTOR = DEFAULT_SERVLET_CLASS.getConstructor();
         } catch(Exception ex) {
-            throw new RuntimeException(ex);
+            System.out.println(" EXCEPTION in UNDERTOW SERVOCE");
         }
+    }
+    public static void init() {
+        System.out.append("UndertowDeploymentInfoService " +  UndertowDeploymentInfoService.class.getClassLoader());
+        System.out.println("LISTENER_INFO" + LISTENER_INFO);
     }
     public static final ServiceName SERVICE_NAME = ServiceName.of("UndertowDeploymentInfoService");
 
