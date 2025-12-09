@@ -4,6 +4,8 @@
  */
 package org.wildfly.extension.undertow.deployment;
 
+import jakarta.el.ELManager;
+import jakarta.el.ExpressionFactory;
 import org.apache.jasper.runtime.JspApplicationContextImpl;
 import org.jboss.as.web.common.ExpressionFactoryWrapper;
 import org.wildfly.extension.undertow.ImportedClassELResolver;
@@ -26,12 +28,13 @@ public class JspInitializationListener implements ServletContextListener {
 
     public static final String CONTEXT_KEY = "org.jboss.as.web.deployment.JspInitializationListener.wrappers";
     private static final String DISABLE_IMPORTED_CLASS_EL_RESOLVER_PROPERTY = "org.wildfly.extension.undertow.deployment.disableImportedClassELResolver";
-
+    private static JspFactory JSP_FACTORY = JspFactory.getDefaultFactory();
+    private static ExpressionFactory exFactory = ELManager.getExpressionFactory();
     @Override
     public void contextInitialized(final ServletContextEvent sce) {
         // if the servlet version is 3.1 or higher, setup a ELResolver which allows usage of static fields java.lang.*
         final ServletContext servletContext = sce.getServletContext();
-        final JspApplicationContext jspApplicationContext = JspFactory.getDefaultFactory().getJspApplicationContext(servletContext);
+        final JspApplicationContext jspApplicationContext = JSP_FACTORY.getJspApplicationContext(servletContext);
         boolean disableImportedClassELResolver = Boolean.parseBoolean(
                 WildFlySecurityManager.getSystemPropertiesPrivileged().getProperty(DISABLE_IMPORTED_CLASS_EL_RESOLVER_PROPERTY));
         if (!disableImportedClassELResolver &&

@@ -27,6 +27,19 @@ public final class JdkDependenciesProcessor implements DeploymentUnitProcessor {
             "jdk.naming.rmi"
     };
 
+    //private static final List<Module> MODULES = new ArrayList<>();
+
+    static {
+        final ModuleLoader moduleLoader = Module.getBootModuleLoader();
+        try {
+            for (String moduleName : JDK_NAMING_MODULES) {
+                moduleLoader.loadModule(moduleName);
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     @Override
     public void deploy(final DeploymentPhaseContext phaseContext) throws DeploymentUnitProcessingException {
         final DeploymentUnit deploymentUnit = phaseContext.getDeploymentUnit();
@@ -34,7 +47,9 @@ public final class JdkDependenciesProcessor implements DeploymentUnitProcessor {
         final ModuleLoader moduleLoader = Module.getBootModuleLoader();
         for (String moduleName : JDK_NAMING_MODULES) {
             try {
-                moduleLoader.loadModule(moduleName);
+                if (!Boolean.getBoolean("org.wildfly.graal")) {
+                    moduleLoader.loadModule(moduleName);
+                }
                 moduleSpecification.addSystemDependency(ModuleDependency.Builder.of(moduleLoader, moduleName).build());
             } catch (ModuleLoadException ex) {
                 NamingLogger.ROOT_LOGGER.debugf("Module not found: %s", moduleName);

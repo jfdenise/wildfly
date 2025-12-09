@@ -150,6 +150,7 @@ import java.util.function.Supplier;
 import static io.undertow.servlet.api.SecurityInfo.EmptyRoleSemantic.AUTHENTICATE;
 import static io.undertow.servlet.api.SecurityInfo.EmptyRoleSemantic.DENY;
 import static io.undertow.servlet.api.SecurityInfo.EmptyRoleSemantic.PERMIT;
+import java.lang.reflect.Constructor;
 
 import org.jboss.as.server.ServerEnvironment;
 
@@ -160,7 +161,70 @@ import org.jboss.as.server.ServerEnvironment;
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
 public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
+    private static ListenerInfo LISTENER_INFO;
+    private static Constructor SERVLET_CONSTRUCTOR;
+    private static Class<?extends Servlet> SERVLET_CLASS;
+    private static Class<? extends Servlet> DEFAULT_SERVLET_CLASS;
+    private static Constructor DEFAULT_SERVLET_CONSTRUCTOR;
+    static class GraalReference implements ManagedReference {
 
+        @Override
+        public void release() {
+        }
+
+        @Override
+        public Object getInstance() {
+            try {
+                return SERVLET_CONSTRUCTOR.newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    static class GraalDefaultReference implements ManagedReference {
+
+        @Override
+        public void release() {
+        }
+
+        @Override
+        public Object getInstance() {
+            try {
+                return DEFAULT_SERVLET_CONSTRUCTOR.newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    static class GraalFactory implements ManagedReferenceFactory {
+
+        @Override
+        public ManagedReference getReference() {
+            return new GraalReference();
+        }
+
+    }
+    static class GraalDefaultFactory implements ManagedReferenceFactory {
+
+        @Override
+        public ManagedReference getReference() {
+            return new GraalDefaultReference();
+        }
+
+    }
+    static {
+        LISTENER_INFO = new ListenerInfo(JspInitializationListener.class);
+        try {
+            Module module = Module.getBootModuleLoader().loadModule("deployment.helloworld.war");
+            SERVLET_CLASS = (Class<? extends Servlet>) module.getClassLoader().loadClass("org.jboss.as.quickstarts.helloworld.HelloWorldServlet");
+            SERVLET_CONSTRUCTOR = SERVLET_CLASS.getConstructor();
+            DEFAULT_SERVLET_CLASS = DefaultServlet.class;
+            DEFAULT_SERVLET_CONSTRUCTOR = DEFAULT_SERVLET_CLASS.getConstructor();
+        } catch(Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
     public static final ServiceName SERVICE_NAME = ServiceName.of("UndertowDeploymentInfoService");
 
     public static final String DEFAULT_SERVLET_NAME = "default";
@@ -583,7 +647,11 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                 }
                 seenMappings.addAll(jspPropertyGroupMappings);
                 //setup Jakarta Server Pages application context initializing listener
-                d.addListener(new ListenerInfo(JspInitializationListener.class));
+                if(Boolean.getBoolean("org.wildfly.graal")) {
+                    d.addListener(LISTENER_INFO);
+                } else {
+                    d.addListener(new ListenerInfo(JspInitializationListener.class));
+                }
                 d.addServletContextAttribute(JspInitializationListener.CONTEXT_KEY, expressionFactoryWrappers);
             }
 
@@ -643,8 +711,18 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                             throw UndertowLogger.ROOT_LOGGER.servletClassNotDefined(servlet.getServletName());
                         }
                     } else {
-                        Class<? extends Servlet> servletClass = (Class<? extends Servlet>) module.getClassLoader().loadClass(servlet.getServletClass());
-                        ManagedReferenceFactory creator = componentRegistry.createInstanceFactory(servletClass, true);
+                        System.out.println("DESCRIPTION \n" + module);
+                        System.out.println("MODULE FOR SERVLET " + module.getName() + " loader " + module.getModuleLoader() + " module cl " + module.getClassLoader());
+                        Class<? extends Servlet> servletClass;
+                        ManagedReferenceFactory creator;
+                        if(Boolean.getBoolean("org.wildfly.graal")) {
+                            servletClass = SERVLET_CLASS;
+                            creator = new GraalFactory();
+                        } else {
+                            servletClass = (Class<? extends Servlet>) module.getClassLoader().loadClass(servlet.getServletClass());
+                            creator = componentRegistry.createInstanceFactory(servletClass, true);
+                        }
+
                         if (creator != null) {
                             InstanceFactory<Servlet> factory = createInstanceFactory(creator);
                             s = new ServletInfo(servlet.getName(), servletClass, factory);
@@ -718,7 +796,13 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
 
             //we explicitly add the default servlet, to allow it to be mapped
             if (!mergedMetaData.getServlets().containsKey(ServletPathMatches.DEFAULT_SERVLET_NAME)) {
-                ServletInfo defaultServlet = Servlets.servlet(DEFAULT_SERVLET_NAME, DefaultServlet.class);
+                ServletInfo defaultServlet;
+                if(Boolean.getBoolean("org.wildfly.graal")) {
+                    InstanceFactory<Servlet> factory = createInstanceFactory(new GraalDefaultFactory());
+                    defaultServlet = new ServletInfo(DEFAULT_SERVLET_NAME, DEFAULT_SERVLET_CLASS, factory);
+                    } else {
+                    defaultServlet = Servlets.servlet(DEFAULT_SERVLET_NAME, DefaultServlet.class);
+                }
                 handleServletMappings(is22OrOlder, seenMappings, servletMappings, defaultServlet);
 
                 d.addServlet(defaultServlet);
