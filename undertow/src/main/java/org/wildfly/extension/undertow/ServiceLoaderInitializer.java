@@ -5,7 +5,10 @@
 package org.wildfly.extension.undertow;
 
 import io.undertow.servlet.api.ServletInfo;
+import java.util.List;
+import java.util.Map;
 import org.apache.jasper.servlet.JspServlet;
+import org.jboss.as.controller.graal.GraalRecorder;
 import org.wildfly.extension.undertow.deployment.JspInitializationListener;
 import org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService;
 
@@ -23,7 +26,6 @@ public class ServiceLoaderInitializer {
         try {
             System.out.println("UndertowDeploymentInfoService " + UndertowDeploymentInfoService.DEFAULT_SERVLET_NAME);
             System.out.println("CONTEXT CLASSLOADER " + Thread.currentThread().getContextClassLoader());
-            UndertowDeploymentInfoService.init();
             System.out.println("ServiceLoaderInitializer.class.getClassLoader() " + ServiceLoaderInitializer.class.getClassLoader());
             Class.forName("org.apache.jasper.compiler.JspRuntimeContext", true, ServiceLoaderInitializer.class.getClassLoader());
             JSP_INITIALIZED = true;
@@ -37,8 +39,9 @@ public class ServiceLoaderInitializer {
 
         JSP_SERVLET = new ServletInfo("jsp", JspServlet.class);
     }
-    public static void init() {
+    public static void init(Map<String, List<GraalRecorder.Record>> map) throws Exception {
         System.out.println("JSP_SERVLET " + JSP_SERVLET);
+        UndertowDeploymentInfoService.init(map);
     }
     public static void checkJsp() throws ClassNotFoundException {
         if (!JSP_INITIALIZED) {
