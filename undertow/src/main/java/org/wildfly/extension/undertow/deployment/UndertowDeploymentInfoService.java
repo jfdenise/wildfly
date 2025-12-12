@@ -150,10 +150,12 @@ import java.util.function.Supplier;
 import static io.undertow.servlet.api.SecurityInfo.EmptyRoleSemantic.AUTHENTICATE;
 import static io.undertow.servlet.api.SecurityInfo.EmptyRoleSemantic.DENY;
 import static io.undertow.servlet.api.SecurityInfo.EmptyRoleSemantic.PERMIT;
+import io.undertow.servlet.util.ConstructorInstanceFactory;
 import java.lang.reflect.Constructor;
 import org.jboss.as.controller.graal.GraalRecorder;
 
 import org.jboss.as.server.ServerEnvironment;
+import org.jboss.modules.ModuleClassLoader;
 import org.wildfly.extension.undertow.graal.PreMainInitializerImpl;
 
 /**
@@ -163,100 +165,100 @@ import org.wildfly.extension.undertow.graal.PreMainInitializerImpl;
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
 public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
-    private static ListenerInfo LISTENER_INFO;
-    private static Map<String, Map<String, Constructor>> SERVLET_CONSTRUCTORS = new HashMap<>();
-    private static Map<String, Map<String, Class<?extends Servlet>>> SERVLET_CLASSES = new HashMap<>();
-    private static Class<? extends Servlet> DEFAULT_SERVLET_CLASS;
-    private static Constructor DEFAULT_SERVLET_CONSTRUCTOR;
-    static class GraalReference implements ManagedReference {
-        private final String name;
-        private final String moduleName;
-        GraalReference(String moduleName, String name) {
-            this.moduleName = moduleName;
-            this.name = name;
-        }
-        @Override
-        public void release() {
-        }
+    //private static ListenerInfo LISTENER_INFO;
+    //private static Map<String, Map<String, Constructor>> SERVLET_CONSTRUCTORS = new HashMap<>();
+    //private static Map<String, Map<String, Class<?extends Servlet>>> SERVLET_CLASSES = new HashMap<>();
+    //private static Class<? extends Servlet> DEFAULT_SERVLET_CLASS;
+    //private static Constructor DEFAULT_SERVLET_CONSTRUCTOR;
+//    static class GraalReference implements ManagedReference {
+//        private final String name;
+//        private final String moduleName;
+//        GraalReference(String moduleName, String name) {
+//            this.moduleName = moduleName;
+//            this.name = name;
+//        }
+//        @Override
+//        public void release() {
+//        }
+//
+//        @Override
+//        public Object getInstance() {
+//            try {
+//                return SERVLET_CONSTRUCTORS.get(moduleName).get(name).newInstance();
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
+//    static class GraalDefaultReference implements ManagedReference {
+//
+//        @Override
+//        public void release() {
+//        }
+//
+//        @Override
+//        public Object getInstance() {
+//            try {
+//                return DEFAULT_SERVLET_CONSTRUCTOR.newInstance();
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 
-        @Override
-        public Object getInstance() {
-            try {
-                return SERVLET_CONSTRUCTORS.get(moduleName).get(name).newInstance();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    static class GraalDefaultReference implements ManagedReference {
-
-        @Override
-        public void release() {
-        }
-
-        @Override
-        public Object getInstance() {
-            try {
-                return DEFAULT_SERVLET_CONSTRUCTOR.newInstance();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    static class GraalFactory implements ManagedReferenceFactory {
-
-        private final String name;
-        private final String moduleName;
-        GraalFactory(String moduleName, String name) {
-            this.name = name;
-            this.moduleName = moduleName;
-        }
-
-        @Override
-        public ManagedReference getReference() {
-            return new GraalReference(moduleName, name);
-        }
-
-    }
-    static class GraalDefaultFactory implements ManagedReferenceFactory {
-
-        @Override
-        public ManagedReference getReference() {
-            return new GraalDefaultReference();
-        }
-
-    }
-    static {
-        System.out.println("INITIALIZE UNDERTOW DEPLOYMENT INFO SERVICE ");
-        LISTENER_INFO = new ListenerInfo(JspInitializationListener.class);
-        try {
-            DEFAULT_SERVLET_CLASS = DefaultServlet.class;
-            DEFAULT_SERVLET_CONSTRUCTOR = DEFAULT_SERVLET_CLASS.getConstructor();
-        } catch(Exception ex) {
-            System.out.println(" EXCEPTION in UNDERTOW SERVOCE");
-        }
-    }
-    public static void init(Map<String, List<GraalRecorder.Record>> map) throws Exception {
-        System.out.println("Init servlet deployment classes " + map);
-        for(String deploymentModule : map.keySet()) {
-            System.out.println("Classes for Module " + deploymentModule);
-            Module module = Module.getBootModuleLoader().loadModule(deploymentModule);
-            Map<String, Class<?extends Servlet>> classes = new HashMap<>();
-            Map<String, Constructor> constructors = new HashMap<>();
-            SERVLET_CLASSES.put(deploymentModule, classes);
-            SERVLET_CONSTRUCTORS.put(deploymentModule, constructors);
-            for(GraalRecorder.Record rec : map.get(deploymentModule)) {
-                JBossServletMetaData metadata = (JBossServletMetaData) rec.content;
-                Class<?extends Servlet> clazz = (Class<? extends Servlet>) module.getClassLoader().loadClass(metadata.getServletClass());
-                System.out.println("FOund in " + deploymentModule + " servlet class " + metadata.getServletClass());
-                classes.put(metadata.getServletClass(), clazz);
-                constructors.put(metadata.getServletClass(), clazz.getConstructor());
-            }
-        }
-        System.out.append("UndertowDeploymentInfoService " +  UndertowDeploymentInfoService.class.getClassLoader());
-        System.out.println("LISTENER_INFO" + LISTENER_INFO);
-    }
+//    static class GraalFactory implements ManagedReferenceFactory {
+//
+//        private final String name;
+//        private final String moduleName;
+//        GraalFactory(String moduleName, String name) {
+//            this.name = name;
+//            this.moduleName = moduleName;
+//        }
+//
+//        @Override
+//        public ManagedReference getReference() {
+//            return new GraalReference(moduleName, name);
+//        }
+//
+//    }
+//    static class GraalDefaultFactory implements ManagedReferenceFactory {
+//
+//        @Override
+//        public ManagedReference getReference() {
+//            return new GraalDefaultReference();
+//        }
+//
+//    }
+//    static {
+//        System.out.println("INITIALIZE UNDERTOW DEPLOYMENT INFO SERVICE ");
+//        LISTENER_INFO = new ListenerInfo(JspInitializationListener.class);
+//        try {
+//            DEFAULT_SERVLET_CLASS = DefaultServlet.class;
+//            DEFAULT_SERVLET_CONSTRUCTOR = DEFAULT_SERVLET_CLASS.getConstructor();
+//        } catch(Exception ex) {
+//            System.out.println(" EXCEPTION in UNDERTOW SERVOCE");
+//        }
+//    }
+//    public static void init(Map<String, List<GraalRecorder.Record>> map) throws Exception {
+//        System.out.println("Init servlet deployment classes " + map);
+//        for(String deploymentModule : map.keySet()) {
+//            System.out.println("Classes for Module " + deploymentModule);
+//            Module module = Module.getBootModuleLoader().loadModule(deploymentModule);
+//            Map<String, Class<?extends Servlet>> classes = new HashMap<>();
+//            Map<String, Constructor> constructors = new HashMap<>();
+//            SERVLET_CLASSES.put(deploymentModule, classes);
+//            SERVLET_CONSTRUCTORS.put(deploymentModule, constructors);
+//            for(GraalRecorder.Record rec : map.get(deploymentModule)) {
+//                JBossServletMetaData metadata = (JBossServletMetaData) rec.content;
+//                Class<?extends Servlet> clazz = (Class<? extends Servlet>) module.getClassLoader().loadClass(metadata.getServletClass());
+//                System.out.println("FOund in " + deploymentModule + " servlet class " + metadata.getServletClass());
+//                classes.put(metadata.getServletClass(), clazz);
+//                constructors.put(metadata.getServletClass(), clazz.getConstructor());
+//            }
+//        }
+//        System.out.append("UndertowDeploymentInfoService " +  UndertowDeploymentInfoService.class.getClassLoader());
+//        System.out.println("LISTENER_INFO" + LISTENER_INFO);
+//    }
     public static final ServiceName SERVICE_NAME = ServiceName.of("UndertowDeploymentInfoService");
 
     public static final String DEFAULT_SERVLET_NAME = "default";
@@ -679,11 +681,11 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                 }
                 seenMappings.addAll(jspPropertyGroupMappings);
                 //setup Jakarta Server Pages application context initializing listener
-                if(Boolean.getBoolean("org.wildfly.graal")) {
-                    d.addListener(LISTENER_INFO);
-                } else {
-                    d.addListener(new ListenerInfo(JspInitializationListener.class));
-                }
+                //if(Boolean.getBoolean("org.wildfly.graal")) {
+                //    d.addListener(LISTENER_INFO);
+                //} else {
+                //    d.addListener(new ListenerInfo(JspInitializationListener.class));
+                //}
                 d.addServletContextAttribute(JspInitializationListener.CONTEXT_KEY, expressionFactoryWrappers);
             }
 
@@ -747,21 +749,20 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                         System.out.println("MODULE FOR SERVLET " + module.getName() + " loader " + module.getModuleLoader() + " module cl " + module.getClassLoader());
                         Class<? extends Servlet> servletClass;
                         ManagedReferenceFactory creator;
+                        servletClass = (Class<? extends Servlet>) module.getClassLoader().loadClass(servlet.getServletClass());
                         if(Boolean.getBoolean("org.wildfly.graal")) {
-                            servletClass = SERVLET_CLASSES.get(module.getName()).get(servlet.getServletClass());
-                            System.out.println("AT runtime " + servletClass + " for " + module.getName() + " class " + servlet.getServletClass());
-                            creator = new GraalFactory(module.getName(), servlet.getServletClass());
+                            Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)module.getConstructorFromCache(servlet.getServletClass());
+                            s = new ServletInfo(servlet.getName(), servletClass, new ConstructorInstanceFactory(ctr));
                         } else {
-                            servletClass = (Class<? extends Servlet>) module.getClassLoader().loadClass(servlet.getServletClass());
                             creator = componentRegistry.createInstanceFactory(servletClass, true);
+                            if (creator != null) {
+                                InstanceFactory<Servlet> factory = createInstanceFactory(creator);
+                                s = new ServletInfo(servlet.getName(), servletClass, factory);
+                            } else {
+                                s = new ServletInfo(servlet.getName(), servletClass);
+                            }
                         }
                         GraalRecorder.record(PreMainInitializerImpl.KEY, module.getName(), servlet, servlet.getServletClass());
-                        if (creator != null) {
-                            InstanceFactory<Servlet> factory = createInstanceFactory(creator);
-                            s = new ServletInfo(servlet.getName(), servletClass, factory);
-                        } else {
-                            s = new ServletInfo(servlet.getName(), servletClass);
-                        }
                     }
                 }
                 s.setAsyncSupported(servlet.isAsyncSupported())
@@ -831,9 +832,10 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
             if (!mergedMetaData.getServlets().containsKey(ServletPathMatches.DEFAULT_SERVLET_NAME)) {
                 ServletInfo defaultServlet;
                 if(Boolean.getBoolean("org.wildfly.graal")) {
-                    InstanceFactory<Servlet> factory = createInstanceFactory(new GraalDefaultFactory());
-                    defaultServlet = new ServletInfo(DEFAULT_SERVLET_NAME, DEFAULT_SERVLET_CLASS, factory);
-                    } else {
+                    Module thisModule = ((ModuleClassLoader) this.getClass().getClassLoader()).getModule();
+                    Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)thisModule.getConstructorFromCache(DefaultServlet.class.getName());
+                    defaultServlet = new ServletInfo(DEFAULT_SERVLET_NAME, DefaultServlet.class, new ConstructorInstanceFactory(ctr));
+                } else {
                     defaultServlet = Servlets.servlet(DEFAULT_SERVLET_NAME, DefaultServlet.class);
                 }
                 handleServletMappings(is22OrOlder, seenMappings, servletMappings, defaultServlet);

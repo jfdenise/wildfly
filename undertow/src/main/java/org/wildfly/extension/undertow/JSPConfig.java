@@ -6,7 +6,11 @@
 package org.wildfly.extension.undertow;
 
 import io.undertow.servlet.api.ServletInfo;
+import io.undertow.servlet.util.ConstructorInstanceFactory;
+import jakarta.servlet.Servlet;
+import java.lang.reflect.Constructor;
 import org.apache.jasper.servlet.JspServlet;
+import org.jboss.modules.ModuleClassLoader;
 
 /**
  * @author Tomaz Cerar (c) 2013 Red Hat Inc.
@@ -29,7 +33,9 @@ public class JSPConfig {
 
             io.undertow.servlet.api.ServletInfo jspServlet = null;
             if (Boolean.getBoolean("org.wildfly.graal")) {
-                jspServlet = ServiceLoaderInitializer.getJspServletInfo();
+                ModuleClassLoader loader = (ModuleClassLoader) JSPConfig.class.getClassLoader();
+                Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)loader.getModule().getConstructorFromCache(JspServlet.class.getName());
+                jspServlet = new ServletInfo("jsp", JspServlet.class, new ConstructorInstanceFactory(ctr));
             } else {
                 jspServlet = new ServletInfo("jsp", JspServlet.class);
             }

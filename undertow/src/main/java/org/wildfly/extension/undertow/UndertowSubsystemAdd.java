@@ -77,11 +77,11 @@ class UndertowSubsystemAdd extends AbstractBoottimeAddStepHandler {
     protected void performBoottime(OperationContext context, ModelNode operation, Resource resource) throws OperationFailedException {
 
         try {
-            if (Boolean.getBoolean("org.wildfly.graal")) {
-                ServiceLoaderInitializer.checkJsp();
-            } else {
+            //if (Boolean.getBoolean("org.wildfly.graal")) {
+            //    ServiceLoaderInitializer.checkJsp();
+            //} else {
                 Class.forName("org.apache.jasper.compiler.JspRuntimeContext", true, this.getClass().getClassLoader());
-            }
+            //}
         } catch (ClassNotFoundException e) {
             UndertowLogger.ROOT_LOGGER.couldNotInitJsp(e);
         }

@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright The WildFly Authors
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import org.jboss.as.controller.graal.GraalRecorder;
 import org.jboss.as.controller.graal.PreMainInitializer;
-import org.wildfly.extension.undertow.ServiceLoaderInitializer;
 
 /**
  *
@@ -25,7 +24,7 @@ public class PreMainInitializerImpl implements PreMainInitializer {
 
     @Override
     public void init(Map<String, List<GraalRecorder.UnresolvedRecord>> map) throws Exception {
-        ServiceLoaderInitializer.init(resolve(map));
+        //ServiceLoaderInitializer.init(resolve(map));
     }
 
     @Override
