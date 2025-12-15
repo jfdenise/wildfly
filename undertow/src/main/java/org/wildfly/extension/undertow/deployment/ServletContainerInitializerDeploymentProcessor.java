@@ -20,6 +20,7 @@ import java.util.Set;
 
 import jakarta.servlet.ServletContainerInitializer;
 import jakarta.servlet.annotation.HandlesTypes;
+import java.util.ServiceLoader;
 
 import org.jboss.as.ee.structure.DeploymentType;
 import org.jboss.as.ee.structure.DeploymentTypeMarker;
@@ -29,6 +30,7 @@ import org.jboss.as.server.deployment.DeploymentUnit;
 import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
 import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.as.server.deployment.annotation.CompositeIndex;
+import org.jboss.as.server.deployment.module.ModuleDependency;
 import org.jboss.as.server.deployment.module.ModuleSpecification;
 import org.jboss.as.server.moduleservice.ServiceModuleLoader;
 import org.wildfly.extension.undertow.logging.UndertowLogger;
@@ -41,6 +43,7 @@ import org.jboss.jandex.FieldInfo;
 import org.jboss.jandex.MethodInfo;
 import org.jboss.jandex.MethodParameterInfo;
 import org.jboss.modules.Module;
+import org.jboss.modules.ModuleLoadException;
 import org.jboss.vfs.VirtualFile;
 
 /**
@@ -86,26 +89,27 @@ public class ServletContainerInitializerDeploymentProcessor implements Deploymen
             scisMetaData.setHandlesTypes(handlesTypes);
         }
         // Find the SCIs from shared modules
-        System.out.println("DO NOT LOAD SCI FOR NOW");
-//        for (ModuleDependency dependency : moduleSpecification.getAllDependencies()) {
-//            // Should not include SCI if services is not included
-//            if (!dependency.isImportServices()) {
-//                continue;
-//            }
-//            try {
-//                Module depModule = loader.loadModule(dependency.getDependencyModule());
-//                ServiceLoader<ServletContainerInitializer> serviceLoader = depModule.loadService(ServletContainerInitializer.class);
-//                for (ServletContainerInitializer service : serviceLoader) {
-//                    if(sciClasses.add(service.getClass())) {
-//                        scis.add(service);
-//                    }
-//                }
-//            } catch (ModuleLoadException e) {
-//                if (!dependency.isOptional()) {
-//                    throw UndertowLogger.ROOT_LOGGER.errorLoadingSCIFromModule(dependency.getDependencyModule(), e);
-//                }
-//            }
-//        }
+        for (ModuleDependency dependency : moduleSpecification.getAllDependencies()) {
+            // Should not include SCI if services is not included
+            if (!dependency.isImportServices()) {
+                continue;
+            }
+            try {
+                Module depModule = loader.loadModule(dependency.getDependencyModule());
+                System.out.println("DEP MODULE LOPADING SERVICES " + depModule.getName());
+                ServiceLoader<ServletContainerInitializer> serviceLoader = depModule.loadService(ServletContainerInitializer.class);
+                for (ServletContainerInitializer service : serviceLoader) {
+                    if(sciClasses.add(service.getClass())) {
+                        scis.add(service);
+                    }
+                }
+                System.out.println("DONE " + depModule.getName());
+            } catch (ModuleLoadException e) {
+                if (!dependency.isOptional()) {
+                    throw UndertowLogger.ROOT_LOGGER.errorLoadingSCIFromModule(dependency.getDependencyModule(), e);
+                }
+            }
+        }
         // Find local ServletContainerInitializer services
         List<String> order = warMetaData.getOrder();
         Map<String, VirtualFile> localScis = warMetaData.getScis();

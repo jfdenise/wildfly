@@ -22,6 +22,7 @@ import org.jboss.as.server.deployment.jbossallxml.JBossAllXmlParserRegisteringPr
 import org.jboss.as.web.common.SharedTldsMetaDataBuilder;
 import org.jboss.as.web.session.SharedSessionManagerConfig;
 import org.jboss.dmr.ModelNode;
+import org.jboss.modules.ModuleClassLoader;
 
 import org.wildfly.extension.undertow.deployment.DefaultDeploymentMappingProvider;
 import org.wildfly.extension.undertow.deployment.DefaultSecurityDomainProcessor;
@@ -62,6 +63,20 @@ import static org.wildfly.extension.undertow.UndertowRootDefinition.HTTP_INVOKER
  */
 class UndertowSubsystemAdd extends AbstractBoottimeAddStepHandler {
 
+//    private static boolean JSP_INITIALIZED;
+//    static {
+//        try {
+//            Class.forName("org.apache.jasper.compiler.JspRuntimeContext", true, UndertowSubsystemAdd.class.getClassLoader());
+//            JSP_INITIALIZED = true;
+//        } catch (Throwable ex) {
+//            System.out.println("JSP NOT INITIALIZED");
+//        }
+//    }
+//    private static void checkJsp() throws ClassNotFoundException {
+//        if (!JSP_INITIALIZED) {
+//            throw new ClassNotFoundException("JSP class not found");
+//        }
+//    }
     private final ServiceValueRegistry<UndertowService> registry;
     private final Predicate<String> knownSecurityDomain;
 
@@ -77,12 +92,15 @@ class UndertowSubsystemAdd extends AbstractBoottimeAddStepHandler {
     protected void performBoottime(OperationContext context, ModelNode operation, Resource resource) throws OperationFailedException {
 
         try {
-            //if (Boolean.getBoolean("org.wildfly.graal")) {
-            //    ServiceLoaderInitializer.checkJsp();
-            //} else {
+            if (Boolean.getBoolean("org.wildfly.graal")) {
+                // Class.forName with constant are identified by Graal VM compiler and replaced by a CNFE...
+                ModuleClassLoader loader = (ModuleClassLoader) this.getClass().getClassLoader();
+                loader.loadClass("org.apache.jasper.compiler.JspRuntimeContext", true);
+            } else {
                 Class.forName("org.apache.jasper.compiler.JspRuntimeContext", true, this.getClass().getClassLoader());
-            //}
+            }
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
             UndertowLogger.ROOT_LOGGER.couldNotInitJsp(e);
         }
         final ModelNode model = resource.getModel();

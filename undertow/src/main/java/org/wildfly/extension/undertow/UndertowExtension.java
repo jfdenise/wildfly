@@ -24,7 +24,11 @@ public class UndertowExtension implements Extension {
 
     public static final String SUBSYSTEM_NAME = "undertow";
     private static final String RESOURCE_NAME = UndertowExtension.class.getPackage().getName() + ".LocalDescriptions";
-
+    static {
+        // The extension being loaded at build time
+        // Enforce some class to be seen and initialized at build time.
+        //JspInitializationListener.init();
+    }
     public static StandardResourceDescriptionResolver getResolver(final String... keyPrefix) {
         StringBuilder prefix = new StringBuilder(SUBSYSTEM_NAME);
         for (String kp : keyPrefix) {
