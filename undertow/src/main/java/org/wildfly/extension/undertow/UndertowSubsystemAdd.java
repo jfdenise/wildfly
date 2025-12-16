@@ -63,20 +63,6 @@ import static org.wildfly.extension.undertow.UndertowRootDefinition.HTTP_INVOKER
  */
 class UndertowSubsystemAdd extends AbstractBoottimeAddStepHandler {
 
-//    private static boolean JSP_INITIALIZED;
-//    static {
-//        try {
-//            Class.forName("org.apache.jasper.compiler.JspRuntimeContext", true, UndertowSubsystemAdd.class.getClassLoader());
-//            JSP_INITIALIZED = true;
-//        } catch (Throwable ex) {
-//            System.out.println("JSP NOT INITIALIZED");
-//        }
-//    }
-//    private static void checkJsp() throws ClassNotFoundException {
-//        if (!JSP_INITIALIZED) {
-//            throw new ClassNotFoundException("JSP class not found");
-//        }
-//    }
     private final ServiceValueRegistry<UndertowService> registry;
     private final Predicate<String> knownSecurityDomain;
 

@@ -129,10 +129,6 @@ public class WarAnnotationDeploymentProcessor implements DeploymentUnitProcessor
             }
             warMetaData.setAdditionalModuleAnnotationsMetadata(additional);
         }
-                System.out.println("WAR METADTA");
-        for(String k : annotationsMetaData.keySet()) {
-            System.out.println("K " + k + " " + annotationsMetaData.get(k));
-        }
     }
 
     /**

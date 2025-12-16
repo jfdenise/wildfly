@@ -55,6 +55,7 @@ import org.jboss.vfs.VirtualFile;
  */
 public class ServletContainerInitializerDeploymentProcessor implements DeploymentUnitProcessor {
 
+    private static ScisMetaData FROM_BUILD;
     /**
      * Process SCIs.
      */
@@ -72,10 +73,21 @@ public class ServletContainerInitializerDeploymentProcessor implements Deploymen
             throw UndertowLogger.ROOT_LOGGER.failedToResolveModule(deploymentUnit);
         }
         final ClassLoader classLoader = module.getClassLoader();
-        ScisMetaData scisMetaData = deploymentUnit.getAttachment(ScisMetaData.ATTACHMENT_KEY);
-        if (scisMetaData == null) {
-            scisMetaData = new ScisMetaData();
+        ScisMetaData scisMetaData;
+        if (Boolean.getBoolean("org.wildfly.graal")) {
+            scisMetaData = FROM_BUILD;
+            UndertowLogger.ROOT_LOGGER.info("Reusing ScisMetaData from build phase.");
             deploymentUnit.putAttachment(ScisMetaData.ATTACHMENT_KEY, scisMetaData);
+            return;
+        } else {
+            scisMetaData = deploymentUnit.getAttachment(ScisMetaData.ATTACHMENT_KEY);
+            if (scisMetaData == null) {
+                scisMetaData = new ScisMetaData();
+                deploymentUnit.putAttachment(ScisMetaData.ATTACHMENT_KEY, scisMetaData);
+                if (Boolean.getBoolean("org.wildfly.graal.build.time")) {
+                    FROM_BUILD = scisMetaData;
+                }
+            }
         }
         Set<ServletContainerInitializer> scis = scisMetaData.getScis();
         Set<Class<? extends ServletContainerInitializer>> sciClasses = new HashSet<>();
@@ -96,14 +108,12 @@ public class ServletContainerInitializerDeploymentProcessor implements Deploymen
             }
             try {
                 Module depModule = loader.loadModule(dependency.getDependencyModule());
-                System.out.println("DEP MODULE LOPADING SERVICES " + depModule.getName());
                 ServiceLoader<ServletContainerInitializer> serviceLoader = depModule.loadService(ServletContainerInitializer.class);
                 for (ServletContainerInitializer service : serviceLoader) {
                     if(sciClasses.add(service.getClass())) {
                         scis.add(service);
                     }
                 }
-                System.out.println("DONE " + depModule.getName());
             } catch (ModuleLoadException e) {
                 if (!dependency.isOptional()) {
                     throw UndertowLogger.ROOT_LOGGER.errorLoadingSCIFromModule(dependency.getDependencyModule(), e);

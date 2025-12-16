@@ -23,7 +23,8 @@ public class ClassLoadingUtils {
         final ClassLoader oldTccl = WildFlySecurityManager.getCurrentContextClassLoaderPrivileged();
         try {
             WildFlySecurityManager.setCurrentContextClassLoaderPrivileged(module.getClassLoader());
-            return Class.forName(className, false, module.getClassLoader());
+            // Can retrieve the class from the cache.
+            return module.getClassLoader().loadClass(className, false);
         } finally {
             WildFlySecurityManager.setCurrentContextClassLoaderPrivileged(oldTccl);
         }

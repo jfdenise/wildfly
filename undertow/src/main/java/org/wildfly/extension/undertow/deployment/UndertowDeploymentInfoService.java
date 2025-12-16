@@ -650,8 +650,6 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                             throw UndertowLogger.ROOT_LOGGER.servletClassNotDefined(servlet.getServletName());
                         }
                     } else {
-                        System.out.println("DESCRIPTION \n" + module);
-                        System.out.println("MODULE FOR SERVLET " + module.getName() + " loader " + module.getModuleLoader() + " module cl " + module.getClassLoader());
                         Class<? extends Servlet> servletClass;
                         ManagedReferenceFactory creator;
                         servletClass = (Class<? extends Servlet>) module.getClassLoader().loadClass(servlet.getServletClass());
