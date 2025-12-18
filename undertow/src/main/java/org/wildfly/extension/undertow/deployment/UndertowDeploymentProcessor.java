@@ -357,7 +357,7 @@ public class UndertowDeploymentProcessor implements DeploymentUnitProcessor {
             provider.getSessionManagerFactoryServiceInstaller(configuration).install(phaseContext);
             provider.getSessionAffinityProviderServiceInstaller(configuration).install(phaseContext);
         }
-
+        System.out.println("INFO SERVICE " + deploymentUnit.getAttachment(UndertowAttachments.WEB_SOCKET_DEPLOYMENT_INFO));
         UndertowDeploymentInfoService undertowDeploymentInfoService = UndertowDeploymentInfoService.builder()
                 .setAttributes(deploymentUnit.getAttachmentList(ServletContextAttribute.ATTACHMENT_KEY))
                 .setContextPath(pathName)
@@ -385,7 +385,7 @@ public class UndertowDeploymentProcessor implements DeploymentUnitProcessor {
                 .setExternalResources(deploymentUnit.getAttachmentList(UndertowAttachments.EXTERNAL_RESOURCES))
                 .setAllowSuspendedRequests(deploymentUnit.getAttachmentList(UndertowAttachments.ALLOW_REQUEST_WHEN_SUSPENDED))
                 .createUndertowDeploymentInfoService(deploymentInfo, undertowService, sessionManagerFactory, sessionAffinityProvider,
-                        servletContainerService, componentRegistryDependency, host, controlPoint, suspendController, serverEnvironment, securityDomain, mechanismFactorySupplier, applySecurityFunction);
+                        servletContainerService, componentRegistryDependency, host, controlPoint, suspendController, serverEnvironment, securityDomain, mechanismFactorySupplier, applySecurityFunction, deploymentUnit.getAttachment(UndertowAttachments.ANNOTATION_RETRIEVER));
         builder.setInstance(undertowDeploymentInfoService);
 
         final Set<String> seenExecutors = new HashSet<String>();

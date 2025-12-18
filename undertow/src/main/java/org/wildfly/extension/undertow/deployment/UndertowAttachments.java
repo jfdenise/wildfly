@@ -14,6 +14,7 @@ import org.wildfly.extension.undertow.ServletContainerService;
 import io.undertow.predicate.Predicate;
 import io.undertow.server.HandlerWrapper;
 import io.undertow.servlet.ServletExtension;
+import io.undertow.servlet.api.AnnotationRetriever;
 import io.undertow.servlet.api.ThreadSetupHandler;
 import io.undertow.websockets.jsr.WebSocketDeploymentInfo;
 
@@ -40,6 +41,8 @@ public final class UndertowAttachments {
     public static final AttachmentKey<SharedSessionManagerConfig> SHARED_SESSION_MANAGER_CONFIG = SharedSessionManagerConfig.ATTACHMENT_KEY;
 
     public static final AttachmentKey<WebSocketDeploymentInfo> WEB_SOCKET_DEPLOYMENT_INFO = AttachmentKey.create(WebSocketDeploymentInfo.class);
+
+    public static final AttachmentKey<AnnotationRetriever> ANNOTATION_RETRIEVER = AttachmentKey.create(AnnotationRetriever.class);
 
     public static final AttachmentKey<AttachmentList<File>> EXTERNAL_RESOURCES = AttachmentKey.createList(File.class);
 

@@ -5,12 +5,14 @@
 
 package org.jboss.as.ee.component;
 
+import java.lang.reflect.Constructor;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 import org.jboss.as.naming.ConstructorManagedReferenceFactory;
 import org.jboss.as.naming.ManagedReference;
 import org.jboss.as.naming.ManagedReferenceFactory;
+import org.jboss.modules.ModuleClassLoader;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
@@ -61,6 +63,14 @@ public class ReflectiveClassIntrospector implements EEClassIntrospector, Service
             try {
                 return new ConstructorManagedReferenceFactory(clazz.getDeclaredConstructor());
             } catch (NoSuchMethodException e) {
+                if (Boolean.getBoolean("org.wildfly.graal")) {
+                   ModuleClassLoader loader = (ModuleClassLoader)clazz.getClassLoader();
+                   Constructor ctr = loader.getModule().getConstructorFromCache(clazz.getName());
+                   if(ctr != null) {
+                       System.out.println("Constructor retrieved from cache for " + clazz.getName() + " in module " + loader.getModule().getName());
+                       return new ConstructorManagedReferenceFactory(ctr);
+                   }
+                }
                 throw new RuntimeException(e);
             }
         }

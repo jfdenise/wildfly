@@ -5,6 +5,7 @@
 
 package org.wildfly.extension.undertow.deployment;
 
+import io.undertow.servlet.api.AnnotationRetriever;
 import io.undertow.websockets.jsr.JsrWebSocketLogger;
 import io.undertow.websockets.jsr.WebSocketDeploymentInfo;
 import org.jboss.as.controller.PathElement;
@@ -164,7 +165,7 @@ public class UndertowJSRWebSocketDeploymentProcessor implements DeploymentUnitPr
         Set<Class<?>> allScannedAnnotatedEndpoints = new HashSet<>(annotatedEndpoints);
         Set<Class<?>> newAnnotatatedEndpoints = new HashSet<>();
         Set<ServerEndpointConfig> serverEndpointConfigurations = new HashSet<>();
-
+        AnnotationRetriever retriever = deploymentUnit.getAttachment(UndertowAttachments.ANNOTATION_RETRIEVER);
         final Set<ServerApplicationConfig> configInstances = new HashSet<>();
         for (Class<? extends ServerApplicationConfig> clazz : serverApplicationConfigClasses) {
             try {
@@ -194,7 +195,7 @@ public class UndertowJSRWebSocketDeploymentProcessor implements DeploymentUnitPr
         for (Class<?> endpoint : newAnnotatatedEndpoints) {
             if(endpoint != null ) {
                 container.addEndpoint(endpoint);
-                ServerEndpoint annotation = endpoint.getAnnotation(ServerEndpoint.class);
+                ServerEndpoint annotation = (ServerEndpoint) retriever.getAnnotation(endpoint, ServerEndpoint.class);
                 if (annotation != null) {
                     String path = annotation.value();
                     addManagementWebsocket(deploymentUnit, endpoint, path);
