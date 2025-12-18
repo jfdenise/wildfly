@@ -34,7 +34,7 @@ public class JSPConfig {
             io.undertow.servlet.api.ServletInfo jspServlet = null;
             if (Boolean.getBoolean("org.wildfly.graal")) {
                 ModuleClassLoader loader = (ModuleClassLoader) JSPConfig.class.getClassLoader();
-                Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)loader.getModule().getConstructorFromCache(JspServlet.class.getName());
+                Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)loader.getModule().getCache().getConstructorFromCache(JspServlet.class.getName());
                 jspServlet = new ServletInfo("jsp", JspServlet.class, new ConstructorInstanceFactory(ctr));
             } else {
                 jspServlet = new ServletInfo("jsp", JspServlet.class);

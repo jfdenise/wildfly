@@ -588,7 +588,7 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                 seenMappings.addAll(jspPropertyGroupMappings);
                 if(Boolean.getBoolean("org.wildfly.graal")) {
                     Module thisModule = ((ModuleClassLoader) this.getClass().getClassLoader()).getModule();
-                    Constructor<? extends EventListener> ctr = (Constructor<? extends EventListener>)thisModule.getConstructorFromCache(JspInitializationListener.class.getName());
+                    Constructor<? extends EventListener> ctr = (Constructor<? extends EventListener>)thisModule.getCache().getConstructorFromCache(JspInitializationListener.class.getName());
                     d.addListener(new ListenerInfo(JspInitializationListener.class, new ConstructorInstanceFactory(ctr)));
                 } else {
                     d.addListener(new ListenerInfo(JspInitializationListener.class));
@@ -656,7 +656,7 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                         ManagedReferenceFactory creator;
                         servletClass = (Class<? extends Servlet>) module.getClassLoader().loadClass(servlet.getServletClass());
                         if(Boolean.getBoolean("org.wildfly.graal")) {
-                            Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)module.getConstructorFromCache(servlet.getServletClass());
+                            Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)module.getCache().getConstructorFromCache(servlet.getServletClass());
                             s = new ServletInfo(servlet.getName(), servletClass, new ConstructorInstanceFactory(ctr));
                         } else {
                             creator = componentRegistry.createInstanceFactory(servletClass, true);
@@ -737,7 +737,7 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                 ServletInfo defaultServlet;
                 if(Boolean.getBoolean("org.wildfly.graal")) {
                     Module thisModule = ((ModuleClassLoader) this.getClass().getClassLoader()).getModule();
-                    Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)thisModule.getConstructorFromCache(DefaultServlet.class.getName());
+                    Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)thisModule.getCache().getConstructorFromCache(DefaultServlet.class.getName());
                     defaultServlet = new ServletInfo(DEFAULT_SERVLET_NAME, DefaultServlet.class, new ConstructorInstanceFactory(ctr));
                 } else {
                     defaultServlet = Servlets.servlet(DEFAULT_SERVLET_NAME, DefaultServlet.class);

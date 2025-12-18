@@ -19,43 +19,43 @@ public class GraalAnnotationRetriever implements AnnotationRetriever {
     @Override
     public Annotation getAnnotation(Class<?> clazz, Class<? extends Annotation> annotType) throws RuntimeException {
         ModuleClassLoader loader = (ModuleClassLoader) clazz.getClassLoader();
-        return loader.getModule().getAnnotation(clazz, annotType);
+        return loader.getModule().getCache().getAnnotation(clazz, annotType);
     }
 
     @Override
     public Annotation getAnnotation(Class<?> clazz, Method m, Class<? extends Annotation> annotType) throws RuntimeException {
         ModuleClassLoader loader = (ModuleClassLoader) clazz.getClassLoader();
-        return loader.getModule().getAnnotation(clazz, m, annotType);
+        return loader.getModule().getCache().getAnnotation(clazz, m, annotType);
     }
 
     @Override
     public Annotation getDeclaredAnnotation(Class<?> clazz, Class<? extends Annotation> annotType) throws RuntimeException {
         ModuleClassLoader loader = (ModuleClassLoader) clazz.getClassLoader();
-        return loader.getModule().getAnnotation(clazz, annotType);
+        return loader.getModule().getCache().getAnnotation(clazz, annotType);
     }
 
     @Override
     public Annotation getDeclaredAnnotation(Class<?> clazz, Method m, Class<? extends Annotation> annotType) throws RuntimeException {
         ModuleClassLoader loader = (ModuleClassLoader) clazz.getClassLoader();
-        return loader.getModule().getAnnotation(clazz, m, annotType);
+        return loader.getModule().getCache().getAnnotation(clazz, m, annotType);
     }
 
     @Override
     public boolean isAnnotationPresent(Class<?> clazz, Method m, Class<? extends Annotation> annotType) throws RuntimeException {
         ModuleClassLoader loader = (ModuleClassLoader) clazz.getClassLoader();
-        return loader.getModule().getAnnotation(clazz, m, annotType) != null;
+        return loader.getModule().getCache().getAnnotation(clazz, m, annotType) != null;
     }
 
     @Override
     public Annotation[][] getParameterAnnotations(Class<?> clazz, Method m) throws RuntimeException {
         ModuleClassLoader loader = (ModuleClassLoader) clazz.getClassLoader();
-        return loader.getModule().getParameterAnnotations(clazz, m);
+        return loader.getModule().getCache().getParameterAnnotations(clazz, m);
     }
 
     @Override
     public Method[] getDeclaredMethods(Class<?> clazz) throws RuntimeException {
         ModuleClassLoader loader = (ModuleClassLoader) clazz.getClassLoader();
-        return loader.getModule().getDeclaredMethods(clazz);
+        return loader.getModule().getCache().getDeclaredMethods(clazz);
     }
 
 }
