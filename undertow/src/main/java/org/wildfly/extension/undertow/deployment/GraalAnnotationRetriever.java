@@ -58,4 +58,9 @@ public class GraalAnnotationRetriever implements AnnotationRetriever {
         return loader.getModule().getCache().getDeclaredMethods(clazz);
     }
 
+    @Override
+    public Method getMethod(Class<?> clazz, String name, Class<?>... params) throws NoSuchMethodException {
+        ModuleClassLoader loader = (ModuleClassLoader) clazz.getClassLoader();
+        return loader.getModule().getCache().getMethod(clazz, name, params);
+    }
 }
