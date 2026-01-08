@@ -67,7 +67,6 @@ public class ReflectiveClassIntrospector implements EEClassIntrospector, Service
                    ModuleClassLoader loader = (ModuleClassLoader)clazz.getClassLoader();
                    Constructor ctr = loader.getModule().getCache().getConstructorFromCache(clazz.getName());
                    if(ctr != null) {
-                       System.out.println("Constructor retrieved from cache for " + clazz.getName() + " in module " + loader.getModule().getName());
                        return new ConstructorManagedReferenceFactory(ctr);
                    }
                 }
