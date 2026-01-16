@@ -65,7 +65,7 @@ public class ReflectiveClassIntrospector implements EEClassIntrospector, Service
             } catch (NoSuchMethodException e) {
                 if (Boolean.getBoolean("org.wildfly.graal")) {
                    ModuleClassLoader loader = (ModuleClassLoader)clazz.getClassLoader();
-                   Constructor ctr = loader.getModule().getCache().getConstructorFromCache(clazz.getName());
+                   Constructor ctr = loader.getModule().getCache().getConstructorFromCache(clazz);
                    if(ctr != null) {
                        return new ConstructorManagedReferenceFactory(ctr);
                    }
