@@ -385,7 +385,7 @@ public class UndertowDeploymentProcessor implements DeploymentUnitProcessor {
                 .setExternalResources(deploymentUnit.getAttachmentList(UndertowAttachments.EXTERNAL_RESOURCES))
                 .setAllowSuspendedRequests(deploymentUnit.getAttachmentList(UndertowAttachments.ALLOW_REQUEST_WHEN_SUSPENDED))
                 .createUndertowDeploymentInfoService(deploymentInfo, undertowService, sessionManagerFactory, sessionAffinityProvider,
-                        servletContainerService, componentRegistryDependency, host, controlPoint, suspendController, serverEnvironment, securityDomain, mechanismFactorySupplier, applySecurityFunction, deploymentUnit.getAttachment(UndertowAttachments.SERVLET_ATTRIBUTES));
+                        servletContainerService, componentRegistryDependency, host, controlPoint, suspendController, serverEnvironment, securityDomain, mechanismFactorySupplier, applySecurityFunction);
         builder.setInstance(undertowDeploymentInfoService);
 
         final Set<String> seenExecutors = new HashSet<String>();

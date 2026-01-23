@@ -20,8 +20,6 @@ import java.util.Set;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
 import org.jboss.as.controller.PathElement;
 import org.jboss.as.controller.capability.CapabilityServiceSupport;
 import org.jboss.as.ee.structure.DeploymentType;
@@ -47,13 +45,9 @@ import org.jboss.metadata.web.jboss.JBossServletsMetaData;
 import org.jboss.metadata.web.jboss.JBossWebMetaData;
 import org.jboss.metadata.web.spec.ServletMappingMetaData;
 import org.jboss.modules.Module;
-import org.jboss.modules.ModuleClassLoader;
 import org.jboss.modules.ModuleLoadException;
-import org.jboss.resteasy.spi.graal.GraalExecutionPhase;
-import org.jboss.resteasy.spi.graal.InstanceCreator;
 import org.jboss.resteasy.plugins.server.servlet.HttpServlet30Dispatcher;
 import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
-import org.wildfly.extension.undertow.deployment.UndertowAttachments;
 import org.wildfly.security.manager.WildFlySecurityManager;
 
 
@@ -63,31 +57,6 @@ import org.wildfly.security.manager.WildFlySecurityManager;
  * @author <a href="mailto:rsigal@redhat.com">Ron Sigal</a>
  */
 public class JaxrsIntegrationProcessor implements DeploymentUnitProcessor {
-    private static class GraalInstanceCreator implements InstanceCreator {
-
-        private ModuleClassLoader getClassLoader(Class clazz) {
-            ModuleClassLoader l;
-            if (clazz.getClassLoader() instanceof ModuleClassLoader) {
-                l = (ModuleClassLoader) clazz.getClassLoader();
-            } else {
-                l = (ModuleClassLoader) Thread.currentThread().getContextClassLoader();
-            }
-            return l;
-        }
-        public Constructor[] getConstructors(Class clazz) {
-            System.out.println("GET CONSTRUCTOR FOR " + clazz);
-            return getClassLoader(clazz).getModule().getCache().getConstructors(clazz);
-        }
-
-        public Constructor[] getDeclaredConstructors(Class clazz) {
-            return getClassLoader(clazz).getModule().getCache().getDeclaredConstructors(clazz);
-        }
-
-        public <T> T newInstance(Class<T> clazz) throws Exception {
-            Constructor c = getClassLoader(clazz).getModule().getCache().getConstructorFromCache(clazz);
-            return (T) c.newInstance();
-        }
-    }
     private static final String JAX_RS_SERVLET_NAME = "jakarta.ws.rs.core.Application";
     private static final String SERVLET_INIT_PARAM = "jakarta.ws.rs.Application";
 
@@ -112,14 +81,7 @@ public class JaxrsIntegrationProcessor implements DeploymentUnitProcessor {
         final DeploymentUnit parent = deploymentUnit.getParent() == null ? deploymentUnit : deploymentUnit.getParent();
         final WarMetaData warMetaData = deploymentUnit.getAttachment(WarMetaData.ATTACHMENT_KEY);
         final JBossWebMetaData webdata = warMetaData.getMergedJBossWebMetaData();
-        if (Boolean.getBoolean("org.wildfly.graal")) {
-            Map<String, Object> objects = deploymentUnit.getAttachment(UndertowAttachments.SERVLET_ATTRIBUTES);
-            if (objects == null) {
-                objects = new HashMap<>();
-                deploymentUnit.putAttachment(UndertowAttachments.SERVLET_ATTRIBUTES, objects);
-            }
-            objects.put(InstanceCreator.INSTANCE_CREATOR_SERVLET_PARAMETER, new GraalInstanceCreator());
-        }
+
         // Add the context parameters
         contextConfiguration.getContextParameters().forEach((key, value) -> setContextParameter(webdata, key, value));
 
@@ -372,17 +334,6 @@ public class JaxrsIntegrationProcessor implements DeploymentUnitProcessor {
     private void addServlet(JBossWebMetaData webdata, JBossServletMetaData servlet) {
         if (webdata.getServlets() == null) {
             webdata.setServlets(new JBossServletsMetaData());
-        }
-        GraalExecutionPhase phase = null;
-        if (Boolean.getBoolean("org.wildfly.graal")) {
-            phase = GraalExecutionPhase.RUNTIME;
-        } else {
-            if (Boolean.getBoolean("org.wildfly.graal.build.time")) {
-                phase = GraalExecutionPhase.BUILDTIME;
-            }
-        }
-        if (phase != null) {
-            setServletInitParam(servlet, GraalExecutionPhase.EXECUTION_PATH_SERVLET_PARAMETER, phase.getName());
         }
         webdata.getServlets().add(servlet);
     }

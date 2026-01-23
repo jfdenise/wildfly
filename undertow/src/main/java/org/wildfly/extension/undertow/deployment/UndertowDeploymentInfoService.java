@@ -213,7 +213,6 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
     private final File tempDir;
     private final List<File> externalResources;
     private final List<Predicate> allowSuspendedRequests;
-    private final Map<String, Object> servletContextAttributes;
 
     private UndertowDeploymentInfoService(
             final Consumer<DeploymentInfo> deploymentInfoConsumer,
@@ -229,7 +228,7 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
             final Supplier<SecurityDomain> rawSecurityDomain,
             final Supplier<HttpServerAuthenticationMechanismFactory> rawMechanismFactory,
             final Supplier<BiFunction<DeploymentInfo, Function<String, RunAsIdentityMetaData>, Registration>> applySecurityFunction,
-            final JBossWebMetaData mergedMetaData, final String deploymentName, final HashMap<String, TagLibraryInfo> tldInfo, final Module module, final ScisMetaData scisMetaData, final VirtualFile deploymentRoot, final String jaccContextId, final String securityDomain, final List<ServletContextAttribute> attributes, final String contextPath, final List<SetupAction> setupActions, final Set<VirtualFile> overlays, final List<ExpressionFactoryWrapper> expressionFactoryWrappers, List<PredicatedHandler> predicatedHandlers, List<HandlerWrapper> initialHandlerChainWrappers, List<HandlerWrapper> innerHandlerChainWrappers, List<HandlerWrapper> outerHandlerChainWrappers, List<ThreadSetupHandler> threadSetupActions, boolean explodedDeployment, List<ServletExtension> servletExtensions, SharedSessionManagerConfig sharedSessionManagerConfig, WebSocketDeploymentInfo webSocketDeploymentInfo, File tempDir, List<File> externalResources, List<Predicate> allowSuspendedRequests, Map<String, Object> servletContextAttributes) {
+            final JBossWebMetaData mergedMetaData, final String deploymentName, final HashMap<String, TagLibraryInfo> tldInfo, final Module module, final ScisMetaData scisMetaData, final VirtualFile deploymentRoot, final String jaccContextId, final String securityDomain, final List<ServletContextAttribute> attributes, final String contextPath, final List<SetupAction> setupActions, final Set<VirtualFile> overlays, final List<ExpressionFactoryWrapper> expressionFactoryWrappers, List<PredicatedHandler> predicatedHandlers, List<HandlerWrapper> initialHandlerChainWrappers, List<HandlerWrapper> innerHandlerChainWrappers, List<HandlerWrapper> outerHandlerChainWrappers, List<ThreadSetupHandler> threadSetupActions, boolean explodedDeployment, List<ServletExtension> servletExtensions, SharedSessionManagerConfig sharedSessionManagerConfig, WebSocketDeploymentInfo webSocketDeploymentInfo, File tempDir, List<File> externalResources, List<Predicate> allowSuspendedRequests) {
         this.deploymentInfoConsumer = deploymentInfoConsumer;
         this.undertowService = undertowService;
         this.sessionManagerFactory = sessionManagerFactory;
@@ -268,7 +267,6 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
         this.tempDir = tempDir;
         this.externalResources = externalResources;
         this.allowSuspendedRequests = allowSuspendedRequests;
-        this.servletContextAttributes = servletContextAttributes;
     }
 
     @Override
@@ -277,11 +275,6 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
         try {
             Thread.currentThread().setContextClassLoader(module.getClassLoader());
             DeploymentInfo deploymentInfo = createServletConfig();
-            if (servletContextAttributes != null) {
-                for (String k : servletContextAttributes.keySet()) {
-                    deploymentInfo.addServletContextAttribute(k, servletContextAttributes.get(k));
-                }
-            }
             deploymentInfo.setConfidentialPortManager(getConfidentialPortManager());
 
             handleDistributable(deploymentInfo);
@@ -1432,15 +1425,14 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                 final Supplier<ServerEnvironment> serverEnvironment,
                 final Supplier<SecurityDomain> rawSecurityDomain,
                 final Supplier<HttpServerAuthenticationMechanismFactory> rawMechanismFactory,
-                final Supplier<BiFunction<DeploymentInfo, Function<String, RunAsIdentityMetaData>, Registration>> applySecurityFunction,
-                final Map<String, Object> servletContextAttributes
+                final Supplier<BiFunction<DeploymentInfo, Function<String, RunAsIdentityMetaData>, Registration>> applySecurityFunction
         ) {
             return new UndertowDeploymentInfoService(deploymentInfoConsumer, undertowService, sessionManagerFactory,
                     sessionAffinityProvider, container, componentRegistry, host, controlPoint,
                     suspendController, serverEnvironment, rawSecurityDomain, rawMechanismFactory, applySecurityFunction, mergedMetaData, deploymentName, tldInfo, module,
                     scisMetaData, deploymentRoot, jaccContextId, securityDomain, attributes, contextPath, setupActions, overlays,
                     expressionFactoryWrappers, predicatedHandlers, initialHandlerChainWrappers, innerHandlerChainWrappers, outerHandlerChainWrappers,
-                    threadSetupActions, explodedDeployment, servletExtensions, sharedSessionManagerConfig, webSocketDeploymentInfo, tempDir, externalResources, allowSuspendedRequests, servletContextAttributes);
+                    threadSetupActions, explodedDeployment, servletExtensions, sharedSessionManagerConfig, webSocketDeploymentInfo, tempDir, externalResources, allowSuspendedRequests);
         }
     }
 

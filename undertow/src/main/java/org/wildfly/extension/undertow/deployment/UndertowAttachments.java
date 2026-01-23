@@ -16,7 +16,6 @@ import io.undertow.server.HandlerWrapper;
 import io.undertow.servlet.ServletExtension;
 import io.undertow.servlet.api.ThreadSetupHandler;
 import io.undertow.websockets.jsr.WebSocketDeploymentInfo;
-import java.util.Map;
 
 /**
  * Class defining {@link AttachmentKey}s for Undertow-specific attachments.
@@ -42,7 +41,6 @@ public final class UndertowAttachments {
 
     public static final AttachmentKey<WebSocketDeploymentInfo> WEB_SOCKET_DEPLOYMENT_INFO = AttachmentKey.create(WebSocketDeploymentInfo.class);
 
-    public static final AttachmentKey<Map<String, Object>> SERVLET_ATTRIBUTES = AttachmentKey.create(Map.class);
     public static final AttachmentKey<AttachmentList<File>> EXTERNAL_RESOURCES = AttachmentKey.createList(File.class);
 
     public static final AttachmentKey<ServletContainerService> SERVLET_CONTAINER_SERVICE = AttachmentKey.create(ServletContainerService.class);
