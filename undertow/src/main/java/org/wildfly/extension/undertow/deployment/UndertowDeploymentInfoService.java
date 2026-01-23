@@ -21,7 +21,6 @@ import io.undertow.server.handlers.resource.ResourceManager;
 import io.undertow.server.session.SecureRandomSessionIdGenerator;
 import io.undertow.servlet.ServletExtension;
 import io.undertow.servlet.Servlets;
-import io.undertow.servlet.api.AnnotationRetriever;
 import io.undertow.servlet.api.AuthMethodConfig;
 import io.undertow.servlet.api.ClassIntrospecter;
 import io.undertow.servlet.api.ConfidentialPortManager;
@@ -155,7 +154,7 @@ import io.undertow.servlet.util.ConstructorInstanceFactory;
 import java.lang.reflect.Constructor;
 
 import org.jboss.as.server.ServerEnvironment;
-import org.jboss.modules.ModuleClassLoader;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 
 /**
  * Service that builds up the undertow metadata.
@@ -164,6 +163,7 @@ import org.jboss.modules.ModuleClassLoader;
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
 public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
+
     public static final ServiceName SERVICE_NAME = ServiceName.of("UndertowDeploymentInfoService");
 
     public static final String DEFAULT_SERVLET_NAME = "default";
@@ -213,8 +213,8 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
     private final File tempDir;
     private final List<File> externalResources;
     private final List<Predicate> allowSuspendedRequests;
-    private final AnnotationRetriever annotationRetriever;
     private final Map<String, Object> servletContextAttributes;
+
     private UndertowDeploymentInfoService(
             final Consumer<DeploymentInfo> deploymentInfoConsumer,
             final Supplier<UndertowService> undertowService,
@@ -229,7 +229,7 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
             final Supplier<SecurityDomain> rawSecurityDomain,
             final Supplier<HttpServerAuthenticationMechanismFactory> rawMechanismFactory,
             final Supplier<BiFunction<DeploymentInfo, Function<String, RunAsIdentityMetaData>, Registration>> applySecurityFunction,
-            final JBossWebMetaData mergedMetaData, final String deploymentName, final HashMap<String, TagLibraryInfo> tldInfo, final Module module, final ScisMetaData scisMetaData, final VirtualFile deploymentRoot, final String jaccContextId, final String securityDomain, final List<ServletContextAttribute> attributes, final String contextPath, final List<SetupAction> setupActions, final Set<VirtualFile> overlays, final List<ExpressionFactoryWrapper> expressionFactoryWrappers, List<PredicatedHandler> predicatedHandlers, List<HandlerWrapper> initialHandlerChainWrappers, List<HandlerWrapper> innerHandlerChainWrappers, List<HandlerWrapper> outerHandlerChainWrappers, List<ThreadSetupHandler> threadSetupActions, boolean explodedDeployment, List<ServletExtension> servletExtensions, SharedSessionManagerConfig sharedSessionManagerConfig, WebSocketDeploymentInfo webSocketDeploymentInfo, File tempDir, List<File> externalResources, List<Predicate> allowSuspendedRequests, AnnotationRetriever annotationRetriever, Map<String, Object> servletContextAttributes) {
+            final JBossWebMetaData mergedMetaData, final String deploymentName, final HashMap<String, TagLibraryInfo> tldInfo, final Module module, final ScisMetaData scisMetaData, final VirtualFile deploymentRoot, final String jaccContextId, final String securityDomain, final List<ServletContextAttribute> attributes, final String contextPath, final List<SetupAction> setupActions, final Set<VirtualFile> overlays, final List<ExpressionFactoryWrapper> expressionFactoryWrappers, List<PredicatedHandler> predicatedHandlers, List<HandlerWrapper> initialHandlerChainWrappers, List<HandlerWrapper> innerHandlerChainWrappers, List<HandlerWrapper> outerHandlerChainWrappers, List<ThreadSetupHandler> threadSetupActions, boolean explodedDeployment, List<ServletExtension> servletExtensions, SharedSessionManagerConfig sharedSessionManagerConfig, WebSocketDeploymentInfo webSocketDeploymentInfo, File tempDir, List<File> externalResources, List<Predicate> allowSuspendedRequests, Map<String, Object> servletContextAttributes) {
         this.deploymentInfoConsumer = deploymentInfoConsumer;
         this.undertowService = undertowService;
         this.sessionManagerFactory = sessionManagerFactory;
@@ -268,7 +268,6 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
         this.tempDir = tempDir;
         this.externalResources = externalResources;
         this.allowSuspendedRequests = allowSuspendedRequests;
-        this.annotationRetriever = annotationRetriever;
         this.servletContextAttributes = servletContextAttributes;
     }
 
@@ -592,18 +591,17 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                     }
                 }
                 seenMappings.addAll(jspPropertyGroupMappings);
-                if(Boolean.getBoolean("org.wildfly.graal")) {
-                    Module thisModule = ((ModuleClassLoader) this.getClass().getClassLoader()).getModule();
-                    Constructor<? extends EventListener> ctr = (Constructor<? extends EventListener>)thisModule.getCache().getConstructorFromCache(JspInitializationListener.class);
-                    d.addListener(new ListenerInfo(JspInitializationListener.class, new ConstructorInstanceFactory(ctr)));
-                } else {
+                Constructor<? extends EventListener> ctr = (Constructor<? extends EventListener>)
+                        WildFlyGraalSetup.getConstructorFromCache(this.getClass().getClassLoader(), JspInitializationListener.class);
+                if(ctr == null) {
                     d.addListener(new ListenerInfo(JspInitializationListener.class));
+                } else {
+                    d.addListener(new ListenerInfo(JspInitializationListener.class, new ConstructorInstanceFactory(ctr)));
                 }
                 d.addServletContextAttribute(JspInitializationListener.CONTEXT_KEY, expressionFactoryWrappers);
             }
 
             d.setClassIntrospecter(new ComponentClassIntrospector(componentRegistry));
-            d.setAnnotationRetriever(annotationRetriever);
             final Map<String, List<ServletMappingMetaData>> servletMappings = new HashMap<>();
 
             if (mergedMetaData.getExecutorName() != null) {
@@ -661,10 +659,8 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                         Class<? extends Servlet> servletClass;
                         ManagedReferenceFactory creator;
                         servletClass = (Class<? extends Servlet>) module.getClassLoader().loadClass(servlet.getServletClass());
-                        if(Boolean.getBoolean("org.wildfly.graal")) {
-                            Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)module.getCache().getConstructorFromCache(servletClass);
-                            s = new ServletInfo(servlet.getName(), servletClass, new ConstructorInstanceFactory(ctr));
-                        } else {
+                        Constructor<? extends Servlet> ctr = WildFlyGraalSetup.getConstructorFromCache(module.getClassLoader(), servletClass);
+                        if(ctr == null) {
                             creator = componentRegistry.createInstanceFactory(servletClass, true);
                             if (creator != null) {
                                 InstanceFactory<Servlet> factory = createInstanceFactory(creator);
@@ -672,6 +668,8 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                             } else {
                                 s = new ServletInfo(servlet.getName(), servletClass);
                             }
+                        } else {
+                            s = new ServletInfo(servlet.getName(), servletClass, new ConstructorInstanceFactory(ctr));
                         }
                     }
                 }
@@ -741,12 +739,11 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
             //we explicitly add the default servlet, to allow it to be mapped
             if (!mergedMetaData.getServlets().containsKey(ServletPathMatches.DEFAULT_SERVLET_NAME)) {
                 ServletInfo defaultServlet;
-                if(Boolean.getBoolean("org.wildfly.graal")) {
-                    Module thisModule = ((ModuleClassLoader) this.getClass().getClassLoader()).getModule();
-                    Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)thisModule.getCache().getConstructorFromCache(DefaultServlet.class);
-                    defaultServlet = new ServletInfo(DEFAULT_SERVLET_NAME, DefaultServlet.class, new ConstructorInstanceFactory(ctr));
-                } else {
+                Constructor<? extends Servlet> ctr = WildFlyGraalSetup.getConstructorFromCache(this.getClass().getClassLoader(), DefaultServlet.class);
+                if(ctr == null) {
                     defaultServlet = Servlets.servlet(DEFAULT_SERVLET_NAME, DefaultServlet.class);
+                } else {
+                    defaultServlet = new ServletInfo(DEFAULT_SERVLET_NAME, DefaultServlet.class, new ConstructorInstanceFactory(ctr));
                 }
                 handleServletMappings(is22OrOlder, seenMappings, servletMappings, defaultServlet);
 
@@ -1436,7 +1433,6 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                 final Supplier<SecurityDomain> rawSecurityDomain,
                 final Supplier<HttpServerAuthenticationMechanismFactory> rawMechanismFactory,
                 final Supplier<BiFunction<DeploymentInfo, Function<String, RunAsIdentityMetaData>, Registration>> applySecurityFunction,
-                final AnnotationRetriever retriever,
                 final Map<String, Object> servletContextAttributes
         ) {
             return new UndertowDeploymentInfoService(deploymentInfoConsumer, undertowService, sessionManagerFactory,
@@ -1444,7 +1440,7 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                     suspendController, serverEnvironment, rawSecurityDomain, rawMechanismFactory, applySecurityFunction, mergedMetaData, deploymentName, tldInfo, module,
                     scisMetaData, deploymentRoot, jaccContextId, securityDomain, attributes, contextPath, setupActions, overlays,
                     expressionFactoryWrappers, predicatedHandlers, initialHandlerChainWrappers, innerHandlerChainWrappers, outerHandlerChainWrappers,
-                    threadSetupActions, explodedDeployment, servletExtensions, sharedSessionManagerConfig, webSocketDeploymentInfo, tempDir, externalResources, allowSuspendedRequests, retriever, servletContextAttributes);
+                    threadSetupActions, explodedDeployment, servletExtensions, sharedSessionManagerConfig, webSocketDeploymentInfo, tempDir, externalResources, allowSuspendedRequests, servletContextAttributes);
         }
     }
 

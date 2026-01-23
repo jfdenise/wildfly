@@ -110,7 +110,6 @@ public class WarAnnotationDeploymentProcessor implements DeploymentUnitProcessor
             annotationsMetaData = new HashMap<String, WebMetaData>();
             warMetaData.setAnnotationsMetaData(annotationsMetaData);
         }
-
         Map<ResourceRoot, Index> indexes = AnnotationIndexUtils.getAnnotationIndexes(deploymentUnit);
 
         // Process lib/*.jar

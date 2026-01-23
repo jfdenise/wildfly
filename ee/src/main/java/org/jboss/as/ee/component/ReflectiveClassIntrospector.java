@@ -12,12 +12,12 @@ import java.security.PrivilegedAction;
 import org.jboss.as.naming.ConstructorManagedReferenceFactory;
 import org.jboss.as.naming.ManagedReference;
 import org.jboss.as.naming.ManagedReferenceFactory;
-import org.jboss.modules.ModuleClassLoader;
 import org.jboss.msc.service.Service;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 import org.wildfly.security.manager.WildFlySecurityManager;
 
 /**
@@ -61,15 +61,12 @@ public class ReflectiveClassIntrospector implements EEClassIntrospector, Service
             });
         } else {
             try {
-                return new ConstructorManagedReferenceFactory(clazz.getDeclaredConstructor());
-            } catch (NoSuchMethodException e) {
-                if (Boolean.getBoolean("org.wildfly.graal")) {
-                   ModuleClassLoader loader = (ModuleClassLoader)clazz.getClassLoader();
-                   Constructor ctr = loader.getModule().getCache().getConstructorFromCache(clazz);
-                   if(ctr != null) {
-                       return new ConstructorManagedReferenceFactory(ctr);
-                   }
+                Constructor ctr = WildFlyGraalSetup.getConstructorFromCache(clazz.getClassLoader(), clazz);
+                if(ctr == null) {
+                    ctr = clazz.getDeclaredConstructor();
                 }
+                return new ConstructorManagedReferenceFactory(ctr);
+            } catch (NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
         }

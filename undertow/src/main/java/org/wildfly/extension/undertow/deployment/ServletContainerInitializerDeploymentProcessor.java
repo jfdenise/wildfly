@@ -16,11 +16,11 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.Set;
 
 import jakarta.servlet.ServletContainerInitializer;
 import jakarta.servlet.annotation.HandlesTypes;
-import java.util.ServiceLoader;
 
 import org.jboss.as.ee.structure.DeploymentType;
 import org.jboss.as.ee.structure.DeploymentTypeMarker;
@@ -45,6 +45,7 @@ import org.jboss.jandex.MethodParameterInfo;
 import org.jboss.modules.Module;
 import org.jboss.modules.ModuleLoadException;
 import org.jboss.vfs.VirtualFile;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 
 /**
  * SCI deployment processor.
@@ -55,7 +56,6 @@ import org.jboss.vfs.VirtualFile;
  */
 public class ServletContainerInitializerDeploymentProcessor implements DeploymentUnitProcessor {
 
-    private static ScisMetaData FROM_BUILD;
     /**
      * Process SCIs.
      */
@@ -73,9 +73,8 @@ public class ServletContainerInitializerDeploymentProcessor implements Deploymen
             throw UndertowLogger.ROOT_LOGGER.failedToResolveModule(deploymentUnit);
         }
         final ClassLoader classLoader = module.getClassLoader();
-        ScisMetaData scisMetaData;
-        if (Boolean.getBoolean("org.wildfly.graal")) {
-            scisMetaData = FROM_BUILD;
+        ScisMetaData scisMetaData = (ScisMetaData)WildFlyGraalSetup.getScisMetaData();
+        if (scisMetaData != null) {
             UndertowLogger.ROOT_LOGGER.info("Reusing ScisMetaData from build phase.");
             deploymentUnit.putAttachment(ScisMetaData.ATTACHMENT_KEY, scisMetaData);
             return;
@@ -84,9 +83,7 @@ public class ServletContainerInitializerDeploymentProcessor implements Deploymen
             if (scisMetaData == null) {
                 scisMetaData = new ScisMetaData();
                 deploymentUnit.putAttachment(ScisMetaData.ATTACHMENT_KEY, scisMetaData);
-                if (Boolean.getBoolean("org.wildfly.graal.build.time")) {
-                    FROM_BUILD = scisMetaData;
-                }
+                WildFlyGraalSetup.setScisMetaData(scisMetaData);
             }
         }
         Set<ServletContainerInitializer> scis = scisMetaData.getScis();

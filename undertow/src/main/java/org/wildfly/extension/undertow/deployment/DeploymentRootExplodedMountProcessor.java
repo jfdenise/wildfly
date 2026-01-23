@@ -5,8 +5,6 @@
 
 package org.wildfly.extension.undertow.deployment;
 
-import io.undertow.servlet.api.AnnotationRetriever;
-import io.undertow.servlet.util.DefaultAnnotationRetriever;
 import java.util.Locale;
 
 import org.jboss.as.server.deployment.DeploymentPhaseContext;
@@ -31,11 +29,5 @@ public class DeploymentRootExplodedMountProcessor implements DeploymentUnitProce
         if (depName.endsWith(WAR_EXTENSION)) {
             MountExplodedMarker.setMountExploded(depUnit);
         }
-        AnnotationRetriever retriever = DefaultAnnotationRetriever.INSTANCE;
-        if(Boolean.getBoolean("org.wildfly.graal")) {
-            retriever = GraalAnnotationRetriever.INSTANCE;
-        }
-        System.out.println("INSTALL ANNOTATION RETRIEVER " + retriever);
-        phaseContext.getDeploymentUnit().putAttachment(UndertowAttachments.ANNOTATION_RETRIEVER, retriever);
     }
 }

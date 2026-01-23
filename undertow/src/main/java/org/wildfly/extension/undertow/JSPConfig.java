@@ -10,7 +10,7 @@ import io.undertow.servlet.util.ConstructorInstanceFactory;
 import jakarta.servlet.Servlet;
 import java.lang.reflect.Constructor;
 import org.apache.jasper.servlet.JspServlet;
-import org.jboss.modules.ModuleClassLoader;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 
 /**
  * @author Tomaz Cerar (c) 2013 Red Hat Inc.
@@ -31,13 +31,12 @@ public class JSPConfig {
             servletInfo = null;
         } else {
 
-            io.undertow.servlet.api.ServletInfo jspServlet = null;
-            if (Boolean.getBoolean("org.wildfly.graal")) {
-                ModuleClassLoader loader = (ModuleClassLoader) JSPConfig.class.getClassLoader();
-                Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>)loader.getModule().getCache().getConstructorFromCache(JspServlet.class);
-                jspServlet = new ServletInfo("jsp", JspServlet.class, new ConstructorInstanceFactory(ctr));
-            } else {
+            io.undertow.servlet.api.ServletInfo jspServlet;
+            Constructor<? extends Servlet> ctr = (Constructor<? extends Servlet>) WildFlyGraalSetup.getConstructorFromCache(JSPConfig.class.getClassLoader(), JspServlet.class);
+            if (ctr == null) {
                 jspServlet = new ServletInfo("jsp", JspServlet.class);
+            } else {
+                jspServlet = new ServletInfo("jsp", JspServlet.class, new ConstructorInstanceFactory(ctr));
             }
             jspServlet.setRequireWelcomeFileMapping(true);
 

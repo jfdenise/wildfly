@@ -52,6 +52,7 @@ import org.wildfly.subsystem.service.ServiceDependency;
 import org.wildfly.subsystem.service.capture.ServiceValueRegistry;
 
 import static org.wildfly.extension.undertow.UndertowRootDefinition.HTTP_INVOKER_RUNTIME_CAPABILITY;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 
 
 /**
@@ -78,12 +79,13 @@ class UndertowSubsystemAdd extends AbstractBoottimeAddStepHandler {
     protected void performBoottime(OperationContext context, ModelNode operation, Resource resource) throws OperationFailedException {
 
         try {
-            if (Boolean.getBoolean("org.wildfly.graal")) {
+            String className = "org.apache.jasper.compiler.JspRuntimeContext";
+            if (WildFlyGraalSetup.isRuntime()) {
                 // Class.forName with constant are identified by Graal VM compiler and replaced by a CNFE...
                 ModuleClassLoader loader = (ModuleClassLoader) this.getClass().getClassLoader();
-                loader.loadClass("org.apache.jasper.compiler.JspRuntimeContext", true);
+                loader.loadClass(className, true);
             } else {
-                Class.forName("org.apache.jasper.compiler.JspRuntimeContext", true, this.getClass().getClassLoader());
+                Class.forName(className, true, this.getClass().getClassLoader());
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
