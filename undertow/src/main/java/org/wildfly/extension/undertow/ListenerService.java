@@ -212,7 +212,7 @@ public abstract class ListenerService implements Service<UndertowListener>, Unde
                 } else {
                     acceptListener = ChannelListeners.openListenerAdapter(openListener);
                 }
-                startListening((XnioWorker)worker.get().get(), socketAddress, acceptListener);
+                startListening(worker.get().get(), socketAddress, acceptListener);
             } catch (IOException e) {
                 cleanFailedStart();
                 try {
