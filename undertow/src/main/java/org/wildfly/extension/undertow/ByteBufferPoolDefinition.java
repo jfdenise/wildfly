@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import io.undertow.connector.ByteBufferPool;
+import io.undertow.connector.PooledByteBuffer;
 import io.undertow.server.DefaultByteBufferPool;
 import org.jboss.as.controller.AbstractAddStepHandler;
 import org.jboss.as.controller.AttributeDefinition;
@@ -140,6 +141,39 @@ public class ByteBufferPoolDefinition extends PersistentResourceDefinition {
 
     private static final class ByteBufferPoolService implements Service<ByteBufferPool> {
 
+        private class ByteBufferPoolDelegate implements ByteBufferPool {
+            ByteBufferPool delegate;
+            private void init() {
+                delegate = new DefaultByteBufferPool(direct, size, maxSize, threadLocalCacheSize, leakDetectionPercent);
+            }
+            private void passivate() {
+                delegate = null;
+            }
+            @Override
+            public PooledByteBuffer allocate() {
+                return delegate.allocate();
+            }
+
+            @Override
+            public ByteBufferPool getArrayBackedPool() {
+                return delegate.getArrayBackedPool();
+            }
+
+            @Override
+            public void close() {
+                delegate.close();
+            }
+
+            @Override
+            public int getBufferSize() {
+                return delegate.getBufferSize();
+            }
+
+            @Override
+            public boolean isDirect() {
+                return delegate.isDirect();
+            }
+        }
         private final boolean direct;
         private final int size;
         private final int maxSize;
@@ -147,7 +181,7 @@ public class ByteBufferPoolDefinition extends PersistentResourceDefinition {
         private final int leakDetectionPercent;
 
 
-        private volatile ByteBufferPool pool;
+        private volatile ByteBufferPoolDelegate pool;
 
         private ByteBufferPoolService(boolean direct, int size, int maxSize, int threadLocalCacheSize, int leakDetectionPercent) {
             this.direct = direct;
@@ -160,9 +194,16 @@ public class ByteBufferPoolDefinition extends PersistentResourceDefinition {
 
         @Override
         public void start(StartContext startContext) throws StartException {
-            pool = new DefaultByteBufferPool(direct, size, maxSize, threadLocalCacheSize, leakDetectionPercent);
+            pool = new ByteBufferPoolDelegate();
+            pool.init();
         }
-
+        public void passivate() {
+            pool.close();
+            pool.passivate();
+        }
+        public void runtime() {
+            pool.init();
+        }
         @Override
         public void stop(StopContext stopContext) {
             pool.close();

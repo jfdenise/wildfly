@@ -584,6 +584,7 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                     }
                 }
                 seenMappings.addAll(jspPropertyGroupMappings);
+                System.out.println("UNDERTOW JSP GETTING CONSTRUCTOR");
                 Constructor<? extends EventListener> ctr = (Constructor<? extends EventListener>)
                         WildFlyGraalSetup.getConstructorFromCache(this.getClass().getClassLoader(), JspInitializationListener.class);
                 if(ctr == null) {

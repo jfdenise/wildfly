@@ -19,8 +19,10 @@ import org.jboss.as.network.NetworkInterfaceBinding;
 import org.jboss.as.server.mgmt.domain.HttpManagement;
 import org.jboss.msc.Service;
 import org.jboss.msc.service.StartContext;
+import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
 import org.wildfly.extension.undertow.logging.UndertowLogger;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 
 /**
  * A service to setup a redirect for the web administration console.
@@ -41,9 +43,14 @@ final class ConsoleRedirectService implements Service {
         this.httpManagement = httpManagement;
         this.host = host;
     }
-
+    private StartContext context;
     @Override
     public void start(final StartContext startContext) {
+           if (WildFlyGraalSetup.isBuildTime()) {
+            System.out.println("DO NOT start Console redirect for graal execution");
+            this.context = context;
+            return;
+        }
         final Host host = this.host.get();
         UndertowLogger.ROOT_LOGGER.debugf("Starting console redirect for %s", host.getName());
         final HttpManagement httpManagement = this.httpManagement != null ? this.httpManagement.get() : null;
@@ -57,7 +64,9 @@ final class ConsoleRedirectService implements Service {
             host.registerHandler(CONSOLE_PATH, new RedirectHandler(NO_CONSOLE));
         }
     }
-
+    public void runtime() throws StartException {
+        start(context);
+    }
     @Override
     public void stop(final StopContext stopContext) {
         final Host host = this.host.get();

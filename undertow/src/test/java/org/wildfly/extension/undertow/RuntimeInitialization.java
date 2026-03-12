@@ -30,11 +30,11 @@ import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StopContext;
 import org.wildfly.extension.io.IOServices;
 import org.wildfly.extension.io.WorkerService;
+import org.wildfly.io.XnioWorkerSupplier;
 import org.wildfly.security.auth.server.HttpAuthenticationFactory;
 import org.xnio.OptionMap;
 import org.xnio.Options;
 import org.xnio.Xnio;
-import org.xnio.XnioWorker;
 
 class RuntimeInitialization extends DefaultInitialization {
     private final Map<ServiceName, Supplier<Object>> values;
@@ -95,7 +95,7 @@ class RuntimeInitialization extends DefaultInitialization {
             target.addService(ContextNames.JBOSS_CONTEXT_SERVICE_NAME).setInstance(new NamingStoreService()).install();
 
             ServiceBuilder<?> builder1 = target.addService(IOServices.WORKER.append("default"));
-            Consumer<XnioWorker> workerConsumer1 = builder1.provides(IOServices.WORKER.append("default"));
+            Consumer<XnioWorkerSupplier> workerConsumer1 = builder1.provides(IOServices.WORKER.append("default"));
             builder1.setInstance(
                     new WorkerService(
                             workerConsumer1,
@@ -104,7 +104,7 @@ class RuntimeInitialization extends DefaultInitialization {
             builder1.install();
 
             ServiceBuilder<?> builder2 = target.addService(IOServices.WORKER.append("non-default"));
-            Consumer<XnioWorker> workerConsumer2 = builder2.provides(IOServices.WORKER.append("non-default"));
+            Consumer<XnioWorkerSupplier> workerConsumer2 = builder2.provides(IOServices.WORKER.append("non-default"));
             builder2.setInstance(
                     new WorkerService(
                             workerConsumer2,

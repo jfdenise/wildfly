@@ -28,8 +28,8 @@ import org.jboss.as.controller.registry.Resource;
 import org.jboss.as.network.SocketBinding;
 import org.jboss.dmr.ModelNode;
 import org.wildfly.extension.io.OptionList;
+import org.wildfly.io.XnioWorkerSupplier;
 import org.xnio.OptionMap;
-import org.xnio.XnioWorker;
 
 /**
  * @author <a href="mailto:tomaz.cerar@redhat.com">Tomaz Cerar</a> (c) 2012 Red Hat Inc.
@@ -82,7 +82,7 @@ abstract class ListenerAdd<S extends ListenerService> extends AbstractAddStepHan
         }
 
         sb.setInstance(service);
-        service.getWorker().set(sb.requiresCapability(REF_IO_WORKER, XnioWorker.class, workerName));
+        service.getWorker().set(sb.requiresCapability(REF_IO_WORKER, XnioWorkerSupplier.class, workerName));
         service.getBinding().set(sb.requires(SocketBinding.SERVICE_DESCRIPTOR, bindingRef));
         service.getBufferPool().set(sb.requiresCapability(Capabilities.CAPABILITY_BYTE_BUFFER_POOL, ByteBufferPool.class, bufferPoolName));
         service.getServerService().set(sb.requires(Server.SERVICE_DESCRIPTOR, serverName));

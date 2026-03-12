@@ -99,6 +99,7 @@ public class HttpListenerService extends ListenerService {
 
     protected void startListening(XnioWorker worker, InetSocketAddress socketAddress, ChannelListener<AcceptingChannel<StreamConnection>> acceptListener)
             throws IOException {
+        System.out.println("UNDERTOW HTTP START LISTENING");
         server = worker.createStreamConnectionServer(socketAddress, acceptListener, OptionMap.builder().addAll(commonOptions).addAll(socketOptions).getMap());
         server.resumeAccepts();
 

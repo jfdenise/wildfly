@@ -32,6 +32,7 @@ import org.jboss.modules.Module;
 import org.jboss.modules.ModuleLoadException;
 import org.jboss.modules.Resource;
 import org.wildfly.extension.undertow.logging.UndertowLogger;
+//import org.wildfly.graal.runtime.WildFlyGraalSetup;
 
 /**
  *
@@ -53,6 +54,9 @@ public class ExternalTldParsingDeploymentProcessor implements DeploymentUnitProc
         if (warMetaData == null || warMetaData.getMergedJBossWebMetaData() == null) {
             return;
         }
+//        if(WildFlyGraalSetup.isRuntime()) {
+//            return;
+//        }
         TldsMetaData tldsMetaData = deploymentUnit.getAttachment(TldsMetaData.ATTACHMENT_KEY);
         Map<String, TldMetaData> tlds = tldsMetaData.getTlds();
 

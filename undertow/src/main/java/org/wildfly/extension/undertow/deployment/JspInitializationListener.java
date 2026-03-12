@@ -26,6 +26,10 @@ import org.wildfly.security.manager.WildFlySecurityManager;
  */
 public class JspInitializationListener implements ServletContextListener {
 
+    static {
+        System.out.println("INIT JspInitializationListener");
+    }
+
     public static final String CONTEXT_KEY = "org.jboss.as.web.deployment.JspInitializationListener.wrappers";
     private static final String DISABLE_IMPORTED_CLASS_EL_RESOLVER_PROPERTY = "org.wildfly.extension.undertow.deployment.disableImportedClassELResolver";
     private static JspFactory JSP_FACTORY = JspFactory.getDefaultFactory();
