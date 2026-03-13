@@ -268,6 +268,11 @@ final class ServletContainerAdd extends AbstractBoottimeAddStepHandler {
             public boolean isOrphanSessionAllowed() {
                 return orphanSessionAllowed;
             }
+
+            @Override
+            public XnioWorkerSupplier getWebsocketsWorkerSupplier() {
+                return (xnioWorker != null) ? xnioWorker.get() : null;
+            }
         };
         builder.setInstance(Service.newInstance(builder.provides(ServletContainerDefinition.SERVLET_CONTAINER_CAPABILITY), service));
         builder.setInitialMode(ServiceController.Mode.ON_DEMAND);

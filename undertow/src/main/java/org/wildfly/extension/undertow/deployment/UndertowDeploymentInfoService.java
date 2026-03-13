@@ -155,6 +155,7 @@ import java.lang.reflect.Constructor;
 
 import org.jboss.as.server.ServerEnvironment;
 import org.wildfly.graal.runtime.WildFlyGraalSetup;
+import org.xnio.XnioWorker;
 
 /**
  * Service that builds up the undertow metadata.
@@ -935,7 +936,9 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
             //now setup websockets if they are enabled
             if(servletContainer.isWebsocketsEnabled() && webSocketDeploymentInfo != null) {
                 webSocketDeploymentInfo.setBuffers(servletContainer.getWebsocketsBufferPool());
-                webSocketDeploymentInfo.setWorker(servletContainer.getWebsocketsWorker());
+                Supplier<XnioWorker> supplier = ()->{return servletContainer.getWebsocketsWorkerSupplier().get();};
+                //webSocketDeploymentInfo.setWorker(servletContainer.getWebsocketsWorker());
+                webSocketDeploymentInfo.setWorkerSupplier(supplier);
                 webSocketDeploymentInfo.setDispatchToWorkerThread(servletContainer.isDispatchWebsocketInvocationToWorker());
 
                 if(servletContainer.isPerMessageDeflate()) {
