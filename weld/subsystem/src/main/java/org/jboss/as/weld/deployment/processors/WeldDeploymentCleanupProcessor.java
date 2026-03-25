@@ -4,6 +4,7 @@
  */
 package org.jboss.as.weld.deployment.processors;
 
+import jakarta.enterprise.inject.spi.BeanManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -16,15 +17,18 @@ import org.jboss.as.server.deployment.DeploymentUnit;
 import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
 import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.as.weld.WeldBootstrapService;
+import org.jboss.as.weld.WeldRegisterBeansService;
 import org.jboss.as.weld._private.WeldDeploymentMarker;
 import org.jboss.as.weld.WeldStartCompletionService;
 import org.jboss.as.weld.WeldStartService;
+import org.jboss.as.weld.services.BeanManagerService;
 import org.jboss.as.weld.util.Utils;
 import org.jboss.modules.Module;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.ServiceRegistry;
 import org.jboss.msc.service.ServiceTarget;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 
 /**
  * A processor which takes care of after boot cleanup for Weld. The idea is to invoke
@@ -80,6 +84,15 @@ public class WeldDeploymentCleanupProcessor implements DeploymentUnitProcessor {
         weldStartCompletionServiceBuilder.setInstance(new WeldStartCompletionService(bootstrapSupplier,
                 WeldDeploymentProcessor.getSetupActions(deploymentUnit), module.getClassLoader()));
         weldStartCompletionServiceBuilder.install();
+        if (WildFlyGraalSetup.isBuildTime()) {
+            ServiceName weldBeanManagerServiceName = BeanManagerService.serviceName(deploymentUnit);
+            ServiceName weldRegisterBeansServiceName = parent.getServiceName().append(WeldRegisterBeansService.SERVICE_NAME);
+            ServiceBuilder<?> weldRegisterBeansServiceBuilder = serviceTarget.addService(weldRegisterBeansServiceName);
+            final Supplier<BeanManager> beanManagerSupplier = weldRegisterBeansServiceBuilder.requires(weldBeanManagerServiceName);
+            weldRegisterBeansServiceBuilder.requires(weldStartCompletionServiceName);
+            weldRegisterBeansServiceBuilder.setInstance(new WeldRegisterBeansService(beanManagerSupplier, WeldDeploymentProcessor.getSetupActions(deploymentUnit), module.getClassLoader()));
+            weldRegisterBeansServiceBuilder.install();
+        }
     }
 
     private List<ServiceName> getComponentStartServiceNames(DeploymentUnit deploymentUnit) {
