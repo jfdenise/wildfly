@@ -13,5 +13,6 @@
 
     <dependencies>
         <module name="java.desktop"/>
+        <module name="org.wildfly.graal.runtime"/>
     </dependencies>    
 </module>

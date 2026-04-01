@@ -8,7 +8,9 @@ import java.lang.annotation.Annotation;
 import java.lang.annotation.Inherited;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import org.wildfly.graal.runtime.WildFlyGraalSetup;
 
 
 /**
@@ -26,12 +28,19 @@ public class Reflections {
     public static <T> T newInstance(String className, ClassLoader classLoader) {
         try {
             Class<?> clazz = classLoader.loadClass(className);
-            return (T) clazz.newInstance();
+            if(WildFlyGraalSetup.isRuntime()) {
+                Constructor<T> ctr = WildFlyGraalSetup.getConstructorFromCache(classLoader, clazz);
+                return ctr.newInstance();
+            } else {
+                return (T) clazz.newInstance();
+            }
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }

@@ -28,5 +28,6 @@
         <module name="org.jboss.weld.spi"/>
         <module name="org.jboss.logging"/>
         <module name="org.eclipse.microprofile.restclient" optional="true"/>
+        <module name="org.wildfly.graal.runtime"/>
     </dependencies>
 </module>
