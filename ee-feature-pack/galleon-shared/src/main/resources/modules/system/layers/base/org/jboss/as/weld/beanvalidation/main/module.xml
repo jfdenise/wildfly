@@ -29,6 +29,7 @@
         <module name="org.wildfly.extension.bean-validation"/>
         <module name="jakarta.enterprise.api"/>
         <module name="jakarta.validation.api"/>
+        <module name="org.wildfly.graal.runtime"/>
     </dependencies>
 
 </module>
