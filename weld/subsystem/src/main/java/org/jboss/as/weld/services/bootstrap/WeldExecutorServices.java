@@ -77,7 +77,9 @@ public class WeldExecutorServices extends AbstractExecutorServices implements Se
 
     @Override
     public void passivate() {
-        executor.shutdownNow();
+        if (executor != null) {
+            executor.shutdownNow();
+        }
     }
     @Override
     public void activate() {
