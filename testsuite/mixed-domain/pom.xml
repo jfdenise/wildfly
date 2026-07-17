@@ -281,6 +281,7 @@
                                     <config-stability-level>default</config-stability-level>
                                     <package-stability-level>experimental</package-stability-level>
                                     <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
+                                    <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                                 </galleon-options>
                             </configuration>
                         </execution>

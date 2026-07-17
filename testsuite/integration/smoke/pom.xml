@@ -570,6 +570,7 @@
                             <jboss-maven-dist/>
                             <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                             <optional-packages>passive+</optional-packages>
+                            <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                         </galleon-options>
                     </configuration>
                     <executions>
@@ -846,6 +847,7 @@
                                         <jboss-maven-dist/>
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
+                                        <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                                     </galleon-options>
                                     <provisioning-file>target/glow-scan/microprofile.surefire/provisioning.xml</provisioning-file>
                                 </configuration>
@@ -867,6 +869,7 @@
                                         <jboss-maven-dist/>
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
+                                        <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                                     </galleon-options>
                                     <provisioning-file>target/glow-scan/legacy-sar-layers.surefire/provisioning.xml</provisioning-file>
                                 </configuration>
@@ -889,6 +892,7 @@
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
                                         <stability-level>preview</stability-level>
+                                        <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                                     </galleon-options>
                                     <provisioning-file>target/glow-scan/jakarta-data-layers.surefire/provisioning.xml</provisioning-file>
                                 </configuration>

@@ -63,6 +63,7 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
+                <version>6.0.0.Final</version>
                 <executions>
                     <execution>
                         <id>server-provisioning</id>
@@ -76,16 +77,6 @@
                             <log-provisioning-time>${galleon.log.time}</log-provisioning-time>
                             <offline-provisioning>${galleon.offline}</offline-provisioning>
                             <overwrite-provisioned-server>true</overwrite-provisioned-server>
-                            <channels>
-                                <channel>
-                                    <name>wildfly-ee</name>
-                                    <manifest>
-                                        <groupId>${channels.maven.groupId}</groupId>
-                                        <artifactId>wildfly-${latest.ee.artifactid.segment}</artifactId>
-                                        <version>${ee.maven.version}</version>
-                                    </manifest>
-                                </channel>
-                            </channels>
                             <feature-packs>
                                 <feature-pack>
                                     <groupId>${ee.maven.groupId}</groupId>
@@ -99,6 +90,7 @@
                             <galleon-options>
                                 <jboss-maven-dist/>
                                 <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
+                                <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                             </galleon-options>
                         </configuration>
                     </execution>

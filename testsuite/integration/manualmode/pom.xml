@@ -425,6 +425,7 @@
                                 <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                 <!-- TODO needing to add this seems not user-friendly -->
                                 <ignore-not-excluded-layers>true</ignore-not-excluded-layers>
+                                <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                             </galleon-options>
                             <channels>
                                 <channel>

@@ -548,6 +548,7 @@
                             <offline-provisioning>${galleon.offline}</offline-provisioning>
                             <galleon-options>
                                 <optional-packages>passive+</optional-packages>
+                                <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                             </galleon-options>
                             <feature-packs>
                                 <feature-pack>

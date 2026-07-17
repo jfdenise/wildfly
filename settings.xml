@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <localRepository>/tmp/wftest/localrepo6</localRepository>
+  
+  <!-- Ban default central definition from Super POM -->
+  <mirrors>
+    <mirror>
+      <mirrorOf>central</mirrorOf>
+      <name>central-cache</name>
+      <url>file:///dev/null/</url>
+      <id>central-ban</id>
+    </mirror>
+  </mirrors>
+ 
+  <profiles>
+    <profile>
+      <id>jboss-nexus-repository-profile</id>
+      <repositories>
+        <repository>
+            <id>jboss-nexus-public-dependencies</id>
+            <name>JBoss Nexus Public Repository</name>
+            <layout>default</layout>
+            <url>https://repository.jboss.org/nexus/repository/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+            <id>jboss-nexus-public-plugins</id>
+            <name>JBoss Nexus Public Repository</name>
+            <layout>default</layout>
+            <url>https://repository.jboss.org/nexus/repository/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+    
+    <profile>
+      <id>central-profile</id>
+      <repositories>
+        <repository>
+          <id>central-dependencies</id>
+          <name>Central Repository</name>
+          <url>https://repo.maven.apache.org/maven2</url>
+          <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>central-plugins</id>
+          <name>Central Repository</name>
+          <url>https://repo.maven.apache.org/maven2</url>
+          <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+ 
+  <!-- the order here does not matter - the profiles are activated in reverse order of the declaration in the file -->
+  <activeProfiles>
+    <activeProfile>jboss-nexus-repository-profile</activeProfile>
+    <activeProfile>central-profile</activeProfile>
+  </activeProfiles>
+ 
+</settings>

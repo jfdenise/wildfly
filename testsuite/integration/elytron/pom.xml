@@ -433,6 +433,7 @@
                             <jboss-maven-dist/>
                             <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                             <optional-packages>passive+</optional-packages>
+                            <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                         </galleon-options>
                     </configuration>
                     <executions>
@@ -820,6 +821,7 @@
                                         <jboss-maven-dist/>
                                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                                         <optional-packages>passive+</optional-packages>
+                                        <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                                     </galleon-options>
                                     <provisioning-file>target/glow-scan/provisioning.xml</provisioning-file>
                                 </configuration>

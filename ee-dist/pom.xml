@@ -154,14 +154,13 @@
                             <overwrite-provisioned-server>true</overwrite-provisioned-server>
                             <galleon-options>
                                 <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
+                                <jboss-bulk-resolve-artifacts>${galleon.bulk.resolve}</jboss-bulk-resolve-artifacts>
                             </galleon-options>
                             <channels>
                                 <channel>
                                     <name>wildfly-ee</name>
                                     <manifest>
-                                        <groupId>${channels.maven.groupId}</groupId>
-                                        <artifactId>wildfly-${latest.ee.artifactid.segment}</artifactId>
-                                        <version>${ee.maven.version}</version>
+                                      <url>file:///Users/jdenise/workspaces/wildfly/ee-dist/wildfly-ee-40.0.1.Final-manifest.yaml</url>
                                     </manifest>
                                 </channel>
                             </channels>
