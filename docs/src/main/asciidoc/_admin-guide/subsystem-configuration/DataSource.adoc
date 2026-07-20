@@ -203,6 +203,39 @@ RESOURCE DESCRIPTION
 [...]
 ----
 
+[[ds-cli-ee-default-bindings]]
+=== Managing the EE Default Datasource
+
+The `data-source add` and `xa-data-source add` commands accept a
+`--set-default-datasource` flag. When set, the command also writes the new
+datasource's JNDI name as the default datasource in the EE subsystem
+(`/subsystem=ee/service=default-bindings`), all within a single atomic composite
+operation. The `--jndi-name` argument is required when this flag is used.
+
+[source,options="nowrap"]
+----
+data-source add --name=MyDS --jndi-name=java:/MyDS \
+    --driver-name=h2 --connection-url=jdbc:h2:mem:test \
+    --user-name=sa --password=sa \
+    --set-default-datasource
+----
+
+The `data-source remove` and `xa-data-source remove` commands accept a
+`--unset-if-default-datasource` flag. When set, the command checks whether the
+datasource being removed is currently the EE default. If it is, an
+`undefine-attribute` step is prepended to the composite operation to clear the
+reference before the removal. If the datasource is not the current EE default the
+flag has no effect.
+
+[source,options="nowrap"]
+----
+data-source remove --name=MyDS --unset-if-default-datasource
+----
+
+Both flags apply equally to the `xa-data-source` command variants. In domain mode,
+the EE default-bindings resource is automatically addressed under the correct
+`/profile=<name>` prefix.
+
 [[ds-component-reference]]
 == Component Reference
 
